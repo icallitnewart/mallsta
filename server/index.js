@@ -3,10 +3,14 @@ const app = express();
 const port = 5005;
 const config = require('./config/key');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 //body-parser
 app.use(bodyParser.urlencoded({ extended : true }));
 app.use(bodyParser.json());
+
+//cookie-parser
+app.use(cookieParser());
 
 //mongoose
 const mongoose = require('mongoose');
