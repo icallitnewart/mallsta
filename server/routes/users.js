@@ -58,4 +58,17 @@ router.get('/auth', auth, (req, res)=> {
     });
 });
 
+//로그아웃
+router.get('/logout', auth, (req, res)=> {
+    User.findOneAndUpdate(
+        { _id : req.user._id },
+        { token : "" },
+        (err, user)=> {
+            if(err) return res.status(400).json({ success : false, err });
+
+            return res.status(200).json({ success : true });
+        }
+    )
+});
+
 module.exports = router;
