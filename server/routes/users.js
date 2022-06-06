@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { User } = require('../models/User');
+const { auth } = require('../middleware/auth');
 
 //회원가입
 router.post("/register", (req, res)=> {
@@ -39,6 +40,21 @@ router.post("/login", (req, res)=> {
                     .json({ success : true, userId : user._id });
             });
         });
+    });
+});
+
+//로그인 인증(auth) 통과
+router.get('/auth', auth, (req, res)=> {
+    res.status(200).json({
+        _id : req.user._id,
+        isAdmin : req.user.role === 0 ? false : true,
+        isAuth : true,
+        username : req.user.username,
+        email : req.user.email,
+        role : req.user.role,
+        cart : req.user.cart,
+        purchaseHistory : req.user.purchaseHistory,
+        storeOwner : req.user.storeOwner
     });
 });
 
