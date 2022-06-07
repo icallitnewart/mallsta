@@ -15,8 +15,8 @@ app.use(cookieParser());
 //mongoose
 const mongoose = require('mongoose');
 mongoose.connect(config.mongoURI, {
-    useNewUrlParser: true, 
-    useUnifiedTopology: true
+	useNewUrlParser: true, 
+	useUnifiedTopology: true
 })
 .then(()=> console.log('MongoDB Connected...'))
 .catch(err=> console.log(err));
@@ -26,9 +26,9 @@ app.use('/api/users', require('./routes/users'));
 
 
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+	res.send('Hello World!');
 });
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
+	console.log(`Example app listening on port ${port}`);
 });
