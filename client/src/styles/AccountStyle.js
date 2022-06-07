@@ -59,10 +59,27 @@ export const ErrMsg = styled.span`
   margin: 5px 0px 5px 3px;
 `;
 
+export const P = styled.p`
+  text-align: center;
+  margin-top: 20px;
+
+  a {
+    display: inline-block;
+    font: 500 13px/1 "Poppins";
+    color: #ff5e62cf;
+    padding-bottom: 1px;
+    border-bottom: 1px solid #ff5e62cf;
+
+    &:hover {
+      color: #ff5e62;
+    }
+  }
+`;
+
 export const Button = styled.button`
   width: 100%;
   height: 35px;
-  margin-top: 10px;
+  margin-top: 15px;
   background-color: #ff5e62;
   border: 0px;
   border-radius: 5px;
