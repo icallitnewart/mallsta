@@ -30,7 +30,7 @@ function Login() {
 					/>
 				</InputContainer>
                 <Button type="submit">
-                    LOGIN
+                    login
                 </Button>
             </form>
         )

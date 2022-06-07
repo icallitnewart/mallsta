@@ -9,8 +9,8 @@ function Account({ renderForm }) {
                 <H1>
                     <Logo 
                         href="/"
-                        fontSize={"30px"}
-                    >MALLSTA</Logo>
+                        fontSize={"35px"}
+                    >Mallsta</Logo>
                 </H1>
                 {renderForm()}
             </Container>

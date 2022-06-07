@@ -27,6 +27,15 @@ export const InputContainer = styled.div`
     margin-bottom: 10px;
 `;
 
+export const Label = styled.label`
+    display: inline-block;
+    font: 500 11px/1 "Poppins";
+    letter-spacing: 1px;
+    color: #888;
+    margin-left: 5px;
+    margin-bottom: 3px;
+`;
+
 export const Input = styled.input`
     width: 100%;
     height: 40px;
@@ -34,7 +43,7 @@ export const Input = styled.input`
     background-color: #eee;
     border-radius: 5px;
     padding: 0px 10px;
-    font: normal 12px/1 "arial";
+    font: normal 12px/1 "Poppins";
     letter-spacing: 1px;
     outline: none;
     
@@ -43,19 +52,11 @@ export const Input = styled.input`
     }
 `;
 
-export const Label = styled.label`
-    display: inline-block;
-    font-size: 11px;
-    letter-spacing: 1px;
-    color: #888;
-    font-weight: 600;
-    margin-left: 5px;
-    margin-bottom: 3px;
-`;
-
 export const ErrMsg = styled.span`
-    font: bold 11px/1 "arial";
+    display: inline-block;
+    font: 500 12px/1 "Poppins";
     color: #ff9966;
+    margin: 5px 0px 5px 3px;
 `;
 
 export const Button = styled.button`
@@ -66,8 +67,8 @@ export const Button = styled.button`
     border: 0px;
     border-radius: 5px;
     color: #fff;
-    font: 500 14px "arial";
-    letter-spacing: 2px;
+    font: 400 12px "Poppins";
+    letter-spacing: 3px;
     cursor: pointer;
     transition: .5s;
 

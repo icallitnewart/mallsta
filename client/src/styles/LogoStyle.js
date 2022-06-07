@@ -7,6 +7,7 @@ export const Logo = styled.a`
     font-weight: bold;
     font-size: ${props => props.fontSize};
     letter-spacing: 2px;
+    font-family: 'Oleo Script', cursive;
 
     &::after {
         content: "*";
