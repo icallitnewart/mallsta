@@ -67,41 +67,41 @@ function Login() {
   };
 
   const renderForm = ()=> {
-      return (
-          <form onSubmit={handleSubmit}>
-      <InputContainer>
-        <Label htmlFor="username">
-          USERNAME
-        </Label>
-        <Input
-          type="text"
-          name="username"
-          id="username"
-          placeholder="Username"
-          value={values.username}
-          onChange={handleChange}
-        />
-        {err.username && <ErrMsg>{err.username}</ErrMsg>}
-      </InputContainer>
-      <InputContainer>
-        <Label htmlFor="password">
-          PASSWORD
-        </Label>
-        <Input
-          type="password"
-          name="password"
-          id="password"
-          placeholder="Password"
-          value={values.password}
-          onChange={handleChange}
-        />
-        {err.password && <ErrMsg>{err.password}</ErrMsg>}
-      </InputContainer>
-              <Button type="submit">
-                  login
-              </Button>
-          </form>
-      )
+    return (
+      <form onSubmit={handleSubmit}>
+        <InputContainer>
+          <Label htmlFor="username">
+            USERNAME
+          </Label>
+          <Input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="Username"
+            value={values.username}
+            onChange={handleChange}
+          />
+          {err.username && <ErrMsg>{err.username}</ErrMsg>}
+        </InputContainer>
+        <InputContainer>
+          <Label htmlFor="password">
+            PASSWORD
+          </Label>
+          <Input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Password"
+            value={values.password}
+            onChange={handleChange}
+          />
+          {err.password && <ErrMsg>{err.password}</ErrMsg>}
+        </InputContainer>
+        <Button type="submit">
+            login
+        </Button>
+      </form>
+    )
   };
 
   return (
