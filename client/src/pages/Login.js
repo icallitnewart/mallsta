@@ -1,8 +1,13 @@
 import React from 'react';
 import Account from '../components/common/Account';
+import useInputs from '../hooks/useInputs';
 import { Input, Label, Button, ErrMsg, InputContainer } from "../styles/AccountStyle";
 
 function Login() {
+	const [ values, handleChange ] = useInputs({
+		username : "",
+		password : ""
+	});
 
     const renderForm = ()=> {
         return (
@@ -16,6 +21,8 @@ function Login() {
 						name="username"
 						id="username"
 						placeholder="Username"
+						value={values.username}
+						onChange={handleChange}
 					/>
 				</InputContainer>
 				<InputContainer>
@@ -27,6 +34,8 @@ function Login() {
 						name="password"
 						id="password"
 						placeholder="Password"
+						value={values.password}
+						onChange={handleChange}
 					/>
 				</InputContainer>
                 <Button type="submit">
