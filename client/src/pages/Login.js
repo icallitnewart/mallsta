@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { loginUser } from '../_actions/user_action';
 import useInputs from '../hooks/useInputs';
-import { Input, Label, Button, ErrMsg, InputContainer } from "../styles/AccountStyle";
+import { Input, Label, Button, ErrMsg, InputContainer, P } from "../styles/AccountStyle";
 import Account from '../components/common/Account';
 
 function Login() {
@@ -100,6 +100,7 @@ function Login() {
         <Button type="submit">
             login
         </Button>
+        <P><Link to="/register">Don't have an account?</Link></P>
       </form>
     )
   };
