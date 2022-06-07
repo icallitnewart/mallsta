@@ -18,17 +18,17 @@ router.post("/login", (req, res)=> {
     User.findOne({ username : req.body.username  }, (err, userInfo)=> {
         if(err) return res.status(400).json({ success : false, err });
         //해당 username이 DB에 존재하지 않을 때
-        if(!userInfo) return res.status(204).json({ 
+        if(!userInfo) return res.json({ 
             success : false, 
-            err : "Username Not Found" 
+            message : "Username Not Found." 
         });
         
         userInfo.comparePassword(req.body.password, (err, isMatch)=> {
-            if(err) return res.status(400).json({ success : false, err });
+            if(err) return res.json({ success : false, err });
             //비밀번호가 틀렸을 때
-            if(!isMatch) return res.status(204).json({ 
+            if(!isMatch) return res.json({ 
                 success : false, 
-                err : "Incorrect Password"
+                message : "Incorrect Password."
             });
 
             //비밀번호가 일치한다면 토큰 생성 후 쿠키에 저장
