@@ -8,7 +8,7 @@ router.post("/register", (req, res)=> {
   const user = new User(req.body);
 
   user.save((err, userInfo)=> {
-    if(err) return res.status(400).json({ success : false, err });
+    if(err) return res.json({ success : false, err });
     return res.status(200).json({ success : true, userInfo })
   });
 });
@@ -67,6 +67,40 @@ router.get('/logout', auth, (req, res)=> {
       if(err) return res.status(400).json({ success : false, err });
 
       return res.status(200).json({ success : true });
+    }
+  )
+});
+
+//아이디 중복 체크
+router.post('/check_username', (req, res)=> {
+  User.findOne(
+    { username : req.body.username },
+    (err, user)=> {
+      if(user) {
+        return res.json({ 
+          isExist : true, 
+          message : "Username already exists."
+        });
+      } else {
+        return res.status(200).json({ isExist : false });
+      }
+    }
+  )
+});
+
+//이메일 중복 체크
+router.post('/check_email', (req, res)=> {
+  User.findOne(
+    { email : req.body.email },
+    (err, user)=> {
+      if(user) {
+        return res.json({ 
+          isExist : true, 
+          message : "Email already exists."
+        });
+      } else {
+        return res.status(200).json({ isExist : false });
+      }
     }
   )
 });
