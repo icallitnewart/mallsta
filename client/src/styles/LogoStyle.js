@@ -1,4 +1,5 @@
 import styled, { css, keyframes } from "styled-components";
+import { Link } from "react-router-dom";
 
 const starSpin = keyframes`
   0% {
@@ -9,7 +10,7 @@ const starSpin = keyframes`
   }
 `;
 
-export const Logo = styled.a`
+export const Logo = styled(Link)`
   background: linear-gradient(45deg, #ff5e62, #ff9966);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

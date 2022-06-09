@@ -72,7 +72,7 @@ function Navbar() {
     <Header>
       <Inner>
         <Logo 
-          href="/"
+          to="/"
           fontSize={22}
           type={"navbar"}
         >Mallsta</Logo>

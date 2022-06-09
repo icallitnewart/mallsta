@@ -8,7 +8,7 @@ function Account({ renderForm }) {
       <Container>
         <H1>
           <Logo 
-            href="/"
+            to="/"
             fontSize={35}
           >Mallsta</Logo>
         </H1>
