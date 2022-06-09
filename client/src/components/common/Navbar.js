@@ -41,6 +41,22 @@ function Navbar() {
     }
   };
 
+  //로그아웃 기능
+  const handleLogout = (e)=> {
+    e.preventDefault();
+
+    axios.
+    get('/api/users/logout')
+    .then(response=> {
+      if(response.data.success) {
+        alert("Logout complete!");
+        window.location.replace("/");
+      } else {
+        alert("Logout failed.");
+      }
+    });
+  };
+
   const renderNav = ()=> {
     return (
       <Ul>
@@ -69,7 +85,7 @@ function Navbar() {
                 <Link to="/">Settings</Link>
               </DropdownItems>
               <DropdownItems>
-                <Link to="/">Logout</Link>
+                <Link to="/" onClick={handleLogout}>Logout</Link>
               </DropdownItems>
             </DropdownBox>
           </Dropdown>
