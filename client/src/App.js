@@ -5,6 +5,7 @@ import {
   Route
 } from 'react-router-dom';
 
+import Auth from "./hoc/auth";
 import Layout from "./components/common/Layout";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -15,12 +16,12 @@ function App() {
     <BrowserRouter>
       <GlobalStyle />
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={Auth(<Login />, false)} />
+        <Route path="/register" element={Auth(<Register />, false)} />
 
         {/* Navbar, Footer 포함 */}
         <Route element={<Layout />}>
-          <Route path="/" element={<div>TEST</div>} />
+          <Route path="/" element={Auth(<div>TEST</div>, null)} />
         </Route>
       </Routes>
     </BrowserRouter>

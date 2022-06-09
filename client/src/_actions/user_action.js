@@ -4,6 +4,7 @@ import {
   REGISTER_USER,
   CHECK_USERNAME_USER,
   CHECK_EMAIL_USER,
+  AUTH_USER
 } from "./types";
 
 //로그인
@@ -57,3 +58,16 @@ export function checkEmailUser(data) {
     payload : request
   }
 }
+
+//로그인 인증
+export function auth() {
+  const request =
+    axios
+    .get('/api/users/auth')
+    .then(res=> res.data);
+
+    return {
+      type : AUTH_USER,
+      payload : request
+    }
+};

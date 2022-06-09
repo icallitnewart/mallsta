@@ -2,7 +2,8 @@ import {
   LOGIN_USER,
   REGISTER_USER,
   CHECK_EMAIL_USER,
-  CHECK_USERNAME_USER
+  CHECK_USERNAME_USER,
+  AUTH_USER
 } from "../_actions/types";
 
 export default function(state={}, action) {
@@ -29,6 +30,12 @@ export default function(state={}, action) {
       return {
         ...state,
         checkEmail : action.payload
+      }
+      break;
+    case AUTH_USER :
+      return {
+        ...state,
+        userData : action.payload
       }
       break;
     default :
