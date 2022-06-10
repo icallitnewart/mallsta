@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { loginUser } from '../_actions/user_action';
 import useInputs from '../hooks/useInputs';
-import { Input, Label, Button, ErrMsg, InputContainer, P } from "../styles/MembershipStyle";
+import { Input, Label, Button, ErrMsg, InputContainer, P } from "../styles/common/MembershipStyle";
 import Membership from '../components/common/Membership';
 
 function Login() {

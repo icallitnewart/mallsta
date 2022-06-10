@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
 
-import { Background, Container } from "../styles/LayoutStyle";
+import { Background, Container } from "../styles/common/LayoutStyle";
 import AsideMenu from '../components/account/AsideMenu';
 import Profile from '../components/account/Profile';
 import Store from '../components/account/Store';

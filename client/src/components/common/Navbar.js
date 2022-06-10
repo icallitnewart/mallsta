@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { Header, Inner, Nav, Ul, Li, Dropdown,DropdownBox, DropdownItems } from "../../styles/NavbarStyle";
-import { Logo } from "../../styles/LogoStyle";
+import { Header, Inner, Nav, Ul, Li, Dropdown,DropdownBox, DropdownItems } from "../../styles/common/NavbarStyle";
+import { Logo } from "../../styles/common/LogoStyle";
 import { BsSuitHeart, BsCart } from "react-icons/bs";
 import { IoPersonOutline } from "react-icons/io5";
 
