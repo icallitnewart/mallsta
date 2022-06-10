@@ -36,7 +36,7 @@ function Navbar() {
       e.preventDefault();
 
       if(window.confirm("This feature requires login. Would you like to login?")) {
-        navigate("/login");
+        navigate("/membership/login");
       }
     }
   };
