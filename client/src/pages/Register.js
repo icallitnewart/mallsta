@@ -3,8 +3,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { registerUser, checkEmailUser, checkUsernameUser } from '../_actions/user_action';
 import useInputs from '../hooks/useInputs';
-import { Input, Label, Button, ErrMsg, InputContainer, P } from "../styles/AccountStyle";
-import Account from '../components/common/Account';
+import { Input, Label, Button, ErrMsg, InputContainer, P } from "../styles/MembershipStyle";
+import Membership from '../components/common/Membership';
 
 function Register() {
   const dispatch = useDispatch();
@@ -173,7 +173,7 @@ function Register() {
   };
 
   return (
-    <Account renderForm={renderForm} />
+    <Membership renderForm={renderForm} />
   )
 }
 
