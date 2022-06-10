@@ -79,10 +79,10 @@ function Navbar() {
           <Dropdown>
             <DropdownBox>
               <DropdownItems>
-                <Link to="/">My Page</Link>
+                <Link to={`/shopping/${user.userData.username}`}>My Shopping</Link>
               </DropdownItems>
               <DropdownItems>
-                <Link to="/">Settings</Link>
+                <Link to="/account/profile">Settings</Link>
               </DropdownItems>
               <DropdownItems>
                 <Link to="/" onClick={handleLogout}>Logout</Link>
