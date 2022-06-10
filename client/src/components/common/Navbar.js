@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Header, Inner, Nav, Ul, Li, Dropdown,DropdownBox, DropdownItems } from "../../styles/common/NavbarStyle";
 import { Logo } from "../../styles/common/LogoStyle";
 import { BsSuitHeart, BsCart } from "react-icons/bs";
@@ -9,6 +9,7 @@ import { IoPersonOutline } from "react-icons/io5";
 
 function Navbar() {
   const user = useSelector(state => state.user);
+  const location = useLocation();
   const navigate = useNavigate();
   const [ isLoggedIn, setIsLoggedIn ] = useState(user.userData ? true : false);
   const [ showDropdown, setShowDropdown ] = useState(false);
@@ -19,6 +20,11 @@ function Navbar() {
     ? setIsLoggedIn(true)
     : setIsLoggedIn(false);
   }, [user.userData]);
+
+  //드롭다운 메뉴 클릭 후 경로 이동시 메뉴 숨기기 
+  useEffect(()=> {
+    if(showDropdown) setShowDropdown(false);
+  }, [location]);
 
   //계정 아이콘 클릭시
   const handleAccountClick = (e)=> {
