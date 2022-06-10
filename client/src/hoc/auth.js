@@ -18,7 +18,7 @@ export default function (Component, option, adminRoute = null) {
       dispatch(auth()).then(response=> {
         if(!response.payload.isAuth) {
           //로그인 X (로그인한 유저 전용 페이지 접속시)
-          if(option) navigate('/login');
+          if(option) navigate('/membership/login');
         } else {
           //관리자 X (관리자 전용 페이지 접속시)
           if(adminRoute && !response.payload.isAdmin) {

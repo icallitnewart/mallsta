@@ -17,8 +17,8 @@ function App() {
     <BrowserRouter>
       <GlobalStyle />
       <Routes>
-        <Route path="/login" element={Auth(<LoginPage />, false)} />
-        <Route path="/register" element={Auth(<RegisterPage />, false)} />
+        <Route path="/membership/login" element={Auth(<LoginPage />, false)} />
+        <Route path="/membership/register" element={Auth(<RegisterPage />, false)} />
 
         {/* Navbar, Footer 포함 */}
         <Route element={<Layout />}>

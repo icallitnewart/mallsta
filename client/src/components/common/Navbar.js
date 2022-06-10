@@ -71,7 +71,7 @@ function Navbar() {
           </Link>
         </Li>
         <Li>
-          <Link to="/login" onClick={handleAccountClick}>
+          <Link to="/membership/login" onClick={handleAccountClick}>
             <IoPersonOutline />
           </Link>
           {/* 계정 소메뉴 */}

@@ -100,7 +100,7 @@ function LoginPage() {
         <Button type="submit">
             login
         </Button>
-        <P><Link to="/register">Don't have an account?</Link></P>
+        <P><Link to="/membership/register">Don't have an account?</Link></P>
       </form>
     )
   };

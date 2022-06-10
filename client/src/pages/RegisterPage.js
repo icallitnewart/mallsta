@@ -167,7 +167,7 @@ function RegisterPage() {
         <Button type="submit">
             sign up
         </Button>
-        <P><Link to="/login">Have an account?</Link></P>
+        <P><Link to="/membership/login">Have an account?</Link></P>
       </form>
     )
   };
