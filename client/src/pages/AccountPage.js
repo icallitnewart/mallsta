@@ -7,7 +7,7 @@ import AsideMenu from '../components/account/AsideMenu';
 import Profile from '../components/account/Profile';
 import Store from '../components/account/Store';
 
-function Account() {
+function AccountPage() {
   const path = useParams().path;
   const user = useSelector(state => state.user);
 
@@ -26,4 +26,4 @@ function Account() {
   )
 }
 
-export default Account;
+export default AccountPage;

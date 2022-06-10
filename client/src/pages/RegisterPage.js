@@ -6,7 +6,7 @@ import useInputs from '../hooks/useInputs';
 import { Input, Label, Button, ErrMsg, InputContainer, P } from "../styles/common/MembershipStyle";
 import Membership from '../components/common/Membership';
 
-function Register() {
+function RegisterPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const initialValue= {
@@ -177,4 +177,4 @@ function Register() {
   )
 }
 
-export default Register;
+export default RegisterPage;

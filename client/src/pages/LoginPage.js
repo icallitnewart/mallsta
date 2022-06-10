@@ -6,7 +6,7 @@ import useInputs from '../hooks/useInputs';
 import { Input, Label, Button, ErrMsg, InputContainer, P } from "../styles/common/MembershipStyle";
 import Membership from '../components/common/Membership';
 
-function Login() {
+function LoginPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const initialValue= {
@@ -110,4 +110,4 @@ function Login() {
   )
 }
 
-export default Login;
+export default LoginPage;
