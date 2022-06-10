@@ -8,7 +8,7 @@ function useInputs(initialValue) {
     setValues({ ...values, [name] : value });
   }, [values]);
 
-  return [ values, handleChange ];
+  return [ values, handleChange, setValues ];
 }
 
 export default useInputs;
