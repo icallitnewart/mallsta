@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
+const path = require('path');
 const { User } = require('../models/User');
 const { auth } = require('../middleware/auth');
 
@@ -143,6 +145,60 @@ router.post('/check_email', (req, res)=> {
       }
     }
   )
+});
+
+//프로필 이미지 업로드
+router.post('/upload_image', auth, (req, res)=> {
+  const username = req.user.username;
+  //허용 파일 유형
+  const fileFilter = (req, file, cb) => {
+    const type = path.extname(file.originalname);
+    if (type === ".png" || type === ".jpg" || type === ".jpeg") {
+      cb(null, true);
+    } else {
+      cb('Wrong file type. Only PNG, JPG, JPEG allowed.', false);
+    }
+  };
+  //사이즈 제한
+  const limits = {
+    fileSize : 1 * 1024 * 1024
+  };
+
+  //multer 설정
+  const storage = multer.diskStorage({
+    destination : function(req, file, cb) {
+      cb(null, './client/public/upload/profile');
+    },
+    filename : function(req, file, cb) {
+      const ext = path.extname(file.originalname);
+      cb(null, username + "_" + Date.now() + ext );
+    }
+  });
+  const upload = multer({ storage, fileFilter, limits }).single("file");
+
+  //업로드 함수
+  upload(req, res, err=> {
+    if(err) return res.json({ 
+      success : false, 
+      err : (typeof err === "string") ? err : err.message
+    });
+    
+    User.findOneAndUpdate(
+      { username }, 
+      { profileImage : `/upload/profile/${req.file.filename}`},
+      { new : true},
+      (err, userInfo)=> {
+        if(err) return res.json({ success : false, err });
+
+        return res.json({
+          success : true,
+          filePath : res.req.file.path,
+          fileName : res.req.file.filename
+        });
+      }
+    )
+  });
+
 });
 
 module.exports = router;

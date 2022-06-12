@@ -5,10 +5,10 @@ export const Container = styled.section`
   padding: 60px 100px 60px 40px;
 `;
 
-export const ProfileBox = styled.div`
+export const ProfileContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  height: 100px; 
+  height: 110px; 
   margin-bottom: 20px;
 `;
 
@@ -48,6 +48,13 @@ export const Image = styled.div`
   height: 100px;
   border-radius: 50%;
   box-sizing: content-box;
+  background-image: ${props=> (props.Src !== null) ? `url(${props.Src})` : "url('/img/profile_image_default.jpg')"};
+  background-size: cover;
+  box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.3);
+  
+  ${props=> (props.Src === null) && css`
+    filter: brightness(1.4);
+  `}
 `;
 
 export const TextBox = styled.div`
@@ -63,7 +70,8 @@ export const TextBox = styled.div`
   }
 `;
 
-export const UploadButton = styled.button`
+export const UploadButton = styled.label`
+  position: relative;
   display: inline-flex;
   align-self: flex-end;
   align-items: center;
@@ -82,6 +90,33 @@ export const UploadButton = styled.button`
   svg {
     font-size: 16px;
     margin-left: 3px;
+  }
+
+  &:hover {
+    &::before {
+      position: absolute;
+      z-index: 10;
+      top: 29px; left: 50%;
+      content: "";
+      width: 10px;
+      height: 10px;
+      background: white;
+      box-shadow: -2px -2px 3px rgba(0, 0, 0, 0.1);
+      transform: rotate(45deg) translateX(-50%);
+
+
+    }
+    &::after {
+      position: absolute;
+      top: 30px; right: 0px;
+      content: "Type: PNG, JPEG, JPG Max size: 1 MB";
+      padding: 10px 15px;
+      background: white;
+      box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1);
+      font: 600 11px/1.5 "Poppins";
+      color: #ff5e62;
+      border-radius: 5px;
+    }
   }
 `;
 

@@ -4,7 +4,8 @@ import {
   CHECK_EMAIL_USER,
   CHECK_USERNAME_USER,
   AUTH_USER,
-  EDIT_USER
+  EDIT_USER,
+  UPLOAD_USER
 } from "../_actions/types";
 
 export default function(state={}, action) {
@@ -43,6 +44,12 @@ export default function(state={}, action) {
       return {
         ...state,
         edit : action.payload
+      }
+      break;
+    case UPLOAD_USER :
+      return {
+        ...state,
+        upload : action.payload
       }
       break;
     default :

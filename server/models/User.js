@@ -24,15 +24,15 @@ const userSchema = mongoose.Schema({
   },
   phone : {
     type: String,
-    minlength: 9
+    default: ""
   },
   address : {
     type: Array,
-    default: []
+    default: ["", ""]
   },
   profileImage : {
-    type: String,
-    default: "/img/profile_image_default.jpg"
+    type: String || null,
+    default: null
   },
   role : {
     type: Number,   

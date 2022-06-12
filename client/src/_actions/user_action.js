@@ -5,7 +5,8 @@ import {
   CHECK_USERNAME_USER,
   CHECK_EMAIL_USER,
   AUTH_USER,
-  EDIT_USER
+  EDIT_USER,
+  UPLOAD_USER
 } from "./types";
 
 //로그인
@@ -82,6 +83,25 @@ export function editUser(data) {
 
   return {
     type : EDIT_USER,
+    payload : request
+  }
+}
+
+//프로필 이미지 업로드
+export function uploadUser(formData) {
+  const request = 
+    axios({
+      method : "post",
+      url: "/api/users/upload_image",
+      data: formData,
+      headers : {
+        "content-type" : "multipart/form-data"
+      }
+    })
+    .then(res => res.data);
+
+  return {
+    type : UPLOAD_USER,
     payload : request
   }
 }
