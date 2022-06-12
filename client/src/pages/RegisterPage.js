@@ -97,10 +97,8 @@ function RegisterPage() {
     dispatch(registerUser(body))
     .then(response=> {
       if(response.payload.success) {
-        alert("You have signed up successfully!");
-        navigate("/");
-      } else {
-        alert("An error occured.");
+        alert("You have signed up successfully! Please login.");
+        navigate("/membership/login");
       }
     });
   };
