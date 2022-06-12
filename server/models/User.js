@@ -22,6 +22,18 @@ const userSchema = mongoose.Schema({
     minlength: 8,
     required: true
   },
+  phone : {
+    type: String,
+    minlength: 9
+  },
+  address : {
+    type: Array,
+    default: []
+  },
+  profileImage : {
+    type: String,
+    default: "/img/profile_image_default.jpg"
+  },
   role : {
     type: Number,   
     default: 0
@@ -101,6 +113,21 @@ userSchema.statics.findByToken = function(token, cb) {
       if(err) return cb(err);
       cb(null, userInfo);
     });
+  });
+};
+
+//회원정보 업데이트
+userSchema.methods.updateInfo = function(newInfo, cb) {
+  const user = this;
+
+  if(newInfo.passwordNew) user.password = newInfo.passwordNew;
+  user.email = newInfo.email;
+  user.phone = newInfo.phone;
+  user.address = [ newInfo.address1, newInfo.address2 ];
+
+  user.save((err, result)=> {
+    if(err) return cb({ success : false, err });
+    cb({ success : true });
   });
 };
 

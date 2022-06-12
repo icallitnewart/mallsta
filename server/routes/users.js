@@ -13,6 +13,42 @@ router.post("/register", (req, res)=> {
   });
 });
 
+//회원정보 수정
+router.post("/edit", auth, async function (req,res) {
+  const user = req.body;
+  const isPassword = (user.passwordNew !== "" ? true : false);
+
+  User.findOne({ username : user.username }, (err, userInfo)=> {
+    //회원정보 변경 함수
+    const updateInfo = ()=> {
+      userInfo.updateInfo(user, (result)=> {
+        if(!result.success) return res.json(result);
+
+        res.status(200).json(result);
+      });
+    };
+
+    //비밀번호 변경시
+    if(isPassword) {
+      //현재 비밀번호 확인
+      userInfo.comparePassword(user.passwordCurrent, (err, isMatch)=> {
+        if(err) return res.json({ success : false, err});
+        
+        //틀린 비밀번호
+        if(!isMatch) return res.json({ 
+          success : false, 
+          message : "Incorrect Password."
+        });
+
+        updateInfo();
+      });
+    } else {
+      updateInfo();
+    }
+  });
+});
+
+
 //로그인
 router.post("/login", (req, res)=> {
   User.findOne({ username : req.body.username  }, (err, userInfo)=> {
@@ -51,6 +87,9 @@ router.get('/auth', auth, (req, res)=> {
     isAuth : true,
     username : req.user.username,
     email : req.user.email,
+    phone : req.user.phone,
+    address : req.user.address,
+    profileImage : req.user.profileImage,
     role : req.user.role,
     cart : req.user.cart,
     purchaseHistory : req.user.purchaseHistory,

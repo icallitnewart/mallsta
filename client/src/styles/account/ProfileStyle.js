@@ -28,6 +28,17 @@ export const Pic = styled.div`
     border-radius: 50%;
     background: linear-gradient(45deg, #ff9966, #ff5e62);
   }
+
+  img {
+    position: absolute;
+    z-index: 10;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    ${props=> props.default && css` 
+      filter: brightness(1.4);
+    `}
+  }
 `;
 
 export const Image = styled.div`
@@ -36,7 +47,6 @@ export const Image = styled.div`
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  background-color: lightpink;
   box-sizing: content-box;
 `;
 
@@ -73,4 +83,19 @@ export const UploadButton = styled.button`
     font-size: 16px;
     margin-left: 3px;
   }
+`;
+
+export const ErrMsg = styled.span`
+  display: inline-block;
+  font: 500 12px/1 "Poppins";
+  color: #ff9966;
+  margin: 5px 0px 5px 3px;
+`;
+
+export const Td = styled.td`
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  width: 100% !important;
+  min-height: 65px;
 `;

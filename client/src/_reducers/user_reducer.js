@@ -3,7 +3,8 @@ import {
   REGISTER_USER,
   CHECK_EMAIL_USER,
   CHECK_USERNAME_USER,
-  AUTH_USER
+  AUTH_USER,
+  EDIT_USER
 } from "../_actions/types";
 
 export default function(state={}, action) {
@@ -36,6 +37,12 @@ export default function(state={}, action) {
       return {
         ...state,
         userData : action.payload
+      }
+      break;
+    case EDIT_USER :
+      return {
+        ...state,
+        edit : action.payload
       }
       break;
     default :

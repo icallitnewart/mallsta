@@ -4,7 +4,8 @@ import {
   REGISTER_USER,
   CHECK_USERNAME_USER,
   CHECK_EMAIL_USER,
-  AUTH_USER
+  AUTH_USER,
+  EDIT_USER
 } from "./types";
 
 //로그인
@@ -71,3 +72,16 @@ export function auth() {
       payload : request
     }
 };
+
+//회원정보 수정
+export function editUser(data) {
+  const request = 
+    axios
+    .post('/api/users/edit', data)
+    .then(res => res.data);
+
+  return {
+    type : EDIT_USER,
+    payload : request
+  }
+}
