@@ -5,7 +5,8 @@ import {
   CHECK_USERNAME_USER,
   AUTH_USER,
   EDIT_USER,
-  UPLOAD_USER
+  UPLOAD_USER,
+  DELETE_UPLOAD_USER
 } from "../_actions/types";
 
 export default function(state={}, action) {
@@ -50,6 +51,12 @@ export default function(state={}, action) {
       return {
         ...state,
         upload : action.payload
+      }
+      break;
+    case DELETE_UPLOAD_USER :
+      return {
+        ...state,
+        deleteUpload : action.payload
       }
       break;
     default :

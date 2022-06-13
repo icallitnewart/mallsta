@@ -13,6 +13,7 @@ export const ProfileContainer = styled.div`
 `;
 
 export const Pic = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -28,16 +29,25 @@ export const Pic = styled.div`
     border-radius: 50%;
     background: linear-gradient(45deg, #ff9966, #ff5e62);
   }
+`;
 
-  img {
-    position: absolute;
-    z-index: 10;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    ${props=> props.default && css` 
-      filter: brightness(1.4);
-    `}
+export const DeleteButton = styled.button`
+  position: absolute;
+  top: 90px; left: calc(50% + 50px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  border: 0px;
+  cursor: pointer;
+  background: #fefefe;
+  box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+  
+  svg {
+    font-size: 16px;
+    color: #a8b7c9;
   }
 `;
 

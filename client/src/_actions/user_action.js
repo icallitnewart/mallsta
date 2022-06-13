@@ -6,7 +6,8 @@ import {
   CHECK_EMAIL_USER,
   AUTH_USER,
   EDIT_USER,
-  UPLOAD_USER
+  UPLOAD_USER,
+  DELETE_UPLOAD_USER
 } from "./types";
 
 //로그인
@@ -102,6 +103,19 @@ export function uploadUser(formData) {
 
   return {
     type : UPLOAD_USER,
+    payload : request
+  }
+}
+
+//프로필 이미지 삭제
+export function deleteUploadUser(data) {
+  const request = 
+    axios
+    .get('/api/users/delete_image', data)
+    .then(res => res.data);
+
+  return {
+    type : DELETE_UPLOAD_USER,
     payload : request
   }
 }
