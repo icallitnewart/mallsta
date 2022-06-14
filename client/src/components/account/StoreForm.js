@@ -16,7 +16,7 @@ function StoreForm({ user, isSeller }) {
 
   return (
     <Container isSeller={isSeller}>
-      {/* <Title>My Store</Title> */}
+      <Title>My Store</Title>
       <form>
         <Table>
           <tbody>

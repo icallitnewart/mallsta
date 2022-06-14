@@ -12,6 +12,7 @@ export const Container = styled.section`
   `}
 `;
 
+//StoreOpen
 export const P = styled.p`
   width: 100%;
   text-align: center;
@@ -19,6 +20,28 @@ export const P = styled.p`
   color: #555;
   margin-bottom: 30px;
 `;
+
+export const StoreButton = styled.button`
+  width: 150px;
+  height: 40px;
+  background: #ff5e62;
+  color: #fff;
+  border: 0px;
+  border-radius: 3px;
+  font: 14px/1 "Poppins";
+  letter-spacing: 1px;
+  cursor: pointer;
+`;
+
+
+//StoreForm
+export const Title = styled.h1`
+  text-align: right;
+  font: 500 34px/1 "Poppins";
+  margin-bottom: 20px;
+  color: #444;
+`;
+
 
 export const ProductBox = styled.p`
   display: flex; 
@@ -32,18 +55,6 @@ export const PostButton = styled(Link)`
   font: 13px/1 "Poppins";
   border-radius: 2px;
   color: #fff;
-`;
-
-export const StoreButton = styled.button`
-  width: 150px;
-  height: 40px;
-  background: #ff5e62;
-  color: #fff;
-  border: 0px;
-  border-radius: 3px;
-  font: 14px/1 "Poppins";
-  letter-spacing: 1px;
-  cursor: pointer;
 `;
 
 
