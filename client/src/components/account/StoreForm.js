@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
+import useInputs from '../../hooks/useInputs';
 
-import { Container, ProductBox, PostButton } from "../../styles/account/StoreStyle";
+import { Container, ProductBox, PostButton, Title } from "../../styles/account/StoreStyle";
 import { Table, Tr, Button } from "../../styles/account/FormStyle";
 
 function StoreForm({ user, isSeller }) {
+  const initialValue = {
+    name : "",
+    desc : "",
+    category : []
+  };
+  const { values, handleChange, handleCheckBox } = useInputs(initialValue);
+
   const category = [ "fashion", "beauty", "food", "furniture", "toys", "electronics", "stationery", "etc" ];
 
   return (
     <Container isSeller={isSeller}>
+      {/* <Title>My Store</Title> */}
       <form>
         <Table>
           <tbody>
@@ -23,8 +32,8 @@ function StoreForm({ user, isSeller }) {
                   id="name"
                   placeholder="Store Name"
                   name="name"
-                  //values={values && values.name}
-                  //onChange={handleChange}
+                  values={values.name}
+                  onChange={handleChange}
                 />
               </td>
             </Tr>
@@ -40,8 +49,8 @@ function StoreForm({ user, isSeller }) {
                   placeholder="Introduce Your Store"
                   id="desc"
                   name="desc"
-                  //values={values && values.desc}
-                  //onChange={handleChange}
+                  values={values.desc}
+                  onChange={handleChange}
                 ></textarea>
               </td>
             </Tr>
@@ -62,8 +71,8 @@ function StoreForm({ user, isSeller }) {
                       name="category" 
                       value={item}
                       id={item} 
-                      //onChange={handleCheckBox}
-                      //checked={checkBox.category.includes(item) && "checked"}
+                      onChange={handleCheckBox}
+                      checked={(values.category.includes(item)) && "checked"}
                     /> 
                     {(itemName === "Etc") 
                     ? `${itemName}.` : itemName}

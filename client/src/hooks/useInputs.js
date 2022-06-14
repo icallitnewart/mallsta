@@ -8,7 +8,24 @@ function useInputs(initialValue) {
     setValues({ ...values, [name] : value });
   }, [values]);
 
-  return [ values, handleChange, setValues ];
+  const handleCheckBox = useCallback((e)=> {
+    const { name, value } = e.target;
+    const newVal = { ...values };
+
+    if(e.target.checked) {
+      newVal[name].push(value);
+    } else {
+      newVal[name] = newVal[name].filter(item=> item !== value);
+    }
+    setValues(newVal);
+  }, [values]);
+
+  return { 
+    values, 
+    setValues,
+    handleChange, 
+    handleCheckBox
+  };
 }
 
 export default useInputs;
