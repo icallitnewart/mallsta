@@ -19,7 +19,7 @@ function ProfileForm({ user }) {
     address2 : ""
   };
   
-  const [ values, handleChange, setValues ] = useInputs(initialValue);
+  const { values, handleChange, setValues } = useInputs(initialValue);
   const [ err, setErr ] = useState({});
 
   //폼 유효성 검사
