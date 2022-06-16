@@ -130,13 +130,6 @@ export const UploadButton = styled.label`
   }
 `;
 
-export const ErrMsg = styled.span`
-  display: inline-block;
-  font: 500 12px/1 "Poppins";
-  color: #ff9966;
-  margin: 5px 0px 5px 3px;
-`;
-
 export const Td = styled.td`
   display: flex;
   flex-wrap: wrap;

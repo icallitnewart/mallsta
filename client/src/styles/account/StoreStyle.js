@@ -42,8 +42,7 @@ export const Title = styled.h1`
   color: #444;
 `;
 
-
-export const ProductBox = styled.p`
+export const ProductBox = styled.div`
   display: flex; 
   justify-content: space-between; align-items: center;
 `;

@@ -5,8 +5,7 @@ import useInputs from '../../hooks/useInputs';
 import { category } from "../../data/storeData";
 
 import { Container, ProductBox, PostButton, Title } from "../../styles/account/StoreStyle";
-import { Table, Tr, Button } from "../../styles/account/FormStyle";
-import { ErrMsg } from "../../styles/account/ProfileStyle";
+import { Table, Tr, Button, ErrMsg } from "../../styles/account/FormStyle";
 
 function StoreForm({ user, openStore }) {
   const dispatch = useDispatch();
@@ -133,7 +132,7 @@ function StoreForm({ user, openStore }) {
                   Description
                 </label>
               </th>
-              <td>
+              <td style={{ padding: "12px 0px 0px" }}>
                 <textarea 
                   type="text" 
                   placeholder="Introduce Your Store"
@@ -149,7 +148,7 @@ function StoreForm({ user, openStore }) {
               <th>
                   Category
               </th>
-              <td>
+              <td style={{ padding: "12px 0px" }}>
                 {category.map((item, index)=> {
                   const itemName = item.charAt(0).toUpperCase() + item.slice(1);
                   return (
@@ -194,7 +193,9 @@ function StoreForm({ user, openStore }) {
                   Open Since
                 </th>
                 <td>
-                  {storeInfo && storeInfo.createdAt.slice(0, 10)}
+                  <span>
+                    {storeInfo && storeInfo.createdAt.slice(0, 10)}
+                  </span>
                 </td>
               </Tr>
               </>

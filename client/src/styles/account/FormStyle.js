@@ -49,11 +49,15 @@ export const Tr = styled.tr`
       height: 100px;
       resize: none;
       padding: 15px;
-      margin: 12.5px 0px 10px;
     }
 
     p {
       font: 16px/1 "Poppins";
+      color: #333;
+    }
+
+    span {
+      font: 15px/1 "Poppins";
       color: #333;
     }
   }
@@ -78,4 +82,11 @@ export const Button = styled.button`
     border: 0px;
     color: #fff;
   }
+`;
+
+export const ErrMsg = styled.span`
+  display: inline-block;
+  font: 500 12px/1 "Poppins";
+  color: #ff9966;
+  margin: 5px 0px 5px 3px;
 `;
