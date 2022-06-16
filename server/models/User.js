@@ -51,6 +51,11 @@ const userSchema = mongoose.Schema({
     type: Boolean,
     default : false
   },
+  store : {
+    type : mongoose.Schema.Types.ObjectId || null,
+    ref: "Store",
+    default : null
+  },
   token : {
     type : String
   },

@@ -96,7 +96,8 @@ router.get('/auth', auth, (req, res)=> {
     role : req.user.role,
     cart : req.user.cart,
     purchaseHistory : req.user.purchaseHistory,
-    storeOwner : req.user.storeOwner
+    storeOwner : req.user.storeOwner,
+    store : req.user.store
   });
 });
 

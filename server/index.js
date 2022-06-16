@@ -23,6 +23,7 @@ mongoose.connect(config.mongoURI, {
 
 //routes
 app.use('/api/users', require('./routes/users'));
+app.use('/api/stores', require('./routes/stores'));
 
 
 app.get('/', (req, res) => {

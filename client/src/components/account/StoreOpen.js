@@ -1,11 +1,11 @@
 import React from 'react';
 import { Container, P, StoreButton } from "../../styles/account/StoreStyle";
 
-function StoreOpen({ isSeller, setIsSeller }) {
+function StoreOpen({ openStore, setOpenStore }) {
   return (
-    <Container isSeller={isSeller}>
+    <Container isSeller={openStore}>
       <P>You haven't opened your store yet.<br/> Would you like to open a store?</P>
-      <StoreButton onClick={()=> setIsSeller(true)}>
+      <StoreButton onClick={()=> setOpenStore(true)}>
         Open Store
       </StoreButton>
     </Container>

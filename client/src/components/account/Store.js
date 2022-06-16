@@ -4,23 +4,23 @@ import StoreOpen from './StoreOpen';
 import StoreForm from './StoreForm';
 
 function Store({ user }) {
-  const [ isSeller, setIsSeller ] = useState(true);
+  const [ openStore, setOpenStore ] = useState(true);
 
   //스토어 판매자 여부 확인
   useEffect(()=> {
-    if(user) setIsSeller(user.storeOwner);
+    if(user) setOpenStore(user.storeOwner);
   }, [user]);
 
   return (
     <>    
-    {!isSeller 
+    {!openStore 
     ? <StoreOpen 
-        isSeller={isSeller}
-        setIsSeller={setIsSeller}
+        openStore={openStore}
+        setOpenStore={setOpenStore}
       />
     : <StoreForm 
         user={user}
-        isSeller={isSeller}
+        openStore={openStore}
       />
     }
     </>
