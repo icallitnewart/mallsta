@@ -13,7 +13,7 @@ function LoginPage() {
     username : "",
     password : ""
   };
-  const [ values, handleChange ] = useInputs(initialValue);
+  const { values, handleChange } = useInputs(initialValue);
   const [ err, setErr ] = useState({});
 
   //빈칸 유효성 검사

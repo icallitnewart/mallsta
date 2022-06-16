@@ -15,7 +15,7 @@ function RegisterPage() {
     password2 : "",
     email : ""
   };
-  const [ values, handleChange ] = useInputs(initialValue);
+  const { values, handleChange } = useInputs(initialValue);
   const [ err, setErr ] = useState({});
 
   //폼 유효성 검사
