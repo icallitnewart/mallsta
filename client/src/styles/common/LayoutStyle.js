@@ -13,4 +13,8 @@ export const Container = styled.div`
   margin: 0px auto;
   border: 1px solid #eee;
   background: #fff;
+
+  ${props=> props.section==="profile" && css`
+    height: 330px;
+  `};
 `;
