@@ -85,7 +85,7 @@ function Navbar() {
           <Dropdown>
             <DropdownBox>
               <DropdownItems>
-                <Link to={`/shopping/${user.userData.username}`}>My Shopping</Link>
+                <Link to={`/${user.userData.username}/shopping`}>My Shopping</Link>
               </DropdownItems>
               <DropdownItems>
                 <Link to="/account/profile">Settings</Link>
