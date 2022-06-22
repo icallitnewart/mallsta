@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
 import { Content, Item, Detail, TextBox, PostButton } from "../../styles/shopping/ContentStyle";
 
 import Filter from './Filter';
+import Popup from './Popup';
 
-function StoreSection({ type }) {
+function StoreSection({ type, authUser }) {
+  const { productId, username } = useParams();
+
   const arr = Array.from(Array(30).keys());
   const [ isLiked, setIsLiked ] = useState({});
+  const [ isUpload, setIsUpload ] = useState(false);
+
   //찜하기 버튼
   const likeItem = (index)=> {
     setIsLiked(prev=> (
@@ -15,23 +21,34 @@ function StoreSection({ type }) {
     ));
   };
 
-  return (
-    <>
-    <Filter />
-    <Content section={type}>
-      <h1>Recent</h1>
+  const renderButton = ()=> {
+    return (
       <PostButton
         type="button"
         bgColor="#ff5e62"
-        wd="140px"
+        wd="120px"
         ht="42px"
         style={{ 
           position: "absolute",
           top: "40px", right: "30px" 
         }}
+        onClick={()=> setIsUpload(true)}
       >  
-        NEW PRODUCT
+        UPLOAD
       </PostButton>
+    )
+  };
+
+  return (
+    <>
+    <Filter />
+    <Content section={type}>
+      <h1>Recent</h1>
+      
+      {/* UploadButton */}
+      {authUser.userData && renderButton()}
+
+      {/* Post List */}
       {arr.map((item, index)=>
         <Item key={index}> 
           <img src={process.env.PUBLIC_URL + "/img/profile_image_default.jpg"} />
@@ -54,6 +71,15 @@ function StoreSection({ type }) {
         </Item>
       )}
     </Content>
+
+    {/* Popup : Upload product / Product post */}
+    {(isUpload || productId) && 
+      <Popup 
+        username={username} 
+        productId={productId}
+        setIsUpload={setIsUpload}
+      />
+    }
     </>
   )
 }

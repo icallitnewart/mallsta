@@ -12,14 +12,14 @@ import ReviewSection from '../components/shopping/ReviewSection';
 import OrderSection from '../components/shopping/OrderSection';
 
 function ShoppingPage({ type }) {
-  const userInfo = useSelector(state=> state.user);
+  const authUser = useSelector(state=> state.user);
   const username = useParams().username;
 
   useEffect(()=> {
-    if(userInfo.userData) {
+    if(authUser.userData) {
 
     }
-  }, [userInfo]);
+  }, [authUser]);
 
   return (
     <Background>
@@ -31,19 +31,20 @@ function ShoppingPage({ type }) {
         {(type==="store") && 
           <StoreSection 
             type={type}
+            authUser={authUser}
           />
         }
-        {(type==="likes") && userInfo &&
+        {(type==="likes") && authUser &&
           <LikeSection 
             type={type}
           />
         }
-        {(type==="reviews") && userInfo &&
+        {(type==="reviews") && authUser &&
           <ReviewSection 
             type={type}
           />
         }
-        {(type==="order") && userInfo &&
+        {(type==="order") && authUser &&
           <OrderSection 
             type={type}
           />
