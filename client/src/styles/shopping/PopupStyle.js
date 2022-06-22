@@ -97,14 +97,21 @@ export const FilterOption = styled.li`
     color: #555;
     letter-spacing: 1px;
     text-transform: uppercase;
+    text-align: center;
+  }
+
+  span {
+    display: inline-block;
+    width: 34px;
+    color: #ff9966;
   }
 
   label {
-    width: 70px;
+    width: 75px;
   }
 
   input[type=range] {
-    width: 170px;
+    width: 180px;
     height: 28px;
     -webkit-appearance: none;
     margin: 10px 0;
@@ -491,8 +498,7 @@ export const Tag = styled.span`
 
 export const ButtonBox = styled.div`
   position: absolute;
-  bottom: 0px;
-  width: 100%;
+  bottom: 0px; right: 0px;
   padding: 0px 20px 20px;
   text-align: right;
 `;
