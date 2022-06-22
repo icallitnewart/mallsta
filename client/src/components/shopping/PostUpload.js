@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { GrClose } from "react-icons/gr";
 import { CloseButton, ButtonBox, Button } from "../../styles/shopping/PopupStyle";
@@ -10,6 +10,7 @@ function PostUpload({ setIsUpload }) {
   const images = [
     `${process.env.PUBLIC_URL}/img/profile_image_default.jpg`,
   ];
+  const [ rangeValues, setRangeValues ] = useState([]);
 
   const closePopup = ()=> {
     setIsUpload(false);
@@ -19,6 +20,8 @@ function PostUpload({ setIsUpload }) {
     <form>
       <ImageUpload 
         images={images}
+        rangeValues={rangeValues}
+        setRangeValues={setRangeValues}
       />
 
       <InputForm />
