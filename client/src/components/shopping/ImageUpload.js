@@ -26,7 +26,7 @@ function ImageUpload({
     
     //서버 파일 삭제
     const body = {
-      targetImage : newArr[targetIndex].fileName
+      targetImage : [ newArr[targetIndex].fileName ]
     };
 
     dispatch(deleteImageProduct(body))

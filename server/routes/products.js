@@ -10,7 +10,6 @@ const { auth } = require('../middleware/auth');
 router.post("/upload_image", auth, (req, res)=> {
   const username = req.user.username;
   const folderPath = `./client/public/upload/product/${username}`;
-  console.log(req.body);
 
   //유저 전용 폴더 생성 
   const directory = fs.existsSync(folderPath);
@@ -64,14 +63,30 @@ router.post("/upload_image", auth, (req, res)=> {
 router.post('/delete_image', auth, (req, res)=> {
   const username = req.user.username;
   const targetImage = req.body.targetImage;
-  const filePath = `./client/public/upload/product/${username}/${targetImage}`;
 
-  //업로드 이미지가 있다면 삭제
-  const isExist = fs.existsSync(filePath);
+  const deleteImages = (images, cb) => {
+    let num = images.length;
+    images.forEach((image)=>{
+      const filePath = `./client/public/upload/product/${username}/${image}`;
+  
+      //업로드 이미지가 있다면 삭제
+      const isExist = fs.existsSync(filePath);
+  
+      if(isExist) fs.unlink(filePath, (err)=> {
+        num--;
 
-  if(isExist) fs.unlink(filePath, (err)=> {
+        if(err) {
+          return cb(err);
+        } else if(num <= 0) {
+          return cb(null); 
+        }
+      });
+    });
+  }
+
+  deleteImages(targetImage, (err)=> {
     if(err) return res.json({ success: false, err });
-
+  
     return res.status(200).json({ success: true });
   });
 });
