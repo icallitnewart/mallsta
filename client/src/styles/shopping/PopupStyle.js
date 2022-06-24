@@ -283,7 +283,7 @@ export const ImageSmall = styled.li`
   }
 `;
 
-export const UploadButton = styled.button`
+export const UploadButton = styled.label`
   display: flex;
   justify-content: center;
   align-items: center;

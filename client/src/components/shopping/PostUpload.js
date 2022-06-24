@@ -7,21 +7,20 @@ import InputForm from './InputForm';
 import ImageUpload from './ImageUpload';
 
 function PostUpload({ setIsUpload }) {
-  const images = [
-    `${process.env.PUBLIC_URL}/img/profile_image_default.jpg`,
-  ];
-  const [ rangeValues, setRangeValues ] = useState([]);
+  const [ filterValues, setFilterValues ] = useState([]);
+  const [ images, setImages ] = useState([]);
 
   const closePopup = ()=> {
     setIsUpload(false);
   };
 
   return (
-    <form>
+    <>
       <ImageUpload 
         images={images}
-        rangeValues={rangeValues}
-        setRangeValues={setRangeValues}
+        setImages={setImages}
+        filterValues={filterValues}
+        setFilterValues={setFilterValues}
       />
 
       <InputForm />
@@ -48,7 +47,7 @@ function PostUpload({ setIsUpload }) {
       >
         <GrClose />
       </CloseButton>
-    </form>
+    </>
   )
 }
 

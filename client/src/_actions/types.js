@@ -11,3 +11,7 @@ export const DELETE_UPLOAD_USER = "delete_upload_user";
 //store
 export const REGISTER_STORE = "register_store";
 export const EDIT_STORE = "edit_store";
+
+//product
+export const UPLOAD_IMAGE_PRODUCT = "upload_image_product";
+export const DELETE_IMAGE_PRODUCT = "delete_image_product";

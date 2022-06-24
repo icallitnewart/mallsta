@@ -1,62 +1,176 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { uploadImageProduct, deleteImageProduct } from '../../_actions/product_action';
+import usePrevious from '../../hooks/usePrevious';
 
 import { GrClose } from "react-icons/gr";
 import { FiUpload } from "react-icons/fi";
 import { ImageBox, ImageBig, ThumbnailBox, ImageSmall, ImageFilter, FilterOption, UploadButton } from "../../styles/shopping/PopupStyle";
 
-function ImageUpload({ images, rangeValues, setRangeValues }) {
-  const [ activeImg, setActiveImg ] = useState(0);
+function ImageUpload({ 
+  images, setImages, filterValues, setFilterValues 
+}) {
+  const dispatch = useDispatch();
+  const file = useRef(null);
+  const form = useRef(null);
+  const prevImages = usePrevious(images);
+  const [ activeIndex, setActiveIndex ] = useState(null);
+  const [ activeImage, setActiveImage ] = useState(null);
 
-  const deleteImage = ()=> {
+  //업로드한 이미지 파일 삭제
+  const deleteImage = (targetIndex)=> {
+    let newArr = [ ...images ];
+    //프론트 이미지 삭제
+    const removed = newArr.filter((image)=>  image.fileName !== images[targetIndex].fileName);
+    setImages(removed);
+    
+    //서버 파일 삭제
+    const body = {
+      targetImage : newArr[targetIndex].fileName
+    };
 
+    dispatch(deleteImageProduct(body))
+    .then(response=> {
+      const data = response.payload;
+
+      if(!data.success) {
+        alert(data.err);
+      }
+    });
   };
 
   //필터 옵션 변경
   const controlRange = (e)=> {
     const { name, value } = e.target;
-    let newArr = [ ...rangeValues ];
+    let newArr = [ ...filterValues ];
     
     newArr.forEach((item)=> {
-      if(item.file === images[activeImg]) {
-        item.range[name] = parseInt(value);
-        setRangeValues(newArr);
+      if(item.file === images[activeIndex]) {
+        item.filter[name] = parseInt(value);
+        setFilterValues(newArr);
       } 
     });
   };
 
-  //총 이미지 개수에 맞춰서 초기값 셋팅
-  useEffect(()=> {
-    const initValue = images.map((image)=> {
-      let obj = {};
-      const initRange = {
-        brightness : 100,
-        saturate : 100,
-        contrast : 100
-      };
+  //input[type=file]: onChange
+  const handleChange = (e)=> {
+    const { value } = e.target;
 
-      obj.file = image;
-      obj.range = initRange;
+    //cancel 클릭시 빈 string이 들어오는 것을 방지
+    if(value) {
+      form.current.dispatchEvent(new Event('submit'));
+    }
+  };
 
-      return obj;
+  //form: onSubmit 
+  //이미지 업로드 기능
+  const handleSubmit = ()=> {
+    //이미지 최대 개수 제한
+    const maxLen = 4;
+    if(images.length === maxLen) {
+      return alert("You can upload a maximum of 4 images.");
+    }
+
+    //서버에 파일 업로드
+    const formData = new FormData();
+    formData.append("file", file.current.files[0]);
+
+    dispatch(uploadImageProduct(formData))
+    .then(response=> {
+      const data = response.payload;
+
+      if(data.success) {
+        const fileName = data.fileName;
+        const filePath = data.filePath.split("client\\public")[1];
+
+        //프론트 이미지 보여주기
+        setImages(prev=> 
+          [...prev, {
+            fileName,
+            filePath
+          }
+        ]);
+      } else {
+        alert(data.err);
+      }
     });
+  };
 
-    setRangeValues(initValue);
-  }, []);
+  //이미지 업로드/삭제시 filterValues, activeIndex 변경
+  useEffect(()=> {
+    if(prevImages) {
+      //이미지 추가시
+      if(prevImages.length < images.length) {
+        let initValue = {};
+        const initFilter = {
+          brightness : 100,
+          saturate : 100,
+          contrast : 100
+        };
+    
+        initValue.file = images[images.length - 1];
+        initValue.filter = initFilter;
+    
+        setFilterValues(prev=> [...prev, initValue]);
+        setActiveIndex(images.length - 1);
+      } 
+      //이미지 삭제시
+      else {
+        //남아있는 이미지가 없는 경우
+        if(images.length === 0) {
+          setFilterValues([]);
+          setActiveIndex(null);
+        } 
+        //아직 다른 이미지가 남아있는 경우
+        else { 
+          let newArr = [...filterValues];
+          const removed = newArr.filter((item)=> {
+            return images.some((image)=> {
+              return item.file.fileName === image.fileName;
+            })
+          });
+  
+          setFilterValues(removed);
+          setActiveIndex(prev=> {
+            //삭제한 이미지가 마지막 이미지인 경우에만 변경
+            if(prev > images.length - 1) {
+              return images.length - 1;
+            } else {
+              return prev;
+            }
+          });
+        }
+      }
+    } 
+  }, [images]);
+
+  //activeIndex 변경시 ImageBig 경로 설정
+  useEffect(()=> {
+    if(images.length > 0) {
+      setActiveImage(images[activeIndex]);
+    } 
+    //이미지 모두 삭제시
+    else {
+      setActiveImage(null);
+    }
+  }, [activeIndex, images]);
 
   return (
     <ImageBox>
       <ImageBig>
+        {(activeImage) && 
         <img 
-          src={images[activeImg]} 
-          alt={`Upload Image${activeImg}`} 
+          src={process.env.PUBLIC_URL + activeImage.filePath} 
+          alt={`Upload Image${activeIndex}`} 
           style={{ 
             filter: `
-              brightness(${(rangeValues.length > 0) && rangeValues[activeImg].range.brightness}%) 
-              contrast(${(rangeValues.length > 0) && rangeValues[activeImg].range.contrast}%) 
-              saturate(${(rangeValues.length > 0) && rangeValues[activeImg].range.saturate}%)
+              brightness(${(filterValues.length > 0) && filterValues[activeIndex].filter.brightness}%) 
+              contrast(${(filterValues.length > 0) && filterValues[activeIndex].filter.contrast}%) 
+              saturate(${(filterValues.length > 0) && filterValues[activeIndex].filter.saturate}%)
             `
           }}
         />
+        }
       </ImageBig>
       <ImageFilter>
         <FilterOption>
@@ -70,10 +184,15 @@ function ImageUpload({ images, rangeValues, setRangeValues }) {
             min="0"
             max="200"
             step="1"
-            value={rangeValues.length > 0 && rangeValues[activeImg].range.brightness}
+            value={(filterValues.length > 0) ? filterValues[activeIndex].filter.brightness : 100}
             onChange={controlRange}
           />
-          <span>{`${rangeValues.length > 0 && rangeValues[activeImg].range.brightness - 100}%`}</span>
+          <span>
+            {(!images.length > 0) ? "0%" : 
+              `${(filterValues.length > 0) && 
+                filterValues[activeIndex].filter.brightness - 100}%`
+            }
+          </span>
         </FilterOption>
         <FilterOption>
           <label htmlFor="saturate">
@@ -86,10 +205,15 @@ function ImageUpload({ images, rangeValues, setRangeValues }) {
             min="0"
             max="200"
             step="1"
-            value={rangeValues.length > 0 && rangeValues[activeImg].range.saturate}
+            value={filterValues.length > 0 && filterValues[activeIndex].filter.saturate}
             onChange={controlRange}
           />
-          <span>{`${rangeValues.length > 0 && rangeValues[activeImg].range.saturate - 100}%`}</span>
+          <span>
+            {(!images.length > 0) ? "0%" :  
+              `${(filterValues.length > 0) && 
+                filterValues[activeIndex].filter.saturate - 100}%`
+            }
+          </span>
         </FilterOption>
         <FilterOption>
           <label htmlFor="contrast">
@@ -102,28 +226,55 @@ function ImageUpload({ images, rangeValues, setRangeValues }) {
             min="0"
             max="200"
             step="1"
-            value={rangeValues.length > 0 && rangeValues[activeImg].range.contrast}
+            value={filterValues.length > 0 && filterValues[activeIndex].filter.contrast}
             onChange={controlRange}
           />
-          <span>{`${rangeValues.length > 0 && rangeValues[activeImg].range.contrast - 100}%`}</span>
+          <span>
+            {(!images.length > 0) ? "0%" : 
+              `${(filterValues.length > 0) && 
+                filterValues[activeIndex].filter.contrast - 100}%`
+            }
+          </span>
         </FilterOption>
       </ImageFilter>
       <ThumbnailBox>
-        {images.map((img, index)=> 
+        {(images.length > 0) && images.map((img, index)=> 
         <ImageSmall 
           key={index}
-          isActive={index===activeImg} 
-          onClick={()=> setActiveImg(index)}
+          isActive={index===activeIndex} 
         >
-          <img src={img} />
-          <span onClick={deleteImage}><GrClose /></span>
+          <img 
+            src={process.env.PUBLIC_URL + img.filePath} 
+            onClick={()=> setActiveIndex(index)}
+          />
+          <span 
+            onClick={()=> deleteImage(index)}
+          >
+            <GrClose />
+          </span>
         </ImageSmall>
         )}
         <li>
-          <UploadButton type="button">
+          <form 
+            encType="multipart/form-data"
+            onSubmitCapture={handleSubmit}
+            ref={form}
+          >
+          <UploadButton 
+            htmlFor="imageUpload"
+          >
             <span>Upload</span> 
             <FiUpload />
           </UploadButton>
+          <input 
+              type="file" 
+              name="file"
+              id="imageUpload"
+              ref={file}
+              className="hidden"
+              onChange={handleChange} 
+            />
+            </form>
         </li>
       </ThumbnailBox>
     </ImageBox>
