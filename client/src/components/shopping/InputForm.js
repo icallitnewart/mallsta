@@ -1,28 +1,84 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { GrClose } from "react-icons/gr";
-import { DetailBox, StoreTitle, Pic, InputBox, EnterButton, TagBox, Tag, ButtonBox, Button } from "../../styles/shopping/PopupStyle";
+import { USER_DEFAULT_PROFILE_IMAGE } from '../../data/userData';
+import { PRODUCT_TAG_COLORS, PRODUCT_CATEGORY } from '../../data/productData';
 
-function InputForm() {
+import { GrClose } from "react-icons/gr";
+import { DetailBox, StoreTitle, Pic, InputBox, EnterButton, TagBox, Tag } from "../../styles/shopping/PopupStyle";
+import useInputs from '../../hooks/useInputs';
+
+function InputForm({ authUser }) {
+  const PUBLIC_URL = process.env.PUBLIC_URL;
+  const TAGCOLORS = PRODUCT_TAG_COLORS;
+  const CATEGORY = PRODUCT_CATEGORY;
+  const userInfo = authUser.userData;
+  const storeInfo = authUser.userData.store;
+  const initValue = {
+    title : "",
+    category1 : "",
+    category2 : "",
+    price : 0,
+    currency : "dollar",
+    desc : "",
+    tags : []
+  };
+  const { values, handleChange } = useInputs(initValue);
+
   const styles = [
     "Vintage", "Artsy", "Casual", "Urban", "Street", "Chic", "Bohemian", "Trendy", "Elegant", "Punk", "Gothic", "Classic"
   ];
-  const colors = [
-    "darksalmon", "darkcyan", "darkgoldenrod", "darkolivegreen", "darkmagenta", "darkslateblue"
-  ];
+
+  const renderCategorySelect = ()=> {
+    return (
+      <select 
+        name="category2" 
+        id="category2" 
+        value={values.category2}
+        onChange={handleChange}
+      >
+        <option value="">--Product Type--</option>
+        {(values.category1) && 
+          CATEGORY.map((category, index)=> {
+            if(category._id === parseInt(values.category1)) {
+              return(
+                <React.Fragment key={index}>
+                {category.array.map((item)=> 
+                  <option 
+                    value={item._id}
+                    key={item._id}
+                  >
+                    {item.type}
+                  </option>  
+                )}
+                </React.Fragment>
+              )
+            }
+          })
+        }
+      </select>
+    )
+  };
 
   return (
     <DetailBox>
       <StoreTitle>
         <Pic>
           <img 
-            src={`${process.env.PUBLIC_URL}/img/profile_image_default.jpg`} 
-            alt="Profile Image" 
+            src={
+              userInfo.profileImage
+              ? (PUBLIC_URL + userInfo.profileImage)
+              : (PUBLIC_URL + USER_DEFAULT_PROFILE_IMAGE)
+            } 
+            style={
+              (!userInfo.profileImage) && 
+              { filter: "brightness(1.3)" }
+            }
+            alt={`${userInfo.username}'s profile image`} 
           />
         </Pic>
         <h1>
-          <Link to="/">Jane's Accessory</Link>
+          <Link to="/">{storeInfo.name}</Link>
         </h1>
       </StoreTitle>
 
@@ -40,6 +96,8 @@ function InputForm() {
                   type="text" 
                   name="title" 
                   id="title" 
+                  value={values.title}
+                  onChange={handleChange}
                 />
               </td>
             </tr>
@@ -53,15 +111,36 @@ function InputForm() {
                 <select 
                   name="category1" 
                   id="category1" 
+                  value={values.category1}
+                  onChange={handleChange}
                 >
-                  <option value="">Department</option>
+                  <option value="">--Department--</option>
+                  {storeInfo.category.map((item)=> {
+                    const department = CATEGORY.filter((category)=> category.department.toLowerCase() === item)[0];
+
+                    return (
+                      <option 
+                        value={department._id} 
+                        key={department._id}
+                      >
+                        {department.department}
+                      </option>
+                    )
+                  })}
                 </select>
-                <select 
-                  name="category2" 
-                  id="category2" 
-                >
-                  <option value="">Product Type</option>
-                </select>
+                {(parseInt(values.category1) === 8)
+                  ? <input 
+                      type="text" 
+                      name="category2" 
+                      id="category2" 
+                      style={{ width: "calc(50% - 5px)" }}
+                      placeholder="Product Type"
+                      value={values.category2}
+                      onChange={handleChange}
+                    />
+                  : renderCategorySelect()
+                }
+                
               </td>
             </tr>
             <tr>
@@ -75,8 +154,15 @@ function InputForm() {
                   type="number" 
                   name="price" 
                   id="price" 
+                  value={values.price}
+                  onChange={handleChange}
                 />
-                <select name="currency" id="currency">
+                <select 
+                  name="currency" 
+                  id="currency"
+                  value={values.currency}
+                  onChange={handleChange}
+                >
                   <option value="dollar">$</option>
                   <option value="won">₩</option>
                 </select>
@@ -90,8 +176,10 @@ function InputForm() {
               </th>
               <td>
                 <textarea 
-                  name="" 
-                  id="" 
+                  name="desc" 
+                  id="desc" 
+                  value={values.desc}
+                  onChange={handleChange}
                 ></textarea>
               </td>
             </tr>
@@ -119,9 +207,9 @@ function InputForm() {
                   <Tag 
                     key={index} 
                     tagColor={
-                      (index >= colors.length) 
-                      ? colors[index-colors.length] 
-                      : colors[index]
+                      (index >= TAGCOLORS.length) 
+                      ? TAGCOLORS[index-TAGCOLORS.length] 
+                      : TAGCOLORS[index]
                     }
                   >
                     {style} <GrClose />

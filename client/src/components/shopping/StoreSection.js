@@ -75,7 +75,7 @@ function StoreSection({ type, authUser }) {
     {/* Popup : Upload product / Product post */}
     {(isUpload || productId) && 
       <Popup 
-        username={username} 
+        authUser={authUser}
         productId={productId}
         setIsUpload={setIsUpload}
       />

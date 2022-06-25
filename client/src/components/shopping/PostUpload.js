@@ -8,7 +8,7 @@ import { CloseButton, ButtonBox, Button } from "../../styles/shopping/PopupStyle
 import InputForm from './InputForm';
 import ImageUpload from './ImageUpload';
 
-function PostUpload({ setIsUpload }) {
+function PostUpload({ authUser, setIsUpload }) {
   const dispatch = useDispatch();
   const [ filterValues, setFilterValues ] = useState([]);
   const [ images, setImages ] = useState([]);
@@ -52,7 +52,9 @@ function PostUpload({ setIsUpload }) {
         setFilterValues={setFilterValues}
       />
 
-      <InputForm />
+      <InputForm 
+        authUser={authUser}
+      />
 
       <ButtonBox>
         <Button 
