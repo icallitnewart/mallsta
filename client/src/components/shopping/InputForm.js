@@ -1,17 +1,19 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import useInputs from '../../hooks/useInputs';
 
-import { USER_DEFAULT_PROFILE_IMAGE } from '../../data/userData';
-import { PRODUCT_TAG_COLORS, PRODUCT_CATEGORY } from '../../data/productData';
+import { USER_DEFAULT_PROFILE_IMAGE as DEFAULT_PROFILE } from '../../data/userData';
+import { 
+  PRODUCT_TAG_COLORS as TAGCOLORS, 
+  PRODUCT_CATEGORY as CATEGORY
+} from '../../data/productData';
 
 import { GrClose } from "react-icons/gr";
 import { DetailBox, StoreTitle, Pic, InputBox, EnterButton, TagBox, Tag } from "../../styles/shopping/PopupStyle";
-import useInputs from '../../hooks/useInputs';
 
 function InputForm({ authUser }) {
   const PUBLIC_URL = process.env.PUBLIC_URL;
-  const TAGCOLORS = PRODUCT_TAG_COLORS;
-  const CATEGORY = PRODUCT_CATEGORY;
+  const tagBox = useRef(null);
   const userInfo = authUser.userData;
   const storeInfo = authUser.userData.store;
   const initValue = {
@@ -23,12 +25,23 @@ function InputForm({ authUser }) {
     desc : "",
     tags : []
   };
-  const { values, handleChange } = useInputs(initValue);
+  const { values, setValues, handleChange } = useInputs(initValue);
+  const [ tagValue, setTagValue ] = useState("");
 
-  const styles = [
-    "Vintage", "Artsy", "Casual", "Urban", "Street", "Chic", "Bohemian", "Trendy", "Elegant", "Punk", "Gothic", "Classic"
-  ];
+  //태그 입력
+  const enterTag = ()=> {
+    const newVal = { ...values };
 
+    if(tagValue) {
+      values.tags.push(tagValue);
+      setValues(newVal);
+      setTagValue("");
+    } else {
+      alert("Please type something to add a tag.");
+    }
+  };
+
+  //category1 선택 후 select 타입의 category2 생성
   const renderCategorySelect = ()=> {
     return (
       <select 
@@ -60,6 +73,21 @@ function InputForm({ authUser }) {
     )
   };
 
+  //태그 입력 후 스크롤 처리
+  useEffect(()=> {
+    if(values.tags.length > 0) {
+      tagBox.current.scroll({
+        top: tagBox.current.scrollHeight,
+        behavior: 'smooth',
+      });
+    }
+  }, [values]);
+
+  //category1 변경시 category2 초기화
+  useEffect(()=> {
+    setValues({ ...values, category2 : "" });
+  }, [values.category1]);
+
   return (
     <DetailBox>
       <StoreTitle>
@@ -68,7 +96,7 @@ function InputForm({ authUser }) {
             src={
               userInfo.profileImage
               ? (PUBLIC_URL + userInfo.profileImage)
-              : (PUBLIC_URL + USER_DEFAULT_PROFILE_IMAGE)
+              : (PUBLIC_URL + DEFAULT_PROFILE)
             } 
             style={
               (!userInfo.profileImage) && 
@@ -116,14 +144,14 @@ function InputForm({ authUser }) {
                 >
                   <option value="">--Department--</option>
                   {storeInfo.category.map((item)=> {
-                    const department = CATEGORY.filter((category)=> category.department.toLowerCase() === item)[0];
+                    const category = CATEGORY.filter((el)=> el.department.toLowerCase() === item)[0];
 
                     return (
                       <option 
-                        value={department._id} 
-                        key={department._id}
+                        value={category._id} 
+                        key={category._id}
                       >
-                        {department.department}
+                        {category.department}
                       </option>
                     )
                   })}
@@ -194,28 +222,42 @@ function InputForm({ authUser }) {
                   type="text" 
                   name="tags" 
                   id="tags" 
+                  value={tagValue}
+                  onChange={(e)=> setTagValue(e.target.value.trim())}
+                  onKeyDown={(e)=> {
+                    if(e.key==="Enter") enterTag();
+                  }}
                 />
-                <EnterButton type="button">
+                <EnterButton 
+                  type="button"
+                  name="tags"
+                  onClick={enterTag}
+                >
                   ENTER
                 </EnterButton>
               </td>
             </tr>
             <tr>
               <td colSpan={2}>
-              <TagBox>
-                {styles.map((style, index)=> 
-                  <Tag 
-                    key={index} 
-                    tagColor={
-                      (index >= TAGCOLORS.length) 
-                      ? TAGCOLORS[index-TAGCOLORS.length] 
-                      : TAGCOLORS[index]
-                    }
-                  >
-                    {style} <GrClose />
-                  </Tag>
-                )}
-              </TagBox>
+                <TagBox ref={tagBox}>
+                  {values.tags.map((tag, index)=> 
+                    <Tag 
+                      key={index} 
+                      tagColor={
+                        (index >= TAGCOLORS.length) 
+                        ? TAGCOLORS[index % TAGCOLORS.length] 
+                        : TAGCOLORS[index]
+                      }
+                    >
+                      {tag} 
+                      <GrClose onClick={()=> {
+                        //태그 삭제 기능
+                        const newArr = values.tags.filter((tag, idx)=> idx !== index);
+                        setValues({ ...values, tags : newArr });
+                      }} />
+                    </Tag>
+                  )}
+                </TagBox>
               </td>
             </tr>
           </tbody>
