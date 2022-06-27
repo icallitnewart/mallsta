@@ -451,8 +451,8 @@ export const EnterButton = styled.button`
 
 export const TagBox = styled.div`
   width: calc(100% - 120px);
-  max-height: 100px;
-  overflow-y: scroll;
+  height: 100px;
+  overflow-y: auto;
   margin-left: 120px;
   margin-top: 5px;
 
