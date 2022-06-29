@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 export const Background = styled.div`
   position: fixed;
@@ -21,9 +21,8 @@ export const Container = styled.div`
   border-radius: 3px;
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
 
-  form {
-    display: flex;
-    width: 100%;
+  >form {
+    width: 55%;
   }
 `;
 
@@ -46,10 +45,16 @@ export const CloseButton = styled.button`
 
 //ImageUpload : Start
 export const ImageBox = styled.div`
+  position: relative;
   width: 45%;
   height: 100%;
   font-size: 0px;
   background: #fbfbfb;
+  
+  form {
+    display: flex;
+    width: 100%;
+  }
 `;
 
 export const ImageBig = styled.div`
@@ -313,7 +318,7 @@ export const UploadButton = styled.label`
 //InputForm : Start
 export const DetailBox = styled.div`
   position: relative;
-  width: 55%;
+  width: 100%;
   height: 100%;
 `;
 
@@ -373,11 +378,13 @@ export const InputBox = styled.div`
 
     tr {
       //category
-      &:nth-of-type(2) td select {
-        width: calc(50% - 5px);
-
-        &:first-child {
+      &:nth-of-type(2) td {
+        select:first-child {
           margin-right: 10px;
+        }
+
+        select, input {
+          width: calc(50% - 5px);
         }
       }
 
@@ -410,6 +417,7 @@ export const InputBox = styled.div`
     }
 
     td {
+      position: relative;
       width: calc(100% - 120px);
       
       input[type=text], input[type=number], textarea, select {
@@ -496,6 +504,44 @@ export const Tag = styled.span`
   }
 `;
 
+export const ErrMsg = styled.div`
+  position: absolute;
+  bottom: -30px; right: 0px;
+  z-index: 10;
+
+  ${props=> props.direction==="up" && css`
+    bottom: 65px; right: 10px;
+  `}
+  
+  &::before {
+    position: absolute;
+    top: -3px; right: 50%;
+    display: block;
+    content: "";
+    width: 6px;
+    height: 6px;
+    transform: translateX(50%) rotate(45deg);
+    background: #fff;
+    box-shadow: -2px -2px 3px rgb(0 0 0 / 15%);
+
+    ${props=> props.direction==="up" && css`
+    top: auto; bottom: -3px; right: 70px;
+    box-shadow: 2px 2px 3px rgb(0 0 0 / 15%);
+
+  `}
+  }
+
+  span {
+    display: block;
+    padding: 7px 10px;
+    background: #fff;
+    box-shadow: 0px 0px 5px 1px rgb(0 0 0 / 15%);
+    border-radius: 3px;
+    font: 11px/1 "Poppins";
+    color: #ff5e62;
+  }
+`;
+
 export const ButtonBox = styled.div`
   position: absolute;
   bottom: 0px; right: 0px;
@@ -503,7 +549,19 @@ export const ButtonBox = styled.div`
   text-align: right;
 `;
 
+const spin = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+`;
+
 export const Button = styled.button`
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   width: 100px;
   height: 40px;
   border: 1px solid #ff5e62;
@@ -513,7 +571,15 @@ export const Button = styled.button`
   color: ${props=> props.btnType==="submit" ? "#fff" : "#ff5e62"};
   text-transform: uppercase;
   letter-spacing: 2px;
+  vertical-align: middle;
   margin-left: 10px;
   cursor: pointer;
+
+  svg {
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    animation: ${spin} linear 1.2s infinite;
+  }
 `;
 //InputForm : End

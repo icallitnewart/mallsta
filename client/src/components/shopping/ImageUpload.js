@@ -5,10 +5,10 @@ import usePrevious from '../../hooks/usePrevious';
 
 import { GrClose } from "react-icons/gr";
 import { FiUpload } from "react-icons/fi";
-import { ImageBox, ImageBig, ThumbnailBox, ImageSmall, ImageFilter, FilterOption, UploadButton } from "../../styles/shopping/PopupStyle";
+import { ImageBox, ImageBig, ThumbnailBox, ImageSmall, ImageFilter, FilterOption, UploadButton, ErrMsg } from "../../styles/shopping/PopupStyle";
 
 function ImageUpload({ 
-  images, setImages, filterValues, setFilterValues 
+  images, setImages, filterValues, setFilterValues, err 
 }) {
   const dispatch = useDispatch();
   const file = useRef(null);
@@ -17,7 +17,7 @@ function ImageUpload({
   const [ activeIndex, setActiveIndex ] = useState(null);
   const [ activeImage, setActiveImage ] = useState(null);
 
-  //업로드한 이미지 파일 삭제
+  //선택한 이미지 파일 삭제 (1개)
   const deleteImage = (targetIndex)=> {
     let newArr = [ ...images ];
     //프론트 이미지 삭제
@@ -260,25 +260,30 @@ function ImageUpload({
             onSubmitCapture={handleSubmit}
             ref={form}
           >
-          <UploadButton 
-            htmlFor="imageUpload"
-          >
-            <span>Upload</span> 
-            <FiUpload />
-          </UploadButton>
-          <input 
-              type="file" 
-              name="file"
-              id="imageUpload"
-              ref={file}
-              className="hidden"
-              onChange={handleChange} 
-            />
+            <UploadButton 
+              htmlFor="imageUpload"
+            >
+              <span>Upload</span> 
+              <FiUpload />
+            </UploadButton>
+            <input 
+                type="file" 
+                name="file"
+                id="imageUpload"
+                ref={file}
+                className="hidden"
+                onChange={handleChange} 
+              />
             </form>
         </li>
       </ThumbnailBox>
+      {err.images &&
+          <ErrMsg direction={"up"}>
+            <span>{err.images}</span>
+          </ErrMsg>
+        }
     </ImageBox>
   )
 }
 
-export default ImageUpload;
+export default React.memo(ImageUpload);

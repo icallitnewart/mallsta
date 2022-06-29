@@ -78,6 +78,7 @@ function StoreSection({ type, authUser }) {
         authUser={authUser}
         productId={productId}
         setIsUpload={setIsUpload}
+        username={username}
       />
     }
     </>

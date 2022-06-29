@@ -4,7 +4,7 @@ import { Background, Container } from "../../styles/shopping/PopupStyle";
 
 import PostUpload from './PostUpload';
 
-function Popup({ authUser, productId, setIsUpload }) {
+function Popup({ authUser, productId, setIsUpload, username }) {
   useEffect(()=> {
     document.body.style.overflow = "hidden";
 
@@ -20,6 +20,7 @@ function Popup({ authUser, productId, setIsUpload }) {
         <PostUpload  
           authUser={authUser}
           setIsUpload={setIsUpload}
+          username={username}
         />
       }
       </Container>

@@ -3,7 +3,8 @@ const router = express.Router();
 const fs = require('fs');
 const multer = require('multer');
 const path = require('path');
-const { User } = require('../models/User');
+const { Store } = require('../models/Store');
+const { Product } = require('../models/Product');
 const { auth } = require('../middleware/auth');
 
 //상품 이미지 업로드
@@ -88,6 +89,29 @@ router.post('/delete_image', auth, (req, res)=> {
     if(err) return res.json({ success: false, err });
   
     return res.status(200).json({ success: true });
+  });
+});
+
+//상품 등록
+router.post('/register', (req, res)=> {
+  const product = new Product(req.body);
+
+  product.save((err, productInfo)=> {
+    if(err) return res.json({ success : false, err });
+
+    Store.findOneAndUpdate(
+      { _id : req.body.store },
+      {
+        $push : { product : productInfo._id },
+        $inc : { productTotal : 1 }
+      },
+      { new : true },
+      (err, storeInfo)=> {
+        if(err) return res.json({ success : false, err });
+
+        return res.status(200).json({ success : true });
+      }
+    )
   });
 });
 

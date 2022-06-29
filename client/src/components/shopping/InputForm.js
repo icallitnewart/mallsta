@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import useInputs from '../../hooks/useInputs';
 
 import { USER_DEFAULT_PROFILE_IMAGE as DEFAULT_PROFILE } from '../../data/userData';
 import { 
@@ -9,23 +8,15 @@ import {
 } from '../../data/productData';
 
 import { GrClose } from "react-icons/gr";
-import { DetailBox, StoreTitle, Pic, InputBox, EnterButton, TagBox, Tag } from "../../styles/shopping/PopupStyle";
+import { DetailBox, StoreTitle, Pic, InputBox, EnterButton, TagBox, Tag, ErrMsg } from "../../styles/shopping/PopupStyle";
 
-function InputForm({ authUser }) {
+function InputForm({ 
+  authUser, values, setValues, handleChange, err 
+}) {
   const PUBLIC_URL = process.env.PUBLIC_URL;
   const tagBox = useRef(null);
   const userInfo = authUser.userData;
   const storeInfo = authUser.userData.store;
-  const initValue = {
-    title : "",
-    category1 : "",
-    category2 : "",
-    price : 0,
-    currency : "dollar",
-    desc : "",
-    tags : []
-  };
-  const { values, setValues, handleChange } = useInputs(initValue);
   const [ tagValue, setTagValue ] = useState("");
 
   //태그 입력
@@ -50,7 +41,7 @@ function InputForm({ authUser }) {
         value={values.category2}
         onChange={handleChange}
       >
-        <option value="">--Product Type--</option>
+        <option value="">-Product Type-</option>
         {(values.category1) && 
           CATEGORY.map((category, index)=> {
             if(category._id === parseInt(values.category1)) {
@@ -127,6 +118,11 @@ function InputForm({ authUser }) {
                   value={values.title}
                   onChange={handleChange}
                 />
+                {err.title && 
+                  <ErrMsg>
+                    <span>{err.title}</span>
+                  </ErrMsg>
+                }
               </td>
             </tr>
             <tr>
@@ -142,7 +138,7 @@ function InputForm({ authUser }) {
                   value={values.category1}
                   onChange={handleChange}
                 >
-                  <option value="">--Department--</option>
+                  <option value="">-Department-</option>
                   {storeInfo.category.map((item)=> {
                     const category = CATEGORY.filter((el)=> el.department.toLowerCase() === item)[0];
 
@@ -161,14 +157,17 @@ function InputForm({ authUser }) {
                       type="text" 
                       name="category2" 
                       id="category2" 
-                      style={{ width: "calc(50% - 5px)" }}
                       placeholder="Product Type"
                       value={values.category2}
                       onChange={handleChange}
                     />
                   : renderCategorySelect()
                 }
-                
+                {err.category && 
+                  <ErrMsg>
+                    <span>{err.category}</span>
+                  </ErrMsg>
+                }
               </td>
             </tr>
             <tr>
@@ -183,7 +182,11 @@ function InputForm({ authUser }) {
                   name="price" 
                   id="price" 
                   value={values.price}
+                  min="0"
                   onChange={handleChange}
+                  onKeyDown={(e)=> {
+                    if(e.key==="e" || e.key==="+" || e.key==="-") e.preventDefault();
+                  }}
                 />
                 <select 
                   name="currency" 
@@ -194,11 +197,16 @@ function InputForm({ authUser }) {
                   <option value="dollar">$</option>
                   <option value="won">₩</option>
                 </select>
+                {err.price && 
+                  <ErrMsg>
+                    <span>{err.price}</span>
+                  </ErrMsg>
+                }
               </td>
             </tr>
             <tr>
               <th>
-                <label htmlFor="">
+                <label htmlFor="desc">
                   Description
                 </label>
               </th>
@@ -209,6 +217,11 @@ function InputForm({ authUser }) {
                   value={values.desc}
                   onChange={handleChange}
                 ></textarea>
+                {err.desc && 
+                  <ErrMsg>
+                    <span>{err.desc}</span>
+                  </ErrMsg>
+                }
               </td>
             </tr>
             <tr>
@@ -267,4 +280,4 @@ function InputForm({ authUser }) {
   )
 }
 
-export default InputForm;
+export default React.memo(InputForm);
