@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams, useOutletContext } from 'react-router-dom';
 
 import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
 import { Content, Item, Detail, TextBox, PostButton } from "../../styles/shopping/ContentStyle";
@@ -7,8 +7,9 @@ import { Content, Item, Detail, TextBox, PostButton } from "../../styles/shoppin
 import Filter from './Filter';
 import Popup from './Popup';
 
-function StoreSection({ type, authUser }) {
+function StoreSection() {
   const { productId, username } = useParams();
+  const [ authUser ] = useOutletContext(); 
 
   const arr = Array.from(Array(30).keys());
   const [ isLiked, setIsLiked ] = useState({});
@@ -42,7 +43,7 @@ function StoreSection({ type, authUser }) {
   return (
     <>
     <Filter />
-    <Content section={type}>
+    <Content section="store">
       <h1>Recent</h1>
       
       {/* UploadButton */}

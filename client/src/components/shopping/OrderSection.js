@@ -5,12 +5,12 @@ import { Content, Item, TextBox, PostButton } from "../../styles/shopping/Conten
 import Filter from './Filter';
 
 
-function OrderSection({ type }) {
+function OrderSection() {
   const arr = Array.from(Array(30).keys());
   return (
     <>
     <Filter />
-    <Content section={type}>
+    <Content section="order">
       <h1>Payment Receipt</h1>
       {arr.map((item, index)=>
         <Item key={index}> 

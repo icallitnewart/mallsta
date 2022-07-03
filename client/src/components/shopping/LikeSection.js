@@ -4,7 +4,7 @@ import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
 import { Content, Item, Detail, TextBox } from "../../styles/shopping/ContentStyle";
 import Filter from './Filter';
 
-function LikeSection({ type }) {
+function LikeSection() {
   const arr = Array.from(Array(30).keys());
   const [ isLiked, setIsLiked ] = useState({});
   //찜하기 버튼
@@ -17,7 +17,7 @@ function LikeSection({ type }) {
   return (
     <>
     <Filter />
-    <Content section={type}>
+    <Content section="likes">
       <h1>Wishlist</h1>
       {arr.map((item, index)=>
         <Item key={index}> 

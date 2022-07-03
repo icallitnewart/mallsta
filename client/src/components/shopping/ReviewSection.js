@@ -5,13 +5,13 @@ import { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs";
 
 import Filter from './Filter';
 
-function ReviewSection({ type }) {
+function ReviewSection() {
   const arr = Array.from(Array(30).keys());
 
   return (
     <>
     <Filter />
-    <Content section={type}>
+    <Content section="reviews">
       <h1>Reviews</h1>
       {arr.map((item, index)=>
         <Item key={index}> 

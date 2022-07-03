@@ -13,8 +13,12 @@ import RegisterPage from "./pages/RegisterPage";
 import AccountPage from "./pages/AccountPage";
 import ShoppingPage from "./pages/ShoppingPage";
 
-function App() {
+import StoreSection from './components/shopping/StoreSection';
+import LikeSection from './components/shopping/LikeSection';
+import ReviewSection from './components/shopping/ReviewSection';
+import OrderSection from './components/shopping/OrderSection';
 
+function App() {
   return (
     <BrowserRouter>
       <GlobalStyle />
@@ -41,26 +45,28 @@ function App() {
           />
 
           {/* Shopping Pages */}
-          <Route 
-            path="/:username/shopping" 
-            element={Auth(<ShoppingPage type="store" />, null)} 
-          />
-          <Route 
-            path="/:username/shopping/product/:productId" 
-            element={Auth(<ShoppingPage type="store" />, null)} 
-          />
-          <Route 
-            path="/:username/shopping/likes" 
-            element={Auth(<ShoppingPage type="likes" />, true)} 
-          />
-          <Route 
-            path="/:username/shopping/reviews" 
-            element={Auth(<ShoppingPage type="reviews" />, true)} 
-          />
-          <Route 
-            path="/:username/shopping/order" 
-            element={Auth(<ShoppingPage type="order" />, true)} 
-          />
+          <Route element={<ShoppingPage />}>
+            <Route 
+              path="/:username/shopping" 
+              element={Auth(<StoreSection />, null)} 
+            />
+            <Route 
+              path="/:username/shopping/product/:productId" 
+              element={Auth(<StoreSection />, null)} 
+            />
+            <Route 
+              path="/:username/shopping/likes" 
+              element={Auth(<LikeSection />, true)} 
+            />
+            <Route 
+              path="/:username/shopping/reviews" 
+              element={Auth(<ReviewSection />, true)} 
+            />
+            <Route 
+              path="/:username/shopping/order" 
+              element={Auth(<OrderSection />, true)} 
+            />
+          </Route>
 
           {/* Page Not Found */}
           <Route path="*" element={Auth(<div>Page Not Found.</div>, null)} />

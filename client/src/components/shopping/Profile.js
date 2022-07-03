@@ -1,33 +1,9 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { IoSettingsSharp } from "react-icons/io5";
 import { Container, Pic, Detail, Username, Image, SettingsButton, Intro, Rank } from "../../styles/shopping/ProfileStyle";
 
-function Profile({ authUser, username, userInfo }) {
-  const [ isAuth, setIsAuth ] = useState(null);
-  const [ isPageOwner, setIsPageOwner ] = useState(false);
-  
-  //로그인 여부 판단
-  useEffect(()=> {
-    if(!authUser.userData) {
-      setIsAuth(false);
-    } else {
-      if (Object.keys(authUser).length > 0) {
-        setIsAuth(authUser.userData.isAuth);
-      }
-    }
-  }, [authUser]);
-
-  //페이지 소유주와 로그인 유저가 동일한지 판단
-  useEffect(()=> {
-    if(isAuth) {
-      if(authUser.userData.username === username) {
-        setIsPageOwner(true);
-      }
-    }
-  }, [isAuth]);
-  
+function Profile({ username, userInfo, isPageOwner }) {
   return (
     <Container>
       <Pic>
