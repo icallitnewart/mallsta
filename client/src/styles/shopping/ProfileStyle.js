@@ -56,7 +56,7 @@ export const Username = styled.h1`
   font: 36px/1 "Poppins";
   color: #444;
   letter-spacing: 2px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 
   span {
     margin-right: 7px;
@@ -86,29 +86,19 @@ export const Rank = styled.ul`
       font: 600 12px/1 "Poppins";
     }
 
-    &:nth-of-type(2) {
-      width: 60px;
+    &:nth-of-type(3) {
+      width: 100px;
     }
 
     span {
       font-weight: 500;
       margin-left: 5px;
     }
-
   }
-
-  /* span {
-    display: inline-block;
-    font: 600 12px/1 "Poppins";
-    color: #ff9966;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-right: 20px;
-  } */
 `;
 
 export const Intro = styled.p`
-  font: 16px/1.5 "Poppins";
-  color: #444;
+  font: 14px/1.5 "Noto Sans KR";
+  color: #555;
   margin-top: 20px;
 `;
