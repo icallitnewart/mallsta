@@ -35,46 +35,80 @@ export const Image = styled.div`
   z-index: 10;
   width: calc(100% - 15px);
   height: calc(100% - 15px);
-  background-image: url('/img/profile_image_default.jpg');
+  background-image:  ${props=> !props.Src ? `url('/img/profile_image_default.jpg')` : `url(${props.Src})`};
   background-size: cover;
   border-radius: 50%;
   box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.3);
+
+  ${props=> !props.Src && css`
+    filter: brightness(1.3);
+  `}
 `;
 
 export const Detail = styled.div`
   width: 500px;
   height: 215px;
   padding: 20px 10px;
-
-  h1 {
-    display: flex;
-    font: 36px/1 "Poppins";
-    color: #444;
-    letter-spacing: 2px;
-
-    span {
-      margin-right: 7px;
-    }
-  }
-
-  >span {
-    display: inline-block;
-    font: 600 12px/1 "Poppins";
-    color: #ff9966;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 20px;
-    margin-right: 20px;
-  }
-
-  p {
-    font: 16px/1.5 "Poppins";
-    color: #444;
-  }
 `;
+
+export const Username = styled.h1` 
+  display: flex;
+  font: 36px/1 "Poppins";
+  color: #444;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+
+  span {
+    margin-right: 7px;
+  }
+`
 
 export const SettingsButton = styled(Link)`
   color: #777;
   font-size: 24px;
   align-self: flex-end;
+`;
+
+export const Rank = styled.ul`
+  display: flex;
+  margin-bottom: 10px;
+
+  li {
+    width: 70px;
+    font: 700 11px/1 "Poppins";
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    &:first-child {
+      width: 80px;
+      color: #ff9966;
+      font: 600 12px/1 "Poppins";
+    }
+
+    &:nth-of-type(2) {
+      width: 60px;
+    }
+
+    span {
+      font-weight: 500;
+      margin-left: 5px;
+    }
+
+  }
+
+  /* span {
+    display: inline-block;
+    font: 600 12px/1 "Poppins";
+    color: #ff9966;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-right: 20px;
+  } */
+`;
+
+export const Intro = styled.p`
+  font: 16px/1.5 "Poppins";
+  color: #444;
+  margin-top: 20px;
 `;
