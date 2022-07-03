@@ -101,4 +101,9 @@ export const Intro = styled.p`
   font: 14px/1.5 "Noto Sans KR";
   color: #555;
   margin-top: 20px;
+
+  ${props=> !props.isStoreOwner && css`
+    font: 600 14px/1.5 "Poppins";
+    text-transform: uppercase;
+  `}
 `;

@@ -18,19 +18,27 @@ function Profile({ username, userInfo, isPageOwner }) {
             <IoSettingsSharp />
           </SettingsButton>
         </Username>
-        {(userInfo && isPageOwner) &&
-          <Rank>
-            <li>Shopper</li> 
-            <li>Rank
-              <span>{userInfo.rank}</span>
-            </li>
-            <li>Reviews
-              <span>{userInfo.reviews.length}</span>
-            </li>
-            <li>Wishlist
-              <span>{userInfo.wishlist.length}</span>
-            </li>
-          </Rank>
+        {userInfo && 
+          (isPageOwner
+          ? <Rank>
+              <li>Shopper</li> 
+              <li>Rank
+                <span>{userInfo.rank}</span>
+              </li>
+              <li>Reviews
+                <span>{userInfo.reviews.length}</span>
+              </li>
+              <li>Wishlist
+                <span>{userInfo.wishlist.length}</span>
+              </li>
+            </Rank>
+          : <Rank>
+              <li>Shopper</li> 
+              <li>Rank
+                <span>{userInfo.rank}</span>
+              </li>
+            </Rank>
+          )
         }
         {(userInfo && userInfo.storeOwner) &&
           <Rank>
@@ -46,10 +54,10 @@ function Profile({ username, userInfo, isPageOwner }) {
             </li>
           </Rank>
         }
-        <Intro>
+        <Intro isStoreOwner={userInfo && userInfo.storeOwner}>
           {(userInfo && userInfo.store)
           ? userInfo.store.desc
-          : "This user is not a seller."
+          : "❌ This user is not a seller ❌"
           }
         </Intro>
       </Detail>
