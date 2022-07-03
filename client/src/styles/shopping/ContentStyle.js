@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 export const Content = styled.section`
   position: relative;
@@ -104,6 +104,39 @@ export const Content = styled.section`
       }
     }
   `}
+`;
+
+export const spin = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(100deg);
+  }
+`
+
+export const Alert = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 500px;
+  color: #bbb;
+
+  svg {
+    font-size: 90px;
+    margin-bottom: 40px;
+
+    ${props=> props.isLoading && css`
+      animation: ${spin} 1s infinite;
+    `}
+  }
+
+  p {
+    font: 600 30px/1 "Poppins";
+    letter-spacing: 1px;
+  }
 `;
 
 export const Item = styled.article`
