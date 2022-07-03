@@ -1,6 +1,7 @@
 import {
   LOGIN_USER,
   REGISTER_USER,
+  GETINFO_USER,
   CHECK_EMAIL_USER,
   CHECK_USERNAME_USER,
   AUTH_USER,
@@ -21,6 +22,12 @@ export default function(state={}, action) {
       return {
         ...state,
         register : action.payload
+      }
+      break;
+    case GETINFO_USER :
+      return {
+        ...state,
+        userInfo : action.payload
       }
       break;
     case CHECK_USERNAME_USER :

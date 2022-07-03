@@ -2,6 +2,7 @@ import axios from "axios";
 import { 
   LOGIN_USER,
   REGISTER_USER,
+  GETINFO_USER,
   CHECK_USERNAME_USER,
   CHECK_EMAIL_USER,
   AUTH_USER,
@@ -35,6 +36,20 @@ export function registerUser(data) {
     payload : request
   }
 }
+
+//회원정보 요청
+export function getUserInfo(data) {
+  const request = 
+    axios
+    .post('/api/users/getInfo', data)
+    .then(res => res.data);
+
+  return {
+    type : GETINFO_USER,
+    payload : request
+  }
+}
+
 
 //아이디 중복 체크
 export function checkUsernameUser(data) {

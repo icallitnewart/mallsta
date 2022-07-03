@@ -16,6 +16,23 @@ router.post("/register", (req, res)=> {
   });
 });
 
+
+//회원정보 요청
+router.post("/getInfo", (req, res)=> {
+  User
+  .findOne({ username : req.body.username })
+  .populate("store")
+  .exec((err, userInfo)=> {
+    if(err) return res.json({ success : false, err });
+
+    return res.status(200).json({
+      success : true,
+      userInfo
+    });
+  })
+});
+
+
 //회원정보 수정
 router.post("/edit", auth, async function (req,res) {
   const user = req.body;
@@ -92,10 +109,11 @@ router.get('/auth', auth, (req, res)=> {
     email : req.user.email,
     phone : req.user.phone,
     address : req.user.address,
+    rank : req.user.rank,
     profileImage : req.user.profileImage,
     role : req.user.role,
     cart : req.user.cart,
-    purchaseHistory : req.user.purchaseHistory,
+    order : req.user.order,
     storeOwner : req.user.storeOwner,
     store : req.user.store
   });

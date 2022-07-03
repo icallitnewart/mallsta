@@ -30,6 +30,10 @@ const userSchema = mongoose.Schema({
     type: Array,
     default: ["", ""]
   },
+  rank : {
+    type: Number,
+    default : 1
+  },
   profileImage : {
     type: String || null,
     default: null
@@ -39,13 +43,21 @@ const userSchema = mongoose.Schema({
     default: 0
     //0: 일반 유저, 1: 관리자
   },
+  wishlist : {
+    type: Array,
+    default: []
+  },
+  reviews : {
+    type: Array,
+    default: []
+  },
   cart : {
     type: Array,
     default: []
   },
-  purchaseHistory : {
-    type : Array,
-    default : []
+  order : {
+    type: Array,
+    default: []
   },
   storeOwner : {
     type: Boolean,

@@ -9,6 +9,10 @@ const storeSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  rank : {
+    type: Number,
+    default : 1
+  },
   category : {
     type: Array,
     required: true
@@ -17,6 +21,10 @@ const storeSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
+  },
+  order : {
+    type: Array,
+    default : []
   },
   product : {
     type: Array,
