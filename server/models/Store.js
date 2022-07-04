@@ -26,10 +26,10 @@ const storeSchema = mongoose.Schema({
     type: Array,
     default : []
   },
-  product : {
-    type: Array,
-    default: []
-  },
+  product : [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Product'
+  }],
   productTotal : {
     type: Number,
     default: 0

@@ -1,7 +1,8 @@
 import axios from "axios";
 import { 
   REGISTER_STORE,
-  EDIT_STORE
+  EDIT_STORE,
+  GETINFO_STORE
 } from "./types";
 
 //스토어 등록
@@ -26,6 +27,19 @@ export function editStore(data) {
 
   return {
     type : EDIT_STORE,
+    payload : request
+  }
+}
+
+//스토어 정보 요청
+export function getStoreInfo(data) {
+  const request = 
+    axios
+    .post('/api/stores/getInfo', data)
+    .then(res => res.data);
+
+  return {
+    type : GETINFO_STORE,
     payload : request
   }
 }

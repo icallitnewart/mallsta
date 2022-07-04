@@ -1,6 +1,7 @@
 import {
   REGISTER_STORE,
-  EDIT_STORE
+  EDIT_STORE,
+  GETINFO_STORE
 } from "../_actions/types";
 
 export default function(state={}, action) {
@@ -15,6 +16,12 @@ export default function(state={}, action) {
       return {
         ...state,
         edit : action.payload
+      }
+      break;
+    case GETINFO_STORE :
+      return {
+        ...state,
+        storeInfo : action.payload
       }
       break;
     default :

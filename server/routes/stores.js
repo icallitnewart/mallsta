@@ -55,4 +55,19 @@ router.post("/edit", (req, res)=> {
   )
 });
 
+//스토어 정보 요청
+router.post("/getInfo", (req, res)=> {
+  Store
+  .findById(req.body.storeId)
+  .populate("product")
+  .exec((err, storeInfo)=> {
+    if(err) return res.json({ success : false, err });
+
+    return res.status(200).json({ 
+      success : true,  
+      storeInfo
+    });
+  })
+});
+
 module.exports = router;

@@ -102,7 +102,7 @@ router.post('/register', (req, res)=> {
     Store.findOneAndUpdate(
       { _id : req.body.store },
       {
-        $push : { product : productInfo._id },
+        $push : { product : product },
         $inc : { productTotal : 1 }
       },
       { new : true },

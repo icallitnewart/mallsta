@@ -12,6 +12,7 @@ export const DELETE_UPLOAD_USER = "delete_upload_user";
 //store
 export const REGISTER_STORE = "register_store";
 export const EDIT_STORE = "edit_store";
+export const GETINFO_STORE = "getinfo_store";
 
 //product
 export const UPLOAD_IMAGE_PRODUCT = "upload_image_product";
