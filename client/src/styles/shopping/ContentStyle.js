@@ -3,7 +3,7 @@ import styled, { css, keyframes } from "styled-components";
 export const Content = styled.section`
   position: relative;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   flex-wrap: wrap;
   width: calc(100% - 240px);
   padding: 30px;
@@ -18,6 +18,8 @@ export const Content = styled.section`
 
   //Store & Likes
   ${props=> (props.section==="store" || props.section==="likes") && css`
+    column-gap: 7.5px;
+
     ${Item} {
       width: calc(100% / 3 - 5px);
       aspect-ratio: 1 / 1;
@@ -53,6 +55,8 @@ export const Content = styled.section`
 
   //Reviews & Order
   ${props=> (props.section==="reviews" || props.section==="order") && css`
+    column-gap: 20px;
+    
     ${Item} {
       display: flex;
       flex-wrap: wrap;
