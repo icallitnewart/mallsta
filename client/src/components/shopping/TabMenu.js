@@ -4,15 +4,13 @@ import { Tab } from "../../styles/shopping/TabStyle";
 
 import { HiOutlineShoppingBag, HiOutlineHeart, HiOutlineTag, HiOutlineChatAlt } from "react-icons/hi";
 
-function TabMenu({ username, userInfo, isAuth }) {
+function TabMenu({ username }) {
   const activeStyle = ({isActive})=>({ 
     color: isActive && "#ff5e62" 
   });
 
   return (
     <Tab>
-    {(userInfo && isAuth)
-    &&
       <ul>
         <li>
           <NavLink 
@@ -51,7 +49,6 @@ function TabMenu({ username, userInfo, isAuth }) {
           </NavLink>
         </li>
       </ul>
-    }
     </Tab>
   )
 }
