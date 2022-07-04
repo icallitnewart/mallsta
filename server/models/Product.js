@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const productSchema = mongoose.Schema({
+  index : {
+    type: Number,
+    required: true
+  },
   store : {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Store",
@@ -65,7 +69,7 @@ const productSchema = mongoose.Schema({
   tags : {
     type: Array
   }
-});
+}, { timestamps : true });
 
 const Product = mongoose.model('Product', productSchema);
 

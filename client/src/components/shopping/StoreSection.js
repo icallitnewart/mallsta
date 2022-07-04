@@ -119,12 +119,12 @@ function StoreSection() {
                     {item.price.amount}  
                   </span>
                 </TextBox>
-                {isLiked[item._id]
+                {isLiked[item.index]
                 ?  <BsSuitHeartFill
-                    onClick={()=> likeItem(item._id)}
+                    onClick={()=> likeItem(item.index)}
                   />
                 : <BsSuitHeart
-                    onClick={()=> likeItem(item._id)}
+                    onClick={()=> likeItem(item.index)}
                   />
                 }
               </Detail>

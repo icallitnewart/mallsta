@@ -30,6 +30,10 @@ const storeSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Product'
   }],
+  productCounter : {
+    type: Number,
+    default: 0
+  },
   productTotal : {
     type: Number,
     default: 0

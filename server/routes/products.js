@@ -94,25 +94,33 @@ router.post('/delete_image', auth, (req, res)=> {
 
 //상품 등록
 router.post('/register', (req, res)=> {
-  const product = new Product(req.body);
+  Store.findById(req.body.store, (err, storeInfo)=> {
+    const product = new Product({
+      ...req.body,
+      index : storeInfo.productCounter + 1
+    });
 
-  product.save((err, productInfo)=> {
-    if(err) return res.json({ success : false, err });
+    product.save((err, productInfo)=> {
+      if(err) return res.json({ success : false, err });
+  
+      Store.findOneAndUpdate(
+        { _id : req.body.store },
+        {
+          $push : { product : product },
+          $inc : { 
+            productCounter : 1, 
+            productTotal : 1 
+          }
+        },
+        { new : true },
+        (err, storeInfo)=> {
+          if(err) return res.json({ success : false, err });
 
-    Store.findOneAndUpdate(
-      { _id : req.body.store },
-      {
-        $push : { product : product },
-        $inc : { productTotal : 1 }
-      },
-      { new : true },
-      (err, storeInfo)=> {
-        if(err) return res.json({ success : false, err });
-
-        return res.status(200).json({ success : true });
-      }
-    )
-  });
+          return res.status(200).json({ success : true });
+        }
+      )
+    });
+  })
 });
 
 module.exports = router;
