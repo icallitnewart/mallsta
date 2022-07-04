@@ -60,6 +60,26 @@ function ShoppingPage() {
     }
   }, [isAuth, username]);
 
+  const renderAlert = (path)=> {
+    const type = path[path.length - 1];
+
+    if(type==="shopping") {
+      return (
+        <Alert>
+          <BsShop />
+          <p>This store is not open</p>
+        </Alert>
+      )
+    } else {
+      return (
+        <Alert>
+          <BsFillExclamationOctagonFill />
+          <p>Service not available</p>
+        </Alert>
+      )
+    }
+  };
+
   return (
     <Background>
       <Container section="profile">
@@ -73,10 +93,7 @@ function ShoppingPage() {
         </Alert>
       : ((!isPageOwner && !userInfo.storeOwner)
         //조건: 페이지 소유주 X && 스토어 오픈 X
-        ? <Alert>
-            <BsShop />
-            <p>This store is not open</p>
-          </Alert>
+        ? renderAlert(path)
         //조건: 페이지 소유주 O || 스토어 오픈 O
         : <Outlet 
             context={{...props}} 
