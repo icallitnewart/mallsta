@@ -106,7 +106,7 @@ export const Content = styled.section`
   `}
 `;
 
-export const spin = keyframes`
+const spin = keyframes`
   0% {
     transform: rotate(0deg);
   }
@@ -126,7 +126,7 @@ export const Alert = styled.div`
 
   svg {
     font-size: 90px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 
     ${props=> props.isLoading && css`
       animation: ${spin} 1s infinite;
@@ -134,8 +134,29 @@ export const Alert = styled.div`
   }
 
   p {
+    margin-top: 20px;
     font: 600 30px/1 "Poppins";
     letter-spacing: 1px;
+  }
+
+  h1 {
+    text-align: center;
+    font: 500 24px/1.7 "Poppins";
+    color: #999;
+    margin-bottom: 20px;
+  }
+
+  a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 40px;
+    font: 16px/1 "Poppins";
+    color: #fff;
+    letter-spacing: 1px;
+    background: #ff5e62;
+    border-radius: 3px;
   }
 `;
 
