@@ -10,7 +10,7 @@ import { CloseButton, ButtonBox, Button } from "../../styles/shopping/PopupStyle
 import InputForm from './InputForm';
 import ImageUpload from './ImageUpload';
 
-function PostUpload({ authUser, setIsUpload, username }) {
+function PostUpload({ auth, setIsUpload, username }) {
   const dispatch = useDispatch();
   const [ images, setImages ] = useState([]);
   const [ isSubmit, setIsSubmit ] = useState(false);
@@ -30,13 +30,12 @@ function PostUpload({ authUser, setIsUpload, username }) {
   };
   const { values, setValues, handleChange } = useInputs(initValue);
   const [ filterValues, setFilterValues ] = useState([]);
-  
 
   //폼 유효성 검사
   const checkForm = useCallback(()=> {
     let errors = {};
     const body = {
-      store : authUser.userData.store._id,
+      store : auth.store._id,
       title : values.title,
       category : {
         department : 
@@ -173,7 +172,7 @@ function PostUpload({ authUser, setIsUpload, username }) {
         }}
       >
         <InputForm 
-          authUser={authUser}
+          auth={auth}
           values={values}
           setValues={setValues}
           handleChange={handleChange}

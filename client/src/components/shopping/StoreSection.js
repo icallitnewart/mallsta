@@ -9,7 +9,7 @@ import Popup from './Popup';
 
 function StoreSection() {
   const { productId, username } = useParams();
-  const [ authUser ] = useOutletContext(); 
+  const { auth, isPageOwner } = useOutletContext(); 
 
   const arr = Array.from(Array(30).keys());
   const [ isLiked, setIsLiked ] = useState({});
@@ -47,7 +47,7 @@ function StoreSection() {
       <h1>Recent</h1>
       
       {/* UploadButton */}
-      {authUser.userData && renderButton()}
+      {isPageOwner && renderButton()}
 
       {/* Post List */}
       {arr.map((item, index)=>
@@ -76,7 +76,7 @@ function StoreSection() {
     {/* Popup : Upload product / Product post */}
     {(isUpload || productId) && 
       <Popup 
-        authUser={authUser}
+        auth={auth}
         productId={productId}
         setIsUpload={setIsUpload}
         username={username}

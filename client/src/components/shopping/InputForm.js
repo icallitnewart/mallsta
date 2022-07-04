@@ -11,12 +11,12 @@ import { GrClose } from "react-icons/gr";
 import { DetailBox, StoreTitle, Pic, InputBox, EnterButton, TagBox, Tag, ErrMsg } from "../../styles/shopping/PopupStyle";
 
 function InputForm({ 
-  authUser, values, setValues, handleChange, err 
+  auth, values, setValues, handleChange, err 
 }) {
   const PUBLIC_URL = process.env.PUBLIC_URL;
   const tagBox = useRef(null);
-  const userInfo = authUser.userData;
-  const storeInfo = authUser.userData.store;
+  const userInfo = auth;
+  const storeInfo = auth.store;
   const [ tagValue, setTagValue ] = useState("");
 
   //태그 입력
