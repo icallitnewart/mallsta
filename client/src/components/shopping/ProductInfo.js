@@ -14,9 +14,9 @@ import {
   EditButtonBox 
 } from '../../styles/shopping/PopupStyle';
 
-function ProductInfo({ username }) {
-  const [ isSeller, setIsSeller ] = useState(false);
-
+function ProductInfo({ username, isPageOwner }) {
+  const isSeller = isPageOwner;
+  
   return (
     <InfoBox>
       {/* 스토어 프로필 */}

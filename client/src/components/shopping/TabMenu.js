@@ -4,7 +4,7 @@ import { Tab } from "../../styles/shopping/TabStyle";
 
 import { HiOutlineShoppingBag, HiOutlineHeart, HiOutlineTag, HiOutlineChatAlt } from "react-icons/hi";
 
-function TabMenu({ username }) {
+function TabMenu({ username, isPageOwner }) {
   const activeStyle = ({isActive})=>({ 
     color: isActive && "#ff5e62" 
   });
@@ -27,7 +27,9 @@ function TabMenu({ username }) {
             style={activeStyle}
           >
             <HiOutlineHeart />
-            <span>Likes</span>
+            <span>
+              {isPageOwner ? "Wishlist" : "Likes"}
+            </span>
           </NavLink>
         </li>
         <li>
