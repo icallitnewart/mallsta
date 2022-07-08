@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useOutletContext, Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useParams, useOutletContext, Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { getStoreInfo } from "../../_actions/store_action";
 
 import { BsSuitHeart, BsSuitHeartFill, BsShop, BsBoxSeam } from "react-icons/bs";
@@ -11,7 +11,9 @@ import Filter from './Filter';
 import Popup from './Popup';
 
 function StoreSection() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const store = useSelector(state=> state.store);
   const { productId, username } = useParams();
   const { auth, isPageOwner, userInfo } = useOutletContext(); 
 
@@ -20,20 +22,29 @@ function StoreSection() {
   const [ isLiked, setIsLiked ] = useState({});
   const [ isUpload, setIsUpload ] = useState(false);
 
+  //데이터 호출
   useEffect(()=> {
     if(userInfo.storeOwner) {
-      const body = { storeId : userInfo.store._id }
-      dispatch(getStoreInfo(body))
-      .then(response=> {
-        const data = response.payload;
+      const isDataStored = Object.keys(store).length > 0;
 
-        if(data.success) {
-          setProducts(data.storeInfo.product);
+      if(isDataStored) {
+        const storeInfo = store.storeInfo.storeInfo;
+        setProducts(storeInfo.product);
+        setIsLoading(false);
+      } else {
+        const body = { storeId : userInfo.store._id }
+        dispatch(getStoreInfo(body))
+        .then(response=> {
+          const data = response.payload;
+
+          if(data.success) {
+            setProducts(data.storeInfo.product);
+          } else {
+            console.error(data.err);
+          }
           setIsLoading(false);
-        } else {
-          console.error(data.err);
-        }
-      })
+        })
+      }
     }
   }, [userInfo]);
 
@@ -109,7 +120,12 @@ function StoreSection() {
           //상품이 없는 경우 알림 문구 출력
           ? renderAlert("product")
           : products.map((item, index)=>
-            <Item key={index}> 
+            <Item 
+              key={index}
+              onClick={()=> {
+                navigate(`/${username}/shopping/product/${item.index}`);
+              }}
+            > 
               <img src={process.env.PUBLIC_URL + item.images[0].file.filePath} />
               <Detail>
                 <TextBox>
@@ -138,6 +154,7 @@ function StoreSection() {
         <Popup 
           auth={auth}
           productId={productId}
+          isUpload={isUpload}
           setIsUpload={setIsUpload}
           username={username}
         />

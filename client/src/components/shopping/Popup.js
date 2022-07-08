@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import { Background, Container } from "../../styles/shopping/PopupStyle";
 
 import PostUpload from './PostUpload';
+import PostView from './PostView';
 
-function Popup({ auth, productId, setIsUpload, username }) {
+function Popup({ auth, productId, isUpload, setIsUpload, username }) {
   useEffect(()=> {
     document.body.style.overflow = "hidden";
 
@@ -16,10 +17,16 @@ function Popup({ auth, productId, setIsUpload, username }) {
   return (
     <Background>
       <Container>
-      {(!productId) && 
+      {(isUpload) && 
         <PostUpload  
           auth={auth}
           setIsUpload={setIsUpload}
+          username={username}
+        />
+      }
+      {(productId) &&
+        <PostView 
+          auth={auth}
           username={username}
         />
       }
