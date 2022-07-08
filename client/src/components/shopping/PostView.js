@@ -7,16 +7,15 @@ import { CloseButton } from '../../styles/shopping/PopupStyle';
 import ImageView from './ImageView';
 import ProductInfo from './ProductInfo';
 
-function PostView({ auth, username }) {
+function PostView(props) {
   const navigate = useNavigate();
+
   return (
     <>
       <ImageView />
-      <ProductInfo 
-        username={username}
-      />
+      <ProductInfo {...props} />
       <CloseButton
-        onClick={()=> navigate(`/${username}/shopping`)}
+        onClick={()=> navigate(`/${props.username}/shopping`)}
         aria-label="Close Button"
       >
         <GrClose />

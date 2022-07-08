@@ -5,7 +5,7 @@ import { Background, Container } from "../../styles/shopping/PopupStyle";
 import PostUpload from './PostUpload';
 import PostView from './PostView';
 
-function Popup({ auth, productId, isUpload, setIsUpload, username }) {
+function Popup(props) {
   useEffect(()=> {
     document.body.style.overflow = "hidden";
 
@@ -17,18 +17,11 @@ function Popup({ auth, productId, isUpload, setIsUpload, username }) {
   return (
     <Background>
       <Container>
-      {(isUpload) && 
-        <PostUpload  
-          auth={auth}
-          setIsUpload={setIsUpload}
-          username={username}
-        />
+      {(props.isUpload) && 
+        <PostUpload {...props} />
       }
-      {(productId) &&
-        <PostView 
-          auth={auth}
-          username={username}
-        />
+      {(props.productId) &&
+        <PostView {...props} />
       }
       </Container>
     </Background>

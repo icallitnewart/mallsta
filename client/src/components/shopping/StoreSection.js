@@ -21,6 +21,11 @@ function StoreSection() {
   const [ isLoading, setIsLoading ] = useState(true);
   const [ isLiked, setIsLiked ] = useState({});
   const [ isUpload, setIsUpload ] = useState(false);
+  const props = {
+    productId, username, 
+    auth, isPageOwner, userInfo,
+    isUpload, setIsUpload
+  };
 
   //데이터 호출
   useEffect(()=> {
@@ -150,15 +155,7 @@ function StoreSection() {
       </Content>
 
       {/* Popup : Upload product / Product post */}
-      {(isUpload || productId) && 
-        <Popup 
-          auth={auth}
-          productId={productId}
-          isUpload={isUpload}
-          setIsUpload={setIsUpload}
-          username={username}
-        />
-      }
+      {(isUpload || productId) && <Popup {...props} />}
       </>
     }
     </>
