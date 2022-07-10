@@ -1,7 +1,8 @@
 import {
   UPLOAD_IMAGE_PRODUCT,
   DELETE_IMAGE_PRODUCT,
-  REGISTER_PRODUCT
+  REGISTER_PRODUCT,
+  GETINFO_PRODUCT
 } from "../_actions/types";
 
 export default function(state={}, action) {
@@ -22,6 +23,12 @@ export default function(state={}, action) {
       return {
         ...state,
         register : action.payload
+      }
+      break;
+    case GETINFO_PRODUCT :
+      return {
+        ...state,
+        productInfo : action.payload
       }
       break;
     default :

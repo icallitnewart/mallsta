@@ -22,7 +22,7 @@ function StoreSection() {
   const [ isLiked, setIsLiked ] = useState({});
   const [ isUpload, setIsUpload ] = useState(false);
   const props = {
-    productId, username, 
+    productId : parseInt(productId), username, 
     auth, isPageOwner, userInfo,
     isUpload, setIsUpload
   };

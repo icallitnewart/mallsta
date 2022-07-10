@@ -123,4 +123,18 @@ router.post('/register', (req, res)=> {
   })
 });
 
+//상품 정보 요청
+router.get('/product_by_id', (req, res)=> {
+  const productId = req.query.id;
+
+  Product.findOne({ index : productId }, (err, productInfo)=> {
+    if(err || !productInfo) return res.json({ 
+      success : false, 
+      err : err ? err : "No matching result found."
+    });
+    
+    return res.status(200).json({ success : true, productInfo });
+  })
+});
+
 module.exports = router;

@@ -14,8 +14,9 @@ import {
   EditButtonBox 
 } from '../../styles/shopping/PopupStyle';
 
-function ProductInfo({ username, isPageOwner }) {
+function ProductInfo({ username, isPageOwner, product, userInfo }) {
   const isSeller = isPageOwner;
+  const storeInfo = userInfo.store;
   
   return (
     <InfoBox>
@@ -36,18 +37,26 @@ function ProductInfo({ username, isPageOwner }) {
           /> */}
         </Pic>
         <h1>
-          <Link to={`/${username}/shopping`}>icallitnewart</Link>
+          <Link to={`/${username}/shopping`}>
+            {storeInfo.name}
+          </Link>
         </h1>
       </StoreTitle>
 
       {/* 상품 설명 */}
       <TextBox>
         <p>
-          <span>icallitnewart</span>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nisi consectetur labore, reprehenderit illo sint corrupti tenetur? Natus officia expedita beatae repudiandae tenetur sunt? Alias explicabo eligendi laboriosam porro voluptatem magnam.
+          <span>{storeInfo.name}</span>
+          {product && product.desc}
         </p>
+        {product && product.tags &&
         <Tags>
-          <li><span>Tags</span></li>
+          {product.tags.map((tag, index)=> 
+            <li key={index}><span>{tag}</span></li>
+          )}
+        </Tags>
+        }
+        <Tags>
         </Tags>
       </TextBox>
 
@@ -238,4 +247,4 @@ function ProductInfo({ username, isPageOwner }) {
   )
 }
 
-export default ProductInfo;
+export default React.memo(ProductInfo);

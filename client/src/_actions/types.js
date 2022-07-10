@@ -18,3 +18,4 @@ export const GETINFO_STORE = "getinfo_store";
 export const UPLOAD_IMAGE_PRODUCT = "upload_image_product";
 export const DELETE_IMAGE_PRODUCT = "delete_image_product";
 export const REGISTER_PRODUCT = "register_product";
+export const GETINFO_PRODUCT = "getinfo_product";

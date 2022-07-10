@@ -2,7 +2,8 @@ import axios from "axios";
 import { 
   UPLOAD_IMAGE_PRODUCT,
   DELETE_IMAGE_PRODUCT,
-  REGISTER_PRODUCT
+  REGISTER_PRODUCT,
+  GETINFO_PRODUCT
 } from "./types";
 
 //이미지 업로드
@@ -40,6 +41,19 @@ export function registerProduct(data) {
 
   return {
     type : REGISTER_PRODUCT,
+    payload : request
+  }
+}
+
+//상품 정보 요청
+export function getInfoProduct(data) {
+  const request = 
+    axios
+    .get(`/api/products/product_by_id?id=${data}`)
+    .then(res => res.data);
+
+  return {
+    type : GETINFO_PRODUCT,
     payload : request
   }
 }

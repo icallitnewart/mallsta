@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
+import { PRODUCT_CATEGORY as CATEGORY } from '../../data/productData';
 
 import { BsStarFill } from "react-icons/bs";
 import { ImageBox, ImageBig, Images, ArrowBtn, TitleBox } from '../../styles/shopping/PopupStyle';
 import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
 
-function ImageView() {
+function ImageView({ product }) {
+  const [ category, setCategory ] = useState(null);
+
+  useEffect(()=> {
+    if(product) {
+      const targetCategory = CATEGORY.filter((category)=> category._id === product.category.department)[0];
+      setCategory(targetCategory);
+    }
+  }, [product]);
+
   return (
     <ImageBox 
       style={{ 
@@ -20,11 +31,24 @@ function ImageView() {
         >
           <IoIosArrowDropleftCircle />
         </ArrowBtn>
-        <Images imgNum={2}>
-          <li>
-            <img src={process.env.PUBLIC_URL + "/img/profile_image_default.jpg"} />
-          </li>
-        </Images>
+        {product && 
+          <Images imgNum={product.images.length}>
+            {product.images.map((image, index)=> 
+            <li key={index}>
+              <img 
+                src={image.file.filePath} 
+                style={{
+                  filter: `
+                    brightness(${image.filter.brightness}%) 
+                    saturate(${image.filter.saturate}%) 
+                    contrast(${image.filter.contrast}%) 
+                  `
+                }}
+              />
+            </li>
+            )}
+          </Images>
+        }
         <ArrowBtn 
           type="button"
           btnType="next"
@@ -35,10 +59,14 @@ function ImageView() {
       </ImageBig>
       <TitleBox ht="calc(100% - 360px)">
         {/* 카테고리 */}
-        <span>Fashion &#62; Top</span>
+        <span>
+          {category && category.department} 
+          &nbsp;&#62;&nbsp;
+          {category && category.array.filter((item)=> item._id === parseInt(product.category.productType))[0].type}
+        </span>
         {/* 상품명 */}
         <h1>
-          <span>Lorem ipsum dolor sit amet consectetur.</span>
+          <span>{product && product.title}</span>
         </h1>
         <ul>
           <li>
@@ -54,7 +82,10 @@ function ImageView() {
           </li>
           <li>
             {/* 가격 */}
-            <span>$300</span>
+            <span>
+              {product && product.price.currency === "dollar" ? "$" : "￦"}
+              {product && product.price.amount}
+            </span>
           </li>
         </ul>
       </TitleBox>
@@ -62,4 +93,4 @@ function ImageView() {
   )
 }
 
-export default ImageView;
+export default React.memo(ImageView);
