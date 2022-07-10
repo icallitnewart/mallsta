@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { deleteProduct } from '../../_actions/product_action';
+import { USER_DEFAULT_PROFILE_IMAGE as DEFAULT_PROFILE } from '../../data/userData';
 
 import { 
   BsStar, BsStarFill, BsStarHalf, 
@@ -17,6 +18,7 @@ import {
 } from '../../styles/shopping/PopupStyle';
 
 function ProductInfo({ username, isPageOwner, product, userInfo }) {
+  const PUBLIC_URL = process.env.PUBLIC_URL;
   const dispatch = useDispatch();
   const isSeller = isPageOwner;
   const storeInfo = userInfo.store;
@@ -51,7 +53,7 @@ function ProductInfo({ username, isPageOwner, product, userInfo }) {
       {/* 스토어 프로필 */}
       <StoreTitle>
         <Pic>
-          {/* <img 
+          <img 
             src={
               userInfo.profileImage
               ? (PUBLIC_URL + userInfo.profileImage)
@@ -62,7 +64,7 @@ function ProductInfo({ username, isPageOwner, product, userInfo }) {
               { filter: "brightness(1.3)" }
             }
             alt={`${userInfo.username}'s profile image`} 
-          /> */}
+          />
         </Pic>
         <h1>
           <Link to={`/${username}/shopping`}>
