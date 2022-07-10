@@ -125,6 +125,7 @@ export const Images = styled.ul`
   li {
     width: ${props=> 100 / props.imgNum}%;
     height: 100%;
+    aspect-ratio: 1 / 1;
 
     img {
       width: 100%;
