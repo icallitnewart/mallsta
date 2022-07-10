@@ -65,27 +65,7 @@ router.post('/delete_image', auth, (req, res)=> {
   const username = req.user.username;
   const targetImage = req.body.targetImage;
 
-  const deleteImages = (images, cb) => {
-    let num = images.length;
-    images.forEach((image)=>{
-      const filePath = `./client/public/upload/product/${username}/${image}`;
-  
-      //업로드 이미지가 있다면 삭제
-      const isExist = fs.existsSync(filePath);
-  
-      if(isExist) fs.unlink(filePath, (err)=> {
-        num--;
-
-        if(err) {
-          return cb(err);
-        } else if(num <= 0) {
-          return cb(null); 
-        }
-      });
-    });
-  }
-
-  deleteImages(targetImage, (err)=> {
+  deleteImages(targetImage, username, (err)=> {
     if(err) return res.json({ success: false, err });
   
     return res.status(200).json({ success: true });
@@ -136,5 +116,54 @@ router.get('/product_by_id', (req, res)=> {
     return res.status(200).json({ success : true, productInfo });
   })
 });
+
+//상품 삭제
+router.post('/delete', (req, res)=> {
+  Product.findOneAndDelete({ _id: req.body._id }, (err)=> {
+    if(err) return res.json({ success : false, err });
+
+    Store.findOneAndUpdate(
+      { _id : req.body.store },
+      { 
+        $inc : { 
+          productTotal : -1
+        }
+      },
+      { new : true },
+      (err, storeInfo)=> {
+        if(err) return res.json({ success : false, err });
+
+        const targetImage = req.body.targetImage;
+        const username = req.body.username;
+
+        deleteImages(targetImage, username, (err)=> {
+          if(err) return res.json({ success: false, err });
+        
+          return res.status(200).json({ success: true });
+        });
+      }
+    )
+  })
+});
+
+function deleteImages(images, username, cb) {
+  let num = images.length;
+  images.forEach((image)=>{
+    const filePath = `./client/public/upload/product/${username}/${image}`;
+
+    //업로드 이미지가 있다면 삭제
+    const isExist = fs.existsSync(filePath);
+
+    if(isExist) fs.unlink(filePath, (err)=> {
+      num--;
+
+      if(err) {
+        return cb(err);
+      } else if(num <= 0) {
+        return cb(null); 
+      }
+    });
+  });
+}
 
 module.exports = router;

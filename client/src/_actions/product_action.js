@@ -3,7 +3,8 @@ import {
   UPLOAD_IMAGE_PRODUCT,
   DELETE_IMAGE_PRODUCT,
   REGISTER_PRODUCT,
-  GETINFO_PRODUCT
+  GETINFO_PRODUCT,
+  DELETE_PRODUCT
 } from "./types";
 
 //이미지 업로드
@@ -54,6 +55,19 @@ export function getInfoProduct(data) {
 
   return {
     type : GETINFO_PRODUCT,
+    payload : request
+  }
+}
+
+//상품 삭제
+export function deleteProduct(data) {
+  const request = 
+    axios
+    .post('/api/products/delete', data)
+    .then(res => res.data);
+
+  return {
+    type : DELETE_PRODUCT,
     payload : request
   }
 }

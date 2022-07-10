@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { deleteProduct } from '../../_actions/product_action';
 
 import { 
   BsStar, BsStarFill, BsStarHalf, 
@@ -15,8 +17,34 @@ import {
 } from '../../styles/shopping/PopupStyle';
 
 function ProductInfo({ username, isPageOwner, product, userInfo }) {
+  const dispatch = useDispatch();
   const isSeller = isPageOwner;
   const storeInfo = userInfo.store;
+
+  const deletePost = ()=> {
+    if(window.confirm("Are you sure you want to delete this post?")) {
+      const targetImage = product.images.map((image)=> image.file.fileName);
+
+      const body = {
+        ...product,
+        targetImage,
+        username
+      };
+  
+      dispatch(deleteProduct(body))
+      .then(response=> {
+        const data = response.payload;
+
+        if(data.success) {
+          alert("Successfully deleted!");
+          window.location.href = `/${username}/shopping`;
+        } else {
+          alert("An error occured. Please try again");
+          console.error(data.err);
+        }
+      })
+    }
+  };
   
   return (
     <InfoBox>
@@ -193,6 +221,7 @@ function ProductInfo({ username, isPageOwner, product, userInfo }) {
         <EditButtonBox>
           <button
             type="button"
+            onClick={deletePost}
           >
             Delete
           </button>
