@@ -12,7 +12,15 @@ function ImageView({ product }) {
   useEffect(()=> {
     if(product) {
       const targetCategory = CATEGORY.filter((category)=> category._id === product.category.department)[0];
-      setCategory(targetCategory);
+      const department = targetCategory.department;
+      const productType = 
+        targetCategory &&
+        (targetCategory.array 
+          ? targetCategory.array.filter((item)=> item._id === parseInt(product.category.productType))[0].type
+          : product.category.productType
+        );
+        
+      setCategory({ department, productType });
     }
   }, [product]);
 
@@ -62,7 +70,7 @@ function ImageView({ product }) {
         <span>
           {category && category.department} 
           &nbsp;&#62;&nbsp;
-          {category && category.array.filter((item)=> item._id === parseInt(product.category.productType))[0].type}
+          {category && category.productType}
         </span>
         {/* 상품명 */}
         <h1>
