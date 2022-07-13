@@ -152,11 +152,16 @@ function PostUpload({
     }
   };
 
-  //브라우저 이탈시 업로드한 이미지 자동 삭제
+  //브라우저 이탈시 경고창 띄우기
   useEffect(()=> {
-    window.addEventListener("beforeunload", deleteImages);
+    const notify = (e)=> {
+      e.preventDefault();
+      e.returnValue = true;
+    };
 
-    return ()=> window.removeEventListener("beforeunload", deleteImages);
+    window.addEventListener("beforeunload", notify);
+
+    return ()=> window.removeEventListener("beforeunload", notify);
   }, []);
 
   //실시간 유효성 검사 (POST버튼 클릭 이후 작동)
