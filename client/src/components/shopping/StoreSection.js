@@ -21,10 +21,11 @@ function StoreSection() {
   const [ isLoading, setIsLoading ] = useState(true);
   const [ isLiked, setIsLiked ] = useState({});
   const [ isUpload, setIsUpload ] = useState(false);
+  const [ isEdit, setIsEdit ] = useState(false);
   const props = {
     productId, username, 
     auth, isPageOwner, userInfo,
-    isUpload, setIsUpload
+    isUpload, setIsUpload, isEdit, setIsEdit
   };
 
   //데이터 호출

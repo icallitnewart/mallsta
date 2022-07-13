@@ -17,11 +17,14 @@ function Popup(props) {
   return (
     <Background>
       <Container>
-      {(props.isUpload) && 
+      {props.isUpload && 
         <PostUpload {...props} />
       }
-      {(props.productId) &&
-        <PostView {...props} />
+      {props.productId &&
+        (props.isEdit
+          ? <PostUpload {...props} />
+          : <PostView {...props} />
+        )
       }
       </Container>
     </Background>

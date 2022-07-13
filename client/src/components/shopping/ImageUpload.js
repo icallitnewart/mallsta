@@ -8,22 +8,33 @@ import { FiUpload } from "react-icons/fi";
 import { ImageBox, ImageBig, ThumbnailBox, ImageSmall, ImageFilter, FilterOption, UploadButton, ErrMsg } from "../../styles/shopping/PopupStyle";
 
 function ImageUpload({ 
-  images, setImages, filterValues, setFilterValues, err 
+  images, setImages, filterValues, setFilterValues, 
+  isEdit, err, product 
 }) {
   const dispatch = useDispatch();
   const file = useRef(null);
   const form = useRef(null);
   const prevImages = usePrevious(images);
-  const [ activeIndex, setActiveIndex ] = useState(null);
-  const [ activeImage, setActiveImage ] = useState(null);
+  const [ activeIndex, setActiveIndex ] = useState(isEdit ? 0 : null);
+  const [ activeImage, setActiveImage ] = useState(isEdit ? images[activeIndex] : null);
 
   //선택한 이미지 파일 삭제 (1개)
   const deleteImage = (targetIndex)=> {
     let newArr = [ ...images ];
+
     //프론트 이미지 삭제
     const removed = newArr.filter((image)=>  image.fileName !== images[targetIndex].fileName);
     setImages(removed);
     
+    if(isEdit) {
+      //기존의 이미지는 서버에서 삭제 방지 (포스트 submit할 때 삭제)
+      const isExist = product.images.some(image=> {
+        return (image.file.fileName === images[targetIndex].fileName);
+      });
+
+      if(isExist) return;
+    }
+
     //서버 파일 삭제
     const body = {
       targetImage : [ newArr[targetIndex].fileName ]
@@ -34,7 +45,7 @@ function ImageUpload({
       const data = response.payload;
 
       if(!data.success) {
-        alert(data.err);
+        console.error(data.err);
       }
     });
   };

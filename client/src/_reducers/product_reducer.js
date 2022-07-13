@@ -3,7 +3,8 @@ import {
   DELETE_IMAGE_PRODUCT,
   REGISTER_PRODUCT,
   GETINFO_PRODUCT,
-  DELETE_PRODUCT
+  DELETE_PRODUCT,
+  EDIT_PRODUCT
 } from "../_actions/types";
 
 export default function(state={}, action) {
@@ -36,6 +37,12 @@ export default function(state={}, action) {
       return {
         ...state,
         delete : action.payload
+      }
+      break;
+    case EDIT_PRODUCT :
+      return {
+        ...state,
+        edit : action.payload
       }
       break;
     default :

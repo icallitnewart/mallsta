@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { deleteImageProduct, registerProduct } from '../../_actions/product_action';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteImageProduct, registerProduct, editProduct } from '../../_actions/product_action';
 import useInputs from '../../hooks/useInputs';
 
 import { GrClose } from "react-icons/gr";
@@ -10,9 +11,13 @@ import { CloseButton, ButtonBox, Button } from "../../styles/shopping/PopupStyle
 import InputForm from './InputForm';
 import ImageUpload from './ImageUpload';
 
-function PostUpload({ auth, setIsUpload, username }) {
+function PostUpload({ 
+  auth, username, isUpload, setIsUpload, isEdit, setIsEdit
+}) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [ images, setImages ] = useState([]);
+  const product = useSelector(state=> state.product.productInfo && state.product.productInfo.productInfo);
+  const [ images, setImages ] = useState(isEdit ? product.images.map(image=> image.file) : []);
   const [ isSubmit, setIsSubmit ] = useState(false);
   const [ success, setSuccess ] = useState(false);
   const [ isLoading, setIsLoading ] = useState(false);
@@ -20,16 +25,23 @@ function PostUpload({ auth, setIsUpload, username }) {
 
   //Form Values
   const initValue = {
-    title : "",
-    category1 : "",
-    category2 : "",
-    price : 0,
-    currency : "dollar",
-    desc : "",
-    tags : []
+    title : isEdit ? product.title : "",
+    category1 : isEdit ? product.category.department : "",
+    category2 : isEdit ? product.category.productType : "",
+    price : isEdit ? product.price.amount : 0,
+    currency : isEdit ? product.price.currency : "dollar",
+    desc : isEdit ? product.desc : "",
+    tags : isEdit ? product.tags : []
   };
   const { values, setValues, handleChange } = useInputs(initValue);
-  const [ filterValues, setFilterValues ] = useState([]);
+  const [ filterValues, setFilterValues ] = useState(isEdit ? product.images : []);
+  
+  const props = {
+    auth, isEdit, isUpload, err, product,
+    images, setImages, 
+    values, setValues, handleChange,
+    filterValues, setFilterValues,
+  };
 
   //폼 유효성 검사
   const checkForm = useCallback(()=> {
@@ -90,7 +102,27 @@ function PostUpload({ auth, setIsUpload, username }) {
   //서버 이미지 파일 (여러개) 삭제
   const deleteImages = ()=> {
     if(images.length > 0) {
-      const targetImage = images.map((image)=> image.fileName);
+      let targetImage = [];
+
+      if(isEdit) {
+        //새로 추가된 이미지 파일만 삭제 (편집 모드)
+        const oldImages = product.images;
+        const newImages = (images, oldImages)=> {
+          const target = images.filter(image=> {
+            return !oldImages.some(oldImage=> {
+              return image.fileName === oldImage.file.fileName;
+            })
+          });
+
+          return target.map(img=> img.fileName);
+        };
+        targetImage = newImages(images, oldImages);
+      }
+
+      if(isUpload) {
+        targetImage = images.map((image)=> image.fileName);
+      }
+
       const body = { targetImage };
   
       dispatch(deleteImageProduct(body))
@@ -106,8 +138,18 @@ function PostUpload({ auth, setIsUpload, username }) {
 
   //팝업창 닫기 클릭시
   const closePopup = ()=> {
-    setIsUpload(false);
-    deleteImages();
+    if(window.confirm("Are you sure you want to cancel posting?")) {
+      if(isUpload) {
+        setIsUpload(false);
+      }
+      
+      if(isEdit) {
+        setIsEdit(false);
+        navigate(`/${username}/shopping`);
+      }
+      
+      deleteImages();
+    }
   };
 
   //브라우저 이탈시 업로드한 이미지 자동 삭제
@@ -123,7 +165,7 @@ function PostUpload({ auth, setIsUpload, username }) {
       setErr(checkForm().errors);
     }
   }, [values, filterValues, isSubmit]);
-
+  
   //포스트 업로드
   useEffect(()=> {
     const isError = (Object.keys(err).length > 0);
@@ -131,7 +173,26 @@ function PostUpload({ auth, setIsUpload, username }) {
     if(success && !isError) {
       const body = checkForm().body;
 
-      dispatch(registerProduct(body))
+      //기존 포스트 수정하는 경우 body 변경
+      if(isEdit) {
+        body._id = product._id;
+        body.username = username;
+
+        //사용자가 삭제한 기존의 이미지 서버에서도 삭제
+        const oldImages = product.images;
+        const targetImages = oldImages.filter(oldImage=> {
+          let missingImages = images.findIndex(image=> {
+            return oldImage.file.fileName === image.fileName; 
+          });
+
+          return missingImages === -1;
+        });
+
+        body.targetImage = targetImages.map(image=> image.file.fileName);
+      }
+
+      //서버에 등록 및 수정
+      dispatch(isEdit ? editProduct(body) : registerProduct(body))
       .then(response=> {
         const data = response.payload;
 
@@ -139,7 +200,7 @@ function PostUpload({ auth, setIsUpload, username }) {
           setIsLoading(false);
           
           const timer = setTimeout(()=> {
-            alert("You have successfully posted a product!");
+            alert(`You have successfully ${isEdit ? "edit" : "post"}ed a product!`);
             window.location.replace(`/${username}/shopping`);
           }, 100);
           return ()=> clearTimeout(timer);
@@ -147,38 +208,24 @@ function PostUpload({ auth, setIsUpload, username }) {
           setIsLoading(false);
 
           const timer = setTimeout(()=> {
-            alert("An attempt to upload a post has failed. Please try again.");
+            alert(`An attempt to ${isEdit ? "edit" : "upload"} a post has failed. Please try again.`);
           }, 100);
           return ()=> clearTimeout(timer);
         }
       });
     }
-  }, [success]);
+  }, [success, isUpload, isEdit]);
 
   return (
     <>
-      <ImageUpload 
-        images={images}
-        setImages={setImages}
-        filterValues={filterValues}
-        setFilterValues={setFilterValues}
-        err={err}
-      />
-
+      <ImageUpload {...props} />
       <form 
         onSubmit={handleSubmit}
         onKeyDown={(e)=> {
           if(e.key==="Enter") e.preventDefault();
         }}
       >
-        <InputForm 
-          auth={auth}
-          values={values}
-          setValues={setValues}
-          handleChange={handleChange}
-          err={err}
-        />
-
+        <InputForm {...props} />
         <ButtonBox>
           <Button 
             type="button"
@@ -194,7 +241,7 @@ function PostUpload({ auth, setIsUpload, username }) {
           >
             {isLoading
             ? <CgSpinner />
-            : "Post"
+            : isEdit ? "Save" : "Post"
             }
           </Button>
         </ButtonBox>
@@ -202,7 +249,7 @@ function PostUpload({ auth, setIsUpload, username }) {
 
       <CloseButton
         onClick={closePopup}
-        aria-label="Close Button"
+        aria-label="Close"
       >
         <GrClose />
       </CloseButton>

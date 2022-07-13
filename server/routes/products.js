@@ -146,6 +146,43 @@ router.post('/delete', (req, res)=> {
   })
 });
 
+//상품 수정
+router.post('/edit', (req, res)=> {
+  Product.findOneAndUpdate(
+    { _id : req.body._id }, 
+    {
+      title : req.body.title,
+      category : {
+        department : req.body.category.department,
+        productType : req.body.category.productType
+      },
+      price : {
+        amount : req.body.price.amount,
+        currency : req.body.price.currency
+      },
+      desc : req.body.desc,
+      images : req.body.images,
+      tags : req.body.tags
+    },
+    { new : true },
+    (err, productInfo)=> {
+      if(err) return res.json({ success : false, err });
+
+      //기존 이미지가 삭제되었다면 서버에서 삭제
+      const targetImage = req.body.targetImage;
+      if(targetImage.length > 0) {
+        const username = req.body.username;
+
+        deleteImages(targetImage, username, (err)=> {
+          if(err) return res.json({ success: false, err });
+          return res.status(200).json({ success: true });
+        });
+      } else {
+        return res.status(200).json({ success: true });
+      }
+  });
+});
+
 function deleteImages(images, username, cb) {
   let num = images.length;
   images.forEach((image)=>{

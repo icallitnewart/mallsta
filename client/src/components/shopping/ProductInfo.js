@@ -17,7 +17,9 @@ import {
   EditButtonBox 
 } from '../../styles/shopping/PopupStyle';
 
-function ProductInfo({ username, isPageOwner, product, userInfo }) {
+function ProductInfo({ 
+  username, isPageOwner, product, userInfo, setIsEdit 
+}) {
   const PUBLIC_URL = process.env.PUBLIC_URL;
   const dispatch = useDispatch();
   const isSeller = isPageOwner;
@@ -47,7 +49,7 @@ function ProductInfo({ username, isPageOwner, product, userInfo }) {
       })
     }
   };
-  
+
   return (
     <InfoBox>
       {/* 스토어 프로필 */}
@@ -229,6 +231,7 @@ function ProductInfo({ username, isPageOwner, product, userInfo }) {
           </button>
           <button
             type="button"
+            onClick={()=> setIsEdit(true)}
           >
             Edit
           </button>
