@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import usePrevious from '../../hooks/usePrevious';
 
 import { USER_DEFAULT_PROFILE_IMAGE as DEFAULT_PROFILE } from '../../data/userData';
 import { 
@@ -15,6 +16,7 @@ function InputForm({
 }) {
   const PUBLIC_URL = process.env.PUBLIC_URL;
   const tagBox = useRef(null);
+  const prevCategory1 = usePrevious(values.category1);
   const userInfo = auth;
   const storeInfo = auth.store;
   const [ tagValue, setTagValue ] = useState("");
@@ -76,7 +78,10 @@ function InputForm({
 
   //category1 변경시 category2 초기화
   useEffect(()=> {
-    setValues({ ...values, category2 : "" });
+    //*처음 렌더링될 때 작동하지 않게 방지
+    if(prevCategory1 !== undefined) {
+      setValues({ ...values, category2 : "" });
+    }
   }, [values.category1]);
 
   return (
