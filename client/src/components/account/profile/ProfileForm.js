@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { checkEmailUser, editUser } from '../../_actions/user_action';
-import useInputs from '../../hooks/useInputs';
+import { checkEmailUser, editUser } from '../../../_actions/user_action';
+import useInputs from '../../../hooks/useInputs';
 
-import { Td } from "../../styles/account/ProfileStyle";
-import { Table, Tr, Button, ErrMsg } from "../../styles/account/FormStyle";
+import { Td } from "../../../styles/account/ProfileStyle";
+import { Table, Tr, Button, ErrMsg } from "../../../styles/account/FormStyle";
 
 function ProfileForm({ user }) {
   const dispatch = useDispatch();

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { registerStore, editStore } from '../../_actions/store_action';
-import useInputs from '../../hooks/useInputs';
-import { category } from "../../data/storeData";
+import { registerStore, editStore } from '../../../_actions/store_action';
+import useInputs from '../../../hooks/useInputs';
+import { category } from "../../../data/storeData";
 
-import { Container, ProductBox, PostButton, Title } from "../../styles/account/StoreStyle";
-import { Table, Tr, Button, ErrMsg } from "../../styles/account/FormStyle";
+import { Container, ProductBox, PostButton, Title } from "../../../styles/account/StoreStyle";
+import { Table, Tr, Button, ErrMsg } from "../../../styles/account/FormStyle";
 
 function StoreForm({ user, openStore }) {
   const dispatch = useDispatch();
@@ -82,9 +82,8 @@ function StoreForm({ user, openStore }) {
           }
         });
       }
-    };
-
     }
+  };
 
 
   useEffect(()=> {

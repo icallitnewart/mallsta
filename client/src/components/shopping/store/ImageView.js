@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
-import { PRODUCT_CATEGORY as CATEGORY } from '../../data/productData';
+import { PRODUCT_CATEGORY as CATEGORY } from '../../../data/productData';
 
 import { BsStarFill } from "react-icons/bs";
-import { ImageBox, ImageBig, TitleBox } from '../../styles/shopping/PopupStyle';
+import { ImageBox, ImageBig, TitleBox } from '../../../styles/shopping/PopupStyle';
 
 import ImageSlider from './ImageSlider';
 

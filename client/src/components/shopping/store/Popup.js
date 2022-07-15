@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { Background, Container } from "../../styles/shopping/PopupStyle";
+import { Background, Container } from "../../../styles/shopping/PopupStyle";
 
 import PostUpload from './PostUpload';
 import PostView from './PostView';

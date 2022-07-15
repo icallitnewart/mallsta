@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { uploadImageProduct, deleteImageProduct } from '../../_actions/product_action';
-import usePrevious from '../../hooks/usePrevious';
+import { uploadImageProduct, deleteImageProduct } from '../../../_actions/product_action';
+import usePrevious from '../../../hooks/usePrevious';
 
 import { GrClose } from "react-icons/gr";
 import { FiUpload } from "react-icons/fi";
-import { ImageBox, ImageBig, ThumbnailBox, ImageSmall, ImageFilter, FilterOption, UploadButton, ErrMsg } from "../../styles/shopping/PopupStyle";
+import { ImageBox, ImageBig, ThumbnailBox, ImageSmall, ImageFilter, FilterOption, UploadButton, ErrMsg } from "../../../styles/shopping/PopupStyle";
 
 function ImageUpload({ 
   images, setImages, filterValues, setFilterValues, 

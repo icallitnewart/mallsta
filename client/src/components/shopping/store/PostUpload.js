@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteImageProduct, registerProduct, editProduct } from '../../_actions/product_action';
-import useInputs from '../../hooks/useInputs';
+import { deleteImageProduct, registerProduct, editProduct } from '../../../_actions/product_action';
+import useInputs from '../../../hooks/useInputs';
 
 import { GrClose } from "react-icons/gr";
 import { CgSpinner } from "react-icons/cg";
-import { CloseButton, ButtonBox, Button } from "../../styles/shopping/PopupStyle";
+import { CloseButton, ButtonBox, Button } from "../../../styles/shopping/PopupStyle";
 
 import InputForm from './InputForm';
 import ImageUpload from './ImageUpload';

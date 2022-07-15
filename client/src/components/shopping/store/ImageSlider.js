@@ -1,7 +1,7 @@
 import React from 'react'
-import useSlider from '../../hooks/useSlider';
+import useSlider from '../../../hooks/useSlider';
 
-import { Images, ArrowBtn, Disc, Dot } from '../../styles/shopping/PopupStyle';
+import { Images, ArrowBtn, Disc, Dot } from '../../../styles/shopping/PopupStyle';
 import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
 
 function ImageSlider({ product }) {

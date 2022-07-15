@@ -7,16 +7,21 @@ import {
 
 import Auth from "./hoc/auth";
 import Layout from "./components/common/Layout";
+import MembershipLayout from "./components/membership/MembershipLayout";
+import ShoppingLayout from "./components/shopping/ShoppingLayout";
+import AccountLayout from "./components/account/AccountLayout";
 
+//membership
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import AccountPage from "./pages/AccountPage";
-import ShoppingPage from "./pages/ShoppingPage";
-
-import StoreSection from './components/shopping/StoreSection';
-import LikeSection from './components/shopping/LikeSection';
-import ReviewSection from './components/shopping/ReviewSection';
-import OrderSection from './components/shopping/OrderSection';
+//account
+import EditProfilePage from "./pages/EditProfilePage";
+import EditStorePage from "./pages/EditStorePage";
+//shopping
+import StorePage from "./pages/StorePage";
+import WishlistPage from "./pages/WishlistPage";
+import ReviewPage from "./pages/ReviewPage";
+import OrderPage from "./pages/OrderPage";
 
 function App() {
   return (
@@ -24,47 +29,57 @@ function App() {
       <GlobalStyle />
       <Routes>
         {/* Membership Pages */}
-        <Route 
-          path="/membership/login" 
-          element={Auth(<LoginPage />, false)} 
-        />
-        <Route 
-          path="/membership/register" 
-          element={Auth(<RegisterPage />, false)} 
-        />
+        <Route element={<MembershipLayout />}>
+          <Route 
+            path="/membership/login" 
+            element={Auth(<LoginPage />, false)} 
+          />
+          <Route 
+            path="/membership/register" 
+            element={Auth(<RegisterPage />, false)} 
+          />
+        </Route>
 
-        {/* Layout: Navbar, Footer */}
+        {/* Common Layout: Navbar, Footer */}
         <Route element={<Layout />}>
           <Route 
             path="/" 
             element={Auth(<div>TEST</div>, null)} 
           />
-          <Route 
-            path="/account/:path" 
-            element={Auth(<AccountPage />, true)} 
-          />
+
+          {/* Account Pages */}
+          <Route element={<AccountLayout />}>
+            <Route 
+              path="/account/profile" 
+              element={Auth(<EditProfilePage />, true)} 
+            />
+            <Route 
+              path="/account/store" 
+              element={Auth(<EditStorePage />, true)} 
+            />
+          </Route>
 
           {/* Shopping Pages */}
-          <Route element={<ShoppingPage />}>
+          <Route element={<ShoppingLayout />}>
             <Route 
               path="/:username/shopping" 
-              element={Auth(<StoreSection />, null)} 
+              element={Auth(<StorePage />, null)} 
             />
             <Route 
               path="/:username/shopping/product/:productId" 
-              element={Auth(<StoreSection />, null)} 
+              element={Auth(<StorePage />, null)} 
             />
             <Route 
               path="/:username/shopping/likes" 
-              element={Auth(<LikeSection />, true)} 
+              element={Auth(<WishlistPage />, true)} 
             />
             <Route 
               path="/:username/shopping/reviews" 
-              element={Auth(<ReviewSection />, true)} 
+              element={Auth(<ReviewPage />, true)} 
             />
             <Route 
               path="/:username/shopping/order" 
-              element={Auth(<OrderSection />, true)} 
+              element={Auth(<OrderPage />, true)} 
             />
           </Route>
 

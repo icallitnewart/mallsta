@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, P, StoreButton } from "../../styles/account/StoreStyle";
+import { Container, P, StoreButton } from "../../../styles/account/StoreStyle";
 
 function StoreOpen({ openStore, setOpenStore }) {
   return (

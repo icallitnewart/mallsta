@@ -1,8 +1,9 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 import { Background, Container, H1 } from "../../styles/common/MembershipStyle";
 import { Logo } from "../../styles/common/LogoStyle";
 
-function Membership({ renderForm }) {
+function MembershipLayout() {
   return (
     <Background>
       <Container>
@@ -12,10 +13,10 @@ function Membership({ renderForm }) {
             fontSize={35}
           >Mallsta</Logo>
         </H1>
-        {renderForm()}
+        <Outlet />
       </Container>
     </Background>
   )
 }
 
-export default Membership;
+export default MembershipLayout;

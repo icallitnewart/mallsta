@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { Content, Item, TextBox, Ratings } from "../../styles/shopping/ContentStyle";
+import { Content, Item, TextBox, Ratings } from "../styles/shopping/ContentStyle";
 import { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs";
 
-import Filter from './Filter';
+import Filter from '../components/shopping/Filter';
 
-function ReviewSection() {
+function ReviewPage() {
   const arr = Array.from(Array(30).keys());
 
   return (
@@ -34,4 +34,4 @@ function ReviewSection() {
   )
 }
 
-export default ReviewSection;
+export default ReviewPage;

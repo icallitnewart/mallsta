@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { Content, Item, TextBox, PostButton } from "../../styles/shopping/ContentStyle";
+import { Content, Item, TextBox, PostButton } from "../styles/shopping/ContentStyle";
 
-import Filter from './Filter';
+import Filter from '../components/shopping/Filter';
 
 
-function OrderSection() {
+function OrderPage() {
   const arr = Array.from(Array(30).keys());
   return (
     <>
@@ -55,4 +55,4 @@ function OrderSection() {
   )
 }
 
-export default OrderSection;
+export default OrderPage;

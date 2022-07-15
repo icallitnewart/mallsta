@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteUploadUser, uploadUser } from "../../_actions/user_action";
+import { deleteUploadUser, uploadUser } from "../../../_actions/user_action";
 
 import { IoSettingsSharp, IoTrash } from "react-icons/io5";
-import { Pic, ProfileContainer, Image, TextBox, UploadButton, DeleteButton } from "../../styles/account/ProfileStyle";
+import { Pic, ProfileContainer, Image, TextBox, UploadButton, DeleteButton } from "../../../styles/account/ProfileStyle";
 
 function ProfileBox({ user }) {
   const dispatch = useDispatch();

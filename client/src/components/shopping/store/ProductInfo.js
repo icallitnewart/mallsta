@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import { deleteProduct } from '../../_actions/product_action';
-import { USER_DEFAULT_PROFILE_IMAGE as DEFAULT_PROFILE } from '../../data/userData';
+import { deleteProduct } from '../../../_actions/product_action';
+import { USER_DEFAULT_PROFILE_IMAGE as DEFAULT_PROFILE } from '../../../data/userData';
 
 import { 
   BsStar, BsStarFill, BsStarHalf, 
@@ -15,7 +15,7 @@ import {
   ReviewBox, ReviewList, Review, ReviewForm, Rating, ReviewInput, 
   Pages, PageNumber, CheckoutForm, QuantityBox, Price, Buttons,
   EditButtonBox 
-} from '../../styles/shopping/PopupStyle';
+} from '../../../styles/shopping/PopupStyle';
 
 function ProductInfo({ 
   username, isPageOwner, product, userInfo, setIsEdit 

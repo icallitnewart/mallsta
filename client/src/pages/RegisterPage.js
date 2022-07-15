@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { registerUser, checkEmailUser, checkUsernameUser } from '../_actions/user_action';
 import useInputs from '../hooks/useInputs';
 import { Input, Label, Button, ErrMsg, InputContainer, P } from "../styles/common/MembershipStyle";
-import Membership from '../components/common/Membership';
 
 function RegisterPage() {
   const dispatch = useDispatch();
@@ -103,75 +102,69 @@ function RegisterPage() {
     });
   };
 
-  const renderForm = ()=> {
-    return (
-      <form onSubmit={handleSubmit}>
-        <InputContainer>
-          <Label htmlFor="username">
-            USERNAME
-          </Label>
-          <Input
-            type="text"
-            name="username"
-            id="username"
-            placeholder="Username"
-            value={values.username}
-            onChange={handleChange}
-          />
-          {err.username && <ErrMsg>{err.username}</ErrMsg>}
-        </InputContainer>
-        <InputContainer>
-          <Label htmlFor="password">
-            PASSWORD
-          </Label>
-          <Input
-            type="password"
-            name="password"
-            id="password"
-            placeholder="Password"
-            value={values.password}
-            onChange={handleChange}
-          />
-          {err.password && <ErrMsg>{err.password}</ErrMsg>}
-        </InputContainer>
-        <InputContainer>
-          <Label htmlFor="password2">
-            CONFIRM PASSWORD
-          </Label>
-          <Input
-            type="password"
-            name="password2"
-            id="password2"
-            placeholder="Confirm password"
-            value={values.password2}
-            onChange={handleChange}
-          />
-          {err.password2 && <ErrMsg>{err.password2}</ErrMsg>}
-        </InputContainer>
-        <InputContainer>
-          <Label htmlFor="">
-            EMAIL ADDRESS
-          </Label>
-          <Input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Email Address"
-            value={values.email}
-            onChange={handleChange}
-          />
-          {err.email && <ErrMsg>{err.email}</ErrMsg>}
-        </InputContainer>
-        <Button type="submit">
-            sign up
-        </Button>
-        <P><Link to="/membership/login">Have an account?</Link></P>
-      </form>
-    )
-  };
-
   return (
-    <Membership renderForm={renderForm} />
+    <form onSubmit={handleSubmit}>
+      <InputContainer>
+        <Label htmlFor="username">
+          USERNAME
+        </Label>
+        <Input
+          type="text"
+          name="username"
+          id="username"
+          placeholder="Username"
+          value={values.username}
+          onChange={handleChange}
+        />
+        {err.username && <ErrMsg>{err.username}</ErrMsg>}
+      </InputContainer>
+      <InputContainer>
+        <Label htmlFor="password">
+          PASSWORD
+        </Label>
+        <Input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Password"
+          value={values.password}
+          onChange={handleChange}
+        />
+        {err.password && <ErrMsg>{err.password}</ErrMsg>}
+      </InputContainer>
+      <InputContainer>
+        <Label htmlFor="password2">
+          CONFIRM PASSWORD
+        </Label>
+        <Input
+          type="password"
+          name="password2"
+          id="password2"
+          placeholder="Confirm password"
+          value={values.password2}
+          onChange={handleChange}
+        />
+        {err.password2 && <ErrMsg>{err.password2}</ErrMsg>}
+      </InputContainer>
+      <InputContainer>
+        <Label htmlFor="">
+          EMAIL ADDRESS
+        </Label>
+        <Input
+          type="email"
+          name="email"
+          id="email"
+          placeholder="Email Address"
+          value={values.email}
+          onChange={handleChange}
+        />
+        {err.email && <ErrMsg>{err.email}</ErrMsg>}
+      </InputContainer>
+      <Button type="submit">
+          sign up
+      </Button>
+      <P><Link to="/membership/login">Have an account?</Link></P>
+    </form>
   )
 }
 

@@ -1,15 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import usePrevious from '../../hooks/usePrevious';
+import usePrevious from '../../../hooks/usePrevious';
 
-import { USER_DEFAULT_PROFILE_IMAGE as DEFAULT_PROFILE } from '../../data/userData';
+import { USER_DEFAULT_PROFILE_IMAGE as DEFAULT_PROFILE } from '../../../data/userData';
 import { 
   PRODUCT_TAG_COLORS as TAGCOLORS, 
   PRODUCT_CATEGORY as CATEGORY
-} from '../../data/productData';
+} from '../../../data/productData';
 
 import { GrClose } from "react-icons/gr";
-import { DetailBox, StoreTitle, Pic, InputBox, EnterButton, TagBox, Tag, ErrMsg } from "../../styles/shopping/PopupStyle";
+import { DetailBox, StoreTitle, Pic, InputBox, EnterButton, TagBox, Tag, ErrMsg } from "../../../styles/shopping/PopupStyle";
 
 function InputForm({ 
   auth, values, setValues, handleChange, err 

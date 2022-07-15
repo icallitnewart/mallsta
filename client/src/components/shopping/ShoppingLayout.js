@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet, useLocation, useParams } from 'react-router-dom';
-import { getUserInfo } from '../_actions/user_action';
+import { getUserInfo } from '../../_actions/user_action';
 
-import { Background, Container } from "../styles/common/LayoutStyle";
-import { Alert } from '../styles/shopping/ContentStyle';
+import { Background, Container } from "../../styles/common/LayoutStyle";
+import { Alert } from '../../styles/shopping/ContentStyle';
 import { BsShop, BsFillExclamationOctagonFill } from "react-icons/bs";
 import { ImSpinner3 } from "react-icons/im";
 
-import Profile from '../components/shopping/Profile';
-import TabMenu from '../components/shopping/TabMenu';
+import Profile from '../../components/shopping/Profile';
+import TabMenu from '../../components/shopping/TabMenu';
 
-function ShoppingPage() {
+function ShoppingLayout() {
   const dispatch = useDispatch();
   const auth = useSelector(state=> state.user.userData);
   const username = useParams().username;
@@ -106,4 +106,4 @@ function ShoppingPage() {
   )
 }
 
-export default ShoppingPage;
+export default ShoppingLayout;

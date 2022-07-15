@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
 import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
-import { Content, Item, Detail, TextBox } from "../../styles/shopping/ContentStyle";
-import Filter from './Filter';
+import { Content, Item, Detail, TextBox } from "../styles/shopping/ContentStyle";
+import Filter from '../components/shopping/Filter';
 
-function LikeSection() {
+function WishlistPage() {
   const arr = Array.from(Array(30).keys());
   const [ isLiked, setIsLiked ] = useState({});
   //찜하기 버튼
@@ -45,4 +45,4 @@ function LikeSection() {
   )
 }
 
-export default LikeSection;
+export default WishlistPage;

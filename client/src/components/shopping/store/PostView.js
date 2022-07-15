@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import { getInfoProduct } from '../../_actions/product_action';
+import { getInfoProduct } from '../../../_actions/product_action';
 
 import { GrClose } from "react-icons/gr";
-import { CloseButton } from '../../styles/shopping/PopupStyle';
+import { CloseButton } from '../../../styles/shopping/PopupStyle';
 
 import ImageView from './ImageView';
 import ProductInfo from './ProductInfo';

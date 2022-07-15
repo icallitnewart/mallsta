@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useOutletContext } from 'react-router-dom';
 
-import StoreOpen from './StoreOpen';
-import StoreForm from './StoreForm';
+import StoreOpen from '../components/account/store/StoreOpen';
+import StoreForm from '../components/account/store/StoreForm';
 
-function Store({ user }) {
+function EditStorePage() {
+  const { user } = useOutletContext();
   const [ openStore, setOpenStore ] = useState(true);
 
   //스토어 판매자 여부 확인
@@ -12,7 +14,7 @@ function Store({ user }) {
   }, [user]);
 
   return (
-    <>    
+    <React.Fragment>    
     {!openStore 
     ? <StoreOpen 
         openStore={openStore}
@@ -23,8 +25,8 @@ function Store({ user }) {
         openStore={openStore}
       />
     }
-    </>
+    </React.Fragment>
   )
 }
 
-export default Store;
+export default EditStorePage;

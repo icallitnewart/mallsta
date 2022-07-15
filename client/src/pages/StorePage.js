@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useOutletContext, Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getStoreInfo } from "../../_actions/store_action";
+import { getStoreInfo } from "../_actions/store_action";
 
 import { BsSuitHeart, BsSuitHeartFill, BsShop, BsBoxSeam } from "react-icons/bs";
 import { ImSpinner3 } from "react-icons/im";
-import { Alert, Content, Item, Detail, TextBox, PostButton } from "../../styles/shopping/ContentStyle";
+import { Alert, Content, Item, Detail, TextBox, PostButton } from "../styles/shopping/ContentStyle";
 
-import Filter from './Filter';
-import Popup from './Popup';
+import Filter from '../components/shopping/Filter';
+import Popup from '../components/shopping/store/Popup';
 
-function StoreSection() {
+function StorePage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const store = useSelector(state=> state.store);
@@ -159,4 +159,4 @@ function StoreSection() {
   )
 }
 
-export default StoreSection;
+export default StorePage;
