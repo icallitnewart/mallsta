@@ -38,7 +38,7 @@ function StoreSection() {
         setProducts(storeInfo.product);
         setIsLoading(false);
       } else {
-        const body = { storeId : userInfo.store._id }
+        const body = { storeId : userInfo.store._id };
         dispatch(getStoreInfo(body))
         .then(response=> {
           const data = response.payload;
@@ -88,26 +88,8 @@ function StoreSection() {
     }
   };
 
-  const renderButton = ()=> {
-    return (
-      <PostButton
-        type="button"
-        bgColor="#ff5e62"
-        wd="120px"
-        ht="42px"
-        style={{ 
-          position: "absolute",
-          top: "40px", right: "30px" 
-        }}
-        onClick={()=> setIsUpload(true)}
-      >  
-        UPLOAD
-      </PostButton>
-    )
-  };
-
   return (
-    <>
+    <React.Fragment>
     {(isPageOwner && !auth.storeOwner)
     //스토어를 열지 않은 경우 알림 문구 출력 (페이지 소유주)
     ? renderAlert("store")
@@ -116,10 +98,24 @@ function StoreSection() {
       <Content section="store">
         <h1>New Items</h1>
         
-        {/* UploadButton */}
-        {isPageOwner && renderButton()}
+        {/* 업로드 버튼 */}
+        {isPageOwner && 
+          <PostButton
+            type="button"
+            bgColor="#ff5e62"
+            wd="120px"
+            ht="42px"
+            style={{ 
+              position: "absolute",
+              top: "40px", right: "30px" 
+            }}
+            onClick={()=> setIsUpload(true)}
+          >  
+            UPLOAD
+          </PostButton>
+        }
 
-        {/* Post List */}
+        {/* 상품 목록 */}
         {isLoading
         ? renderAlert("loading")
         : ((products.length === 0)
@@ -155,11 +151,11 @@ function StoreSection() {
         )}
       </Content>
 
-      {/* Popup : Upload product / Product post */}
+      {/* 팝업창 : 상품 업로드 / 상품 상세보기 */}
       {(isUpload || productId) && <Popup {...props} />}
       </>
     }
-    </>
+    </React.Fragment>
   )
 }
 
