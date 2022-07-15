@@ -108,8 +108,8 @@ function StoreSection() {
 
   return (
     <>
-    {!auth.storeOwner
-    //스토어를 열지 않은 경우 알림 문구 출력
+    {(isPageOwner && !auth.storeOwner)
+    //스토어를 열지 않은 경우 알림 문구 출력 (페이지 소유주)
     ? renderAlert("store")
     : <>
       <Filter />
