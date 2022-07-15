@@ -3,8 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { PRODUCT_CATEGORY as CATEGORY } from '../../data/productData';
 
 import { BsStarFill } from "react-icons/bs";
-import { ImageBox, ImageBig, Images, ArrowBtn, TitleBox } from '../../styles/shopping/PopupStyle';
-import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
+import { ImageBox, ImageBig, TitleBox } from '../../styles/shopping/PopupStyle';
+
+import ImageSlider from './ImageSlider';
 
 function ImageView({ product }) {
   const [ category, setCategory ] = useState(null);
@@ -32,38 +33,7 @@ function ImageView({ product }) {
       }}
     >
       <ImageBig>
-        <ArrowBtn 
-          type="button"
-          btnType="prev"
-          aria-label="Go to the previous product image"
-        >
-          <IoIosArrowDropleftCircle />
-        </ArrowBtn>
-        {product && 
-          <Images imgNum={product.images.length}>
-            {product.images.map((image, index)=> 
-            <li key={index}>
-              <img 
-                src={image.file.filePath} 
-                style={{
-                  filter: `
-                    brightness(${image.filter.brightness}%) 
-                    saturate(${image.filter.saturate}%) 
-                    contrast(${image.filter.contrast}%) 
-                  `
-                }}
-              />
-            </li>
-            )}
-          </Images>
-        }
-        <ArrowBtn 
-          type="button"
-          btnType="next"
-          aria-label="Go to the next product image"
-        >
-          <IoIosArrowDroprightCircle /> 
-        </ArrowBtn>
+      {product && <ImageSlider product={product} />}
       </ImageBig>
       <TitleBox ht="calc(100% - 360px)">
         {/* 카테고리 */}

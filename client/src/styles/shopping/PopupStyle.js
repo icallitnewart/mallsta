@@ -117,10 +117,33 @@ export const ArrowBtn = styled.button`
   `}
 `;
 
+export const Disc = styled.div`
+  position: absolute;
+  bottom: 0px; left: 50%;
+  z-index: 100;
+  display: flex;
+`;
+
+export const Dot = styled.span`
+  display: inline-block;
+  width: 7px; 
+  height: 7px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  margin: 10px 3px;
+  cursor: pointer;
+
+  ${props=> props.isActive && css`
+      background: rgba(255, 255, 255, 0.8);
+  `}
+`;
+
 export const Images = styled.ul`
   display: flex;
   flex-wrap: wrap;
   width: ${props=> props.imgNum * 100}%;
+  transform: translateX(${props=> props.slide}%);
+  transition: .5s;
 
   li {
     width: ${props=> 100 / props.imgNum}%;
@@ -133,7 +156,6 @@ export const Images = styled.ul`
       object-fit: cover;
     }
   }
-
 `;
 
 export const ImageFilter =styled.ul`
