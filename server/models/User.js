@@ -43,10 +43,12 @@ const userSchema = mongoose.Schema({
     default: 0
     //0: 일반 유저, 1: 관리자
   },
-  wishlist : {
-    type: Array,
-    default: []
-  },
+  wishlist : [
+    {
+      type : mongoose.Schema.Types.ObjectId,
+      ref: "Product"
+    }
+  ],
   reviews : {
     type: Array,
     default: []

@@ -113,6 +113,7 @@ router.get('/auth', auth, (req, res)=> {
     profileImage : req.user.profileImage,
     role : req.user.role,
     cart : req.user.cart,
+    wishlist : req.user.wishlist,
     order : req.user.order,
     storeOwner : req.user.storeOwner,
     store : req.user.store

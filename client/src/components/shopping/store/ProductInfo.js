@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import { deleteProduct } from '../../../_actions/product_action';
+import { deleteProduct, likeProduct } from '../../../_actions/product_action';
 import { USER_DEFAULT_PROFILE_IMAGE as DEFAULT_PROFILE } from '../../../data/userData';
 
 import { 
@@ -18,13 +18,16 @@ import {
 } from '../../../styles/shopping/PopupStyle';
 
 function ProductInfo({ 
-  username, isPageOwner, product, userInfo, setIsEdit 
+  username, auth, isPageOwner, userInfo,
+  product, setIsEdit, isLiked, setIsLiked
 }) {
   const PUBLIC_URL = process.env.PUBLIC_URL;
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const isSeller = isPageOwner;
   const storeInfo = userInfo.store;
 
+  //포스트 삭제
   const deletePost = ()=> {
     if(window.confirm("Are you sure you want to delete this post?")) {
       const targetImage = product.images.map((image)=> image.file.fileName);
@@ -49,6 +52,39 @@ function ProductInfo({
       })
     }
   };
+
+  //위시리스트에 상품 추가/삭제
+  const updateWishlist = ()=> {
+    if(auth) {
+      const body = { ...product };
+
+      dispatch(likeProduct(body))
+      .then(response=> {
+        const data = response.payload;
+
+        if(data.success) {
+          setIsLiked(prev=> !prev);
+        } else {
+          console.error(data.err);
+          alert("An error occured. Please try again");
+        }
+      });
+    } else {
+      const alert = "This feature requires login. Would you like to log in?";
+
+      if(window.confirm(alert)) {
+        navigate('/membership/login');
+      }
+    }
+  };
+
+  //위시리스트 추가 여부 확인
+  useEffect(()=> {
+    if(auth && product) {
+      const userLike = product.likes.users.some(userId=> userId === auth._id);
+      if(userLike) setIsLiked(true);
+    }
+  }, [auth, product]);
 
   return (
     <InfoBox>
@@ -265,8 +301,9 @@ function ProductInfo({
             <button
               type="button"
               aria-label="Add to wishlist"
+              onClick={updateWishlist}
             >
-              <BsSuitHeart />
+              {isLiked ? <BsSuitHeartFill /> : <BsSuitHeart />}
             </button>
             <button
               type="submit"

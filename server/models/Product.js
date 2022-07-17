@@ -68,6 +68,30 @@ const productSchema = mongoose.Schema({
   ],
   tags : {
     type: Array
+  },
+  likes : {
+    total : {
+      type: Number,
+      default: 0
+    },
+    users : [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+      }
+    ]
+  },
+  order : {
+    total : {
+      type: Number,
+      default: 0
+    },
+    users : [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+      }
+    ]
   }
 }, { timestamps : true });
 

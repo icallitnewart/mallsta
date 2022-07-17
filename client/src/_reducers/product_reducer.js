@@ -4,7 +4,8 @@ import {
   REGISTER_PRODUCT,
   GETINFO_PRODUCT,
   DELETE_PRODUCT,
-  EDIT_PRODUCT
+  EDIT_PRODUCT,
+  LIKE_PRODUCT
 } from "../_actions/types";
 
 export default function(state={}, action) {
@@ -43,6 +44,12 @@ export default function(state={}, action) {
       return {
         ...state,
         edit : action.payload
+      }
+      break;
+    case LIKE_PRODUCT :
+      return {
+        ...state,
+        like : action.payload
       }
       break;
     default :

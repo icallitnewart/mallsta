@@ -21,3 +21,4 @@ export const REGISTER_PRODUCT = "register_product";
 export const GETINFO_PRODUCT = "getinfo_product";
 export const DELETE_PRODUCT = "delete_product";
 export const EDIT_PRODUCT = "edit_product";
+export const LIKE_PRODUCT = "like_product";

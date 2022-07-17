@@ -5,7 +5,8 @@ import {
   REGISTER_PRODUCT,
   GETINFO_PRODUCT,
   DELETE_PRODUCT,
-  EDIT_PRODUCT
+  EDIT_PRODUCT,
+  LIKE_PRODUCT
 } from "./types";
 
 //이미지 업로드
@@ -82,6 +83,19 @@ export function editProduct(data) {
 
   return {
     type : EDIT_PRODUCT,
+    payload : request
+  }
+}
+
+//상품 위시리스트에 추가/삭제
+export function likeProduct(data) {
+  const request = 
+    axios
+    .post('/api/products/like', data)
+    .then(res => res.data);
+
+  return {
+    type : LIKE_PRODUCT,
     payload : request
   }
 }

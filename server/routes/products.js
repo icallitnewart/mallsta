@@ -5,6 +5,7 @@ const multer = require('multer');
 const path = require('path');
 const { Store } = require('../models/Store');
 const { Product } = require('../models/Product');
+const { User } = require('../models/User');
 const { auth } = require('../middleware/auth');
 
 //상품 이미지 업로드
@@ -180,6 +181,39 @@ router.post('/edit', (req, res)=> {
       } else {
         return res.status(200).json({ success: true });
       }
+  });
+});
+
+//상품 위시리스트에 추가 및 삭제
+router.post('/like', auth, (req, res)=> {
+  Product.findOne({ _id : req.body._id }, (err, productInfo)=> {
+    if(err) return res.json({ success : false, err });
+
+    const isLiked = productInfo.likes.users.some(user=> user.toString() === req.user._id.toString());
+    const num = isLiked ? -1 : 1;
+    const operator = isLiked ? "$pull" : "$push";
+
+    Product.updateOne(
+      { _id : req.body._id },
+      { 
+        $inc : { "likes.total" : num },
+        [operator] : { "likes.users" : req.user._id } 
+      },
+      (err)=> {
+        if(err) return res.json({ success : false, err });
+
+        User.findOneAndUpdate(
+          { _id : req.user._id },
+          { [operator] : { wishlist : req.body._id } },
+          { new : true },
+          (err, userInfo)=> {
+            if(err) return res.json({ success : false, err });
+
+            return res.status(200).json({ success : true });
+          }
+        )
+      }
+    )
   });
 });
 

@@ -13,6 +13,7 @@ function PostView(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [ product, setProduct ] = useState(null);
+  const [ isLiked, setIsLiked ] = useState(false);
 
   useEffect(()=> {
     dispatch(getInfoProduct(props.productId))
@@ -27,12 +28,16 @@ function PostView(props) {
         navigate(`/${props.username}/shopping`);
       }
     });
-  }, []);
+  }, [isLiked]);
 
   return (
     <>
-      <ImageView {...{...props, product}} />
-      <ProductInfo {...{...props, product}} />
+      <ImageView 
+        {...{...props, product }} 
+      />
+      <ProductInfo 
+        {...{...props, product, isLiked, setIsLiked }} 
+      />
       <CloseButton
         onClick={()=> navigate(`/${props.username}/shopping`)}
         aria-label="Close Button"
