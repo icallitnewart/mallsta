@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 import { PRODUCT_CATEGORY as CATEGORY } from '../../../data/productData';
 
-import { BsStarFill } from "react-icons/bs";
-import { ImageBox, ImageBig, TitleBox } from '../../../styles/shopping/PopupStyle';
+import { BsStarFill, BsSuitHeartFill } from "react-icons/bs";
+import { ImageBox, ImageBig, TitleBox, Category, Title, DetailedInfo, RatingInfo, LikeInfo, PriceInfo } from '../../../styles/shopping/PopupStyle';
 
 import ImageSlider from './ImageSlider';
 
@@ -37,35 +37,38 @@ function ImageView({ product }) {
       </ImageBig>
       <TitleBox ht="calc(100% - 360px)">
         {/* 카테고리 */}
-        <span>
+        <Category>
           {category && category.department} 
           &nbsp;&#62;&nbsp;
           {category && category.productType}
-        </span>
+        </Category>
         {/* 상품명 */}
-        <h1>
-          <span>{product && product.title}</span>
-        </h1>
-        <ul>
-          <li>
-            <BsStarFill title="Star icon for rating score" />
-          </li>
-          <li>
+        <Title>
+          {product && product.title}
+        </Title>
+        <DetailedInfo>
+          <RatingInfo>
             {/* 별점 */}
+            <BsStarFill title="Star icon for rating score" />
             <span>7</span>
             <span>/</span>
             <span>10</span>
             {/* 리뷰 총 개수 */}
             <span>(20)</span>
-          </li>
-          <li>
+          </RatingInfo>
+          {/* 찜하기 개수 */}
+          <LikeInfo>
+            <BsSuitHeartFill />
+            <span>{product.likes.total}</span>
+          </LikeInfo>
+          <PriceInfo>
             {/* 가격 */}
             <span>
               {product && product.price.currency === "dollar" ? "$" : "￦"}
               {product && product.price.amount}
             </span>
-          </li>
-        </ul>
+          </PriceInfo>
+        </DetailedInfo>
       </TitleBox>
     </ImageBox>
   )

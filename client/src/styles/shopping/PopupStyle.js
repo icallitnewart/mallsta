@@ -664,89 +664,100 @@ export const TitleBox = styled.div`
   width: 100%;
   height: ${props=> props.ht};
   padding: 15px 25px 25px 15px;
+`;
 
-  //category
-  >span {
-    font: 14px/1 "Poppins";
-    color: #666;
+export const Category = styled.span`
+  font: 14px/1 "Poppins";
+  color: #666;
+`;
+
+export const Title = styled.h1`
+  height: 90px;
+  font: 500 20px/1.5 "Poppins";
+  padding: 10px 0px;
+  color: #333;
+  word-break: break-all;
+`;
+
+export const DetailedInfo = styled.ul`
+  &::after {
+    content: "";
+    display: block;
+    clear: both;
   }
 
-  //title
-  h1 {
-    height: 90px;
-    font: 500 20px/1.5 "Poppins";
-    padding: 10px 0px;
-    color: #333;
-    word-break: break-all;
+  li {
+    display: inline-flex;
+    align-items: center;
+    height: 20px;
+    float: left;
+    color: #555;
+  }
+`;
+
+export const LikeInfo = styled.li`
+  span {
+    font: 500 18px/1 "Poppins";
   }
 
-  //rating & price
-  ul {
-    &::after {
-      content: "";
-      display: block;
-      clear: both;
+  svg {
+    font-size: 20px;
+    color: #ff5e62;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+`;
+
+export const RatingInfo = styled.li`
+  margin-right: 15px;
+
+  span {
+    font-size: 16px;
+
+    //rating score
+    &:nth-of-type(1) {
+      align-self: flex-start;
+      font: 500 18px/1 "Poppins";
+      margin-left: 3px;
     }
 
-    li {
-      display: inline-flex;
-      align-items: center;
-      height: 20px;
-      float: left;
-      color: #555;
-
-      //rating
-      span {
-        font-size: 16px;
-
-        //rating score
-        &:nth-of-type(1) {
-          align-self: flex-start;
-          font: 500 18px/1 "Poppins";
-          margin-left: 3px;
-        }
-
-        //slash
-        &:nth-of-type(2) { 
-          align-self: flex-end;
-          font: 400 16px/1 "Poppins";
-          transform: rotate(10deg);
-          margin: 0px 1px;
-        }
-
-        //total score
-        &:nth-of-type(3) {
-          align-self: flex-end;
-          font: 500 12px/1 "Poppins";
-        }
-
-        //total number of reviews
-        &:nth-of-type(4) {
-          align-self: flex-end;
-          font: 500 10px/1 "Poppins";
-          margin-left: 5px;
-          color: #777;
-        }
-      }
-
-      //star
-      svg {
-        font-size: 20px;
-        color: #ff9966;
-        margin-right: 5px;
-        vertical-align: middle;
-      }
-
-      //price
-      &:last-child {
-        float: right;
-
-        span {
-          font: 500 26px/1 "Poppins";
-          color: #f9864d;
-        }
-      }
+    //slash
+    &:nth-of-type(2) { 
+      align-self: flex-end;
+      font: 400 16px/1 "Poppins";
+      transform: rotate(10deg);
+      margin: 0px 1px;
     }
+
+    //total score
+    &:nth-of-type(3) {
+      align-self: flex-end;
+      font: 500 12px/1 "Poppins";
+    }
+
+    //total number of reviews
+    &:nth-of-type(4) {
+      align-self: flex-end;
+      font: 500 10px/1 "Poppins";
+      margin-left: 5px;
+      color: #777;
+    }
+  }
+
+  svg {
+    font-size: 20px;
+    color: #ff9966;
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+`;
+
+export const PriceInfo = styled.li`
+  float: right !important;
+
+  span {
+    font: 500 26px/1 "Poppins";
+    color: #f9864d;
   }
 `;
 //ImageView : End
