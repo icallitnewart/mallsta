@@ -33,42 +33,44 @@ function ImageView({ product }) {
       }}
     >
       <ImageBig>
-      {product && <ImageSlider product={product} />}
+        {product && <ImageSlider product={product} />}
       </ImageBig>
       <TitleBox ht="calc(100% - 360px)">
-        {/* 카테고리 */}
-        <Category>
-          {category && category.department} 
-          &nbsp;&#62;&nbsp;
-          {category && category.productType}
-        </Category>
-        {/* 상품명 */}
-        <Title>
-          {product && product.title}
-        </Title>
-        <DetailedInfo>
-          <RatingInfo>
-            {/* 별점 */}
-            <BsStarFill title="Star icon for rating score" />
-            <span>7</span>
-            <span>/</span>
-            <span>10</span>
-            {/* 리뷰 총 개수 */}
-            <span>(20)</span>
-          </RatingInfo>
-          {/* 찜하기 개수 */}
-          <LikeInfo>
-            <BsSuitHeartFill />
-            <span>{product.likes.total}</span>
-          </LikeInfo>
-          <PriceInfo>
-            {/* 가격 */}
-            <span>
-              {product && product.price.currency === "dollar" ? "$" : "￦"}
-              {product && product.price.amount}
-            </span>
-          </PriceInfo>
-        </DetailedInfo>
+        {product && <>
+          {/* 카테고리 */}
+          <Category>
+            {category && category.department} 
+            &nbsp;&#62;&nbsp;
+            {category && category.productType}
+          </Category>
+          {/* 상품명 */}
+          <Title>
+            {product.title}
+          </Title>
+          <DetailedInfo>
+            <RatingInfo>
+              {/* 별점 */}
+              <BsStarFill title="Star icon for rating score" />
+              <span>7</span>
+              <span>/</span>
+              <span>10</span>
+              {/* 리뷰 총 개수 */}
+              <span>(20)</span>
+            </RatingInfo>
+            {/* 찜하기 개수 */}
+            <LikeInfo>
+              <BsSuitHeartFill />
+              <span>{product.likes.total}</span>
+            </LikeInfo>
+            <PriceInfo>
+              {/* 가격 */}
+              <span>
+                {product.price.currency === "dollar" ? "$" : "￦"}
+                {product.price.amount}
+              </span>
+            </PriceInfo>
+          </DetailedInfo>
+        </>}
       </TitleBox>
     </ImageBox>
   )
