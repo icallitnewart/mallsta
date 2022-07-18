@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useOutletContext, Link, useNavigate } from 'react-router-dom';
+import { useParams, useOutletContext, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getStoreInfo } from "../_actions/store_action";
 
-import { BsSuitHeart, BsSuitHeartFill, BsShop, BsBoxSeam } from "react-icons/bs";
+import { BsShop, BsBoxSeam } from "react-icons/bs";
 import { ImSpinner3 } from "react-icons/im";
-import { Alert, Content, Item, Detail, TextBox, PostButton } from "../styles/shopping/ContentStyle";
+import { Alert, Content, PostButton } from "../styles/shopping/ContentStyle";
 
 import Filter from '../components/shopping/Filter';
 import Popup from '../components/shopping/store/Popup';
+import PostList from '../components/shopping/store/PostList';
 
 function StorePage() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const store = useSelector(state=> state.store);
   const { productId, username } = useParams();
@@ -19,7 +19,6 @@ function StorePage() {
 
   const [ products, setProducts ] = useState([]);
   const [ isLoading, setIsLoading ] = useState(true);
-  const [ isLiked, setIsLiked ] = useState({});
   const [ isUpload, setIsUpload ] = useState(false);
   const [ isEdit, setIsEdit ] = useState(false);
   const props = {
@@ -53,13 +52,6 @@ function StorePage() {
       }
     }
   }, [userInfo]);
-
-  //찜하기 버튼
-  const likeItem = (index)=> {
-    setIsLiked(prev=> (
-      { ...prev, [index] : !prev[index] }
-    ));
-  };
 
   const renderAlert = (type)=> {
     if(type==="loading") {
@@ -121,33 +113,7 @@ function StorePage() {
         : ((products.length === 0)
           //상품이 없는 경우 알림 문구 출력
           ? renderAlert("product")
-          : products.map((item, index)=>
-            <Item 
-              key={index}
-              onClick={()=> {
-                navigate(`/${username}/shopping/product/${item.index}`);
-              }}
-            > 
-              <img src={process.env.PUBLIC_URL + item.images[0].file.filePath} />
-              <Detail>
-                <TextBox>
-                  <h2>{item.title}</h2>
-                  <span>
-                    {item.price.currency === "dollar" ? "$" : "₩"}
-                    {item.price.amount}  
-                  </span>
-                </TextBox>
-                {isLiked[item.index]
-                ?  <BsSuitHeartFill
-                    onClick={()=> likeItem(item.index)}
-                  />
-                : <BsSuitHeart
-                    onClick={()=> likeItem(item.index)}
-                  />
-                }
-              </Detail>
-            </Item>
-          )
+          : <PostList {...{ ...props, products }} />
         )}
       </Content>
 
