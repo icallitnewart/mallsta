@@ -31,6 +31,14 @@ export const Content = styled.section`
       img {
         height: 100%;
       }
+
+      svg {
+        position: absolute;
+        top: 15px; right: 15px;
+        z-index: 10;
+        font-size: 20px;
+        color: #ff5e62;
+      }
     }
 
     ${TextBox} {
@@ -173,14 +181,6 @@ export const Item = styled.article`
   img {
     width: 100%;
     object-fit: cover;
-  }
-
-  svg {
-    position: absolute;
-    top: 15px; right: 15px;
-    z-index: 10;
-    font-size: 20px;
-    color: #ff5e62;
   }
 `;
 
