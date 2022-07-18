@@ -87,20 +87,15 @@ function ShoppingLayout() {
       </Container>
       <TabMenu {...props} />
       <Container>
-      {isLoading
-      ? <Alert isLoading={isLoading}>
-          <ImSpinner3 />
-        </Alert>
-      : ((!isPageOwner && !userInfo.storeOwner)
+      {userInfo &&
+      ((!isPageOwner && !userInfo.storeOwner)
         //조건: 페이지 소유주 X && 스토어 오픈 X
         ? renderAlert(path)
         //조건: 페이지 소유주 O || 스토어 오픈 O
         : <Outlet 
             context={{...props}} 
           />
-        )
-      }
-      
+      )}
       </Container>
     </Background>
   )
