@@ -128,6 +128,9 @@ router.post('/delete', (req, res)=> {
       { 
         $inc : { 
           productTotal : -1
+        },
+        $pull : {
+          product : req.body._id
         }
       },
       { new : true },
