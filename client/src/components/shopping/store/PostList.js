@@ -6,7 +6,7 @@ import { likeProduct } from '../../../_actions/product_action';
 import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
 import { Item, Detail, TextBox } from "../../../styles/shopping/ContentStyle";
 
-function PostList({ auth, username, products }) {
+function PostList({ auth, username, products, userInfo }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [ likes, setLikes ] = useState({});
@@ -67,14 +67,25 @@ function PostList({ auth, username, products }) {
                 {product.price.amount}  
               </span>
             </TextBox>
-            {auth && likes[product.index]
-            ?  <BsSuitHeartFill
-                onClick={()=> updateWishlist(product.index)}
-              />
-            : <BsSuitHeart
-                onClick={()=> updateWishlist(product.index)}
-              />
-            }
+          {/* 하트 아이콘 */}
+          {auth   //로그인 했을 경우
+          //본인 스토어가 아닐 때 (본인 스토어인 경우 하트 아이콘 X)
+          ? (auth.store._id !== userInfo.store._id) &&  
+            (likes[product.index]
+              //위시리스트에 추가된 경우
+              ? <BsSuitHeartFill
+                  onClick={()=> updateWishlist(product.index)}
+                />
+              //위시리스트에 추가되지 않은 경우
+              : <BsSuitHeart
+                  onClick={()=> updateWishlist(product.index)}
+                />
+            )
+          //로그인 안 했을 경우
+          : <BsSuitHeart
+              onClick={()=> updateWishlist(product.index)}
+            />
+          }
           </Detail>
         </Item>
       )}
