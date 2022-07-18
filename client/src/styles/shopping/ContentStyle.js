@@ -4,8 +4,10 @@ export const Content = styled.section`
   position: relative;
   display: flex;
   justify-content: flex-start;
+  align-content: flex-start;
   flex-wrap: wrap;
   width: calc(100% - 240px);
+  min-height: 550px;
   padding: 30px;
 
   h1 {
@@ -172,6 +174,14 @@ export const Item = styled.article`
     width: 100%;
     object-fit: cover;
   }
+
+  svg {
+    position: absolute;
+    top: 15px; right: 15px;
+    z-index: 10;
+    font-size: 20px;
+    color: #ff5e62;
+  }
 `;
 
 export const TextBox = styled.div`
@@ -195,13 +205,6 @@ export const Detail = styled.div`
   width: 100%;
   height: 100%;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.01), rgba(0, 0, 0, 0.6));
-
-  svg {
-    position: absolute;
-    top: 15px; right: 15px;
-    font-size: 20px;
-    color: #ff5e62;
-  }
 `;
 
 //Reviews

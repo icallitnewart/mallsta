@@ -51,26 +51,25 @@ function PostList({ auth, username, products, userInfo }) {
   return (
     <>
       {products.map((product, index)=>
-        <Item 
-          key={index}
-        > 
+        <Item key={index}> 
           <img src={process.env.PUBLIC_URL + product.images[0].file.filePath} />
-          <Detail>
-            <TextBox
-              onClick={()=> {
-                navigate(`/${username}/shopping/product/${product.index}`);
-              }}
-            >
+          <Detail
+            onClick={()=> {
+              navigate(`/${username}/shopping/product/${product.index}`);
+            }}
+          >
+            <TextBox>
               <h2>{product.title}</h2>
               <span>
                 {product.price.currency === "dollar" ? "$" : "₩"}
                 {product.price.amount}  
               </span>
             </TextBox>
+          </Detail>
           {/* 하트 아이콘 */}
           {auth   //로그인 했을 경우
           //본인 스토어가 아닐 때 (본인 스토어인 경우 하트 아이콘 X)
-          ? (auth.store._id !== userInfo.store._id) &&  
+          ? (!auth.storeOwner || auth.store._id !== userInfo.store._id) &&  
             (likes[product.index]
               //위시리스트에 추가된 경우
               ? <BsSuitHeartFill
@@ -86,7 +85,6 @@ function PostList({ auth, username, products, userInfo }) {
               onClick={()=> updateWishlist(product.index)}
             />
           }
-          </Detail>
         </Item>
       )}
     </>
