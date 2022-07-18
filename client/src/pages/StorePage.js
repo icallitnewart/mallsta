@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useOutletContext, Link } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { useParams, useOutletContext, Link, Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getStoreInfo } from "../_actions/store_action";
 
@@ -13,7 +13,8 @@ import PostList from '../components/shopping/store/PostList';
 
 function StorePage() {
   const dispatch = useDispatch();
-  const store = useSelector(state=> state.store);
+  const productData = useSelector(state=> state.product.productInfo);
+  const isReloaded = useRef(true);
   const { productId, username } = useParams();
   const { auth, isPageOwner, userInfo } = useOutletContext(); 
 
@@ -27,31 +28,42 @@ function StorePage() {
     isUpload, setIsUpload, isEdit, setIsEdit
   };
 
-  //데이터 호출
+  //첫 로드시 데이터 호출
   useEffect(()=> {
     if(userInfo.storeOwner) {
-      const isDataStored = Object.keys(store).length > 0;
+      const body = { storeId : userInfo.store._id };
+      dispatch(getStoreInfo(body))
+      .then(response=> {
+        const data = response.payload;
 
-      if(isDataStored) {
-        const storeInfo = store.storeInfo.storeInfo;
-        setProducts(storeInfo.product);
+        if(data.success) {
+          setProducts(data.storeInfo.product);
+          isReloaded.current = false;
+        } else {
+          console.error(data.err);
+        }
         setIsLoading(false);
-      } else {
-        const body = { storeId : userInfo.store._id };
-        dispatch(getStoreInfo(body))
-        .then(response=> {
-          const data = response.payload;
-
-          if(data.success) {
-            setProducts(data.storeInfo.product);
-          } else {
-            console.error(data.err);
-          }
-          setIsLoading(false);
-        })
-      }
+      });
     }
   }, [userInfo]);
+
+  //상품 팝업 페이지 접속 후 다시 상품 목록으로 이동시
+  //모든 상품 목록 데이터를 재호출하지 않고
+  //해당 상품 정보만 업데이트해서 보여주기
+  //(위시리스트 추가와 같이 데이터의 변화가 있을 경우를 대비)
+  useEffect(()=> {
+    if(!isReloaded.current && productData) {
+      const newProduct = productData.productInfo;
+      const updatedList = [...products].map((product)=> {
+        if(product.index === newProduct.index) {
+          return newProduct;
+        } else {
+          return product;
+        }
+      });
+      setProducts(updatedList);
+    }
+  }, [productData, isReloaded]);
 
   const renderAlert = (type)=> {
     if(type==="loading") {
@@ -117,8 +129,10 @@ function StorePage() {
         )}
       </Content>
 
-      {/* 팝업창 : 상품 업로드 / 상품 상세보기 */}
-      {(isUpload || productId) && <Popup {...props} />}
+      {/* 팝업창 : 상품 상세보기 */}
+      <Outlet context={{...props}} />
+      {/* 팝업창 : 상품 업로드 */}
+      {(isUpload) && <Popup {...props} />}
       </>
     }
     </React.Fragment>

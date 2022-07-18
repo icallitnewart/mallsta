@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import { Background, Container } from "../../../styles/shopping/PopupStyle";
 
 import PostUpload from './PostUpload';
-import PostView from './PostView';
 
 function Popup(props) {
   useEffect(()=> {
@@ -17,15 +16,7 @@ function Popup(props) {
   return (
     <Background>
       <Container>
-      {props.isUpload && 
         <PostUpload {...props} />
-      }
-      {props.productId &&
-        (props.isEdit
-          ? <PostUpload {...props} />
-          : <PostView {...props} />
-        )
-      }
       </Container>
     </Background>
   )

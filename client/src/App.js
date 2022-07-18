@@ -19,6 +19,7 @@ import EditProfilePage from "./pages/EditProfilePage";
 import EditStorePage from "./pages/EditStorePage";
 //shopping
 import StorePage from "./pages/StorePage";
+import ProductPage from "./pages/ProductPage";
 import WishlistPage from "./pages/WishlistPage";
 import ReviewPage from "./pages/ReviewPage";
 import OrderPage from "./pages/OrderPage";
@@ -30,10 +31,12 @@ function App() {
       <Routes>
         {/* Membership Pages */}
         <Route element={<MembershipLayout />}>
+          {/* Login Page */}
           <Route 
             path="/membership/login" 
             element={Auth(<LoginPage />, false)} 
           />
+          {/* Sign-in Page */}
           <Route 
             path="/membership/register" 
             element={Auth(<RegisterPage />, false)} 
@@ -49,10 +52,12 @@ function App() {
 
           {/* Account Pages */}
           <Route element={<AccountLayout />}>
+            {/* Profile Setting Page */}
             <Route 
               path="/account/profile" 
               element={Auth(<EditProfilePage />, true)} 
             />
+            {/* Store Setting Page */}
             <Route 
               path="/account/store" 
               element={Auth(<EditStorePage />, true)} 
@@ -61,22 +66,28 @@ function App() {
 
           {/* Shopping Pages */}
           <Route element={<ShoppingLayout />}>
+            {/* Store Page */}
             <Route 
               path="/:username/shopping" 
               element={Auth(<StorePage />, null)} 
-            />
-            <Route 
-              path="/:username/shopping/product/:productId" 
-              element={Auth(<StorePage />, null)} 
-            />
+            >
+              {/* Product Page */}
+              <Route 
+                path="product/:productId" 
+                element={Auth(<ProductPage />, null)} 
+              />
+            </Route>
+            {/* Wishlist Page */}
             <Route 
               path="/:username/shopping/likes" 
               element={Auth(<WishlistPage />, true)} 
             />
+            {/* Review Page */}
             <Route 
               path="/:username/shopping/reviews" 
               element={Auth(<ReviewPage />, true)} 
             />
+            {/* Order History Page */}
             <Route 
               path="/:username/shopping/order" 
               element={Auth(<OrderPage />, true)} 
