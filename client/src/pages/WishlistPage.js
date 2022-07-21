@@ -21,9 +21,9 @@ function WishlistPage() {
 
   useEffect(()=> {
     if(userInfo && auth) {
-      const store_id = userInfo.store._id;
+      const storeId = !isPageOwner ? userInfo.store._id : null;
 
-      dispatch(wishlistUser(isPageOwner, store_id))
+      dispatch(wishlistUser(storeId))
       .then(response=> {
         const data = response.payload;
 

@@ -137,13 +137,7 @@ export function deleteUploadUser() {
 }
 
 //위시리스트 목록 요청
-export function wishlistUser(isPageOwner, store_id) {
-  const storeId = 
-  (!isPageOwner) 
-  //1. 현 스토어에서 위시리스트에 추가한 상품
-  ? store_id
-  //2. 유저의 위시리스트에 추가한 모든 상품 (storeId 옵션 없음)
-  : null;
+export function wishlistUser(storeId) {
   let url = "/api/users/wishlist";
   if(storeId) url += `?storeId=${storeId}`;
 
