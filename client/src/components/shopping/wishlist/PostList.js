@@ -65,7 +65,7 @@ function PostList({
               <Detail
                 onClick={()=> {
                   //TODO: URL 데이터 연동
-                  window.location.replace(`/${username}/shopping/product/${product.index}`);
+                  window.location.replace(product.url);
                 }}
               >
                 <TextBox>

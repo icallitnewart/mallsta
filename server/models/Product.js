@@ -69,6 +69,10 @@ const productSchema = mongoose.Schema({
   tags : {
     type: Array
   },
+  url : {
+    type: String,
+    required: true
+  },
   likes : {
     total : {
       type: Number,

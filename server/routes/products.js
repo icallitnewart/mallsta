@@ -75,10 +75,16 @@ router.post('/delete_image', auth, (req, res)=> {
 
 //상품 등록
 router.post('/register', (req, res)=> {
-  Store.findById(req.body.store, (err, storeInfo)=> {
+  Store
+  .findById(req.body.store)
+  .populate("owner")
+  .exec((err, storeInfo)=> {
+    const username = storeInfo.owner.username;
+    const index = storeInfo.productCounter + 1;
     const product = new Product({
       ...req.body,
-      index : storeInfo.productCounter + 1
+      index : index,
+      url : `/${username}/shopping/product/${index}`
     });
 
     product.save((err, productInfo)=> {
