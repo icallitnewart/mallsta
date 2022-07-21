@@ -8,6 +8,7 @@ export const AUTH_USER = "auth_user";
 export const EDIT_USER = "edit_user";
 export const UPLOAD_USER = "upload_user";
 export const DELETE_UPLOAD_USER = "delete_upload_user";
+export const WISHLIST_USER = "wishlist_user";
 
 //store
 export const REGISTER_STORE = "register_store";

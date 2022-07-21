@@ -262,4 +262,33 @@ router.post('/upload_image', auth, (req, res)=> {
 
 });
 
+//위시리스트 목록 요청
+router.get('/wishlist', auth, (req, res)=> {
+  const storeId = req.query.storeId;
+  const storeItems = {
+    path : "wishlist",
+    match : {
+      store : storeId
+    }  
+  };
+
+  User
+  .findById(req.user._id)
+  .populate(
+    storeId 
+    //1. 현 스토어에서 위시리스트에 추가한 상품
+    ? storeItems 
+    //2. 유저의 위시리스트에 추가한 모든 상품
+    : "wishlist"
+  )
+  .exec((err, userInfo)=> {
+    if(err) return res.json({ success : false, err });
+
+    return res.status(200).json({ 
+      success : true,
+      wishlist : userInfo.wishlist
+    });
+  });
+});
+
 module.exports = router;

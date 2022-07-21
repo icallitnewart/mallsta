@@ -7,7 +7,8 @@ import {
   AUTH_USER,
   EDIT_USER,
   UPLOAD_USER,
-  DELETE_UPLOAD_USER
+  DELETE_UPLOAD_USER,
+  WISHLIST_USER
 } from "../_actions/types";
 
 export default function(state={}, action) {
@@ -64,6 +65,12 @@ export default function(state={}, action) {
       return {
         ...state,
         deleteUpload : action.payload
+      }
+      break;
+    case WISHLIST_USER :
+      return {
+        ...state,
+        wishlist : action.payload
       }
       break;
     default :

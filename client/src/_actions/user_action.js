@@ -8,7 +8,8 @@ import {
   AUTH_USER,
   EDIT_USER,
   UPLOAD_USER,
-  DELETE_UPLOAD_USER
+  DELETE_UPLOAD_USER,
+  WISHLIST_USER
 } from "./types";
 
 //로그인
@@ -123,14 +124,36 @@ export function uploadUser(formData) {
 }
 
 //프로필 이미지 삭제
-export function deleteUploadUser(data) {
+export function deleteUploadUser() {
   const request = 
     axios
-    .get('/api/users/delete_image', data)
+    .get('/api/users/delete_image')
     .then(res => res.data);
 
   return {
     type : DELETE_UPLOAD_USER,
+    payload : request
+  }
+}
+
+//위시리스트 목록 요청
+export function wishlistUser(isPageOwner, store_id) {
+  const storeId = 
+  (!isPageOwner) 
+  //1. 현 스토어에서 위시리스트에 추가한 상품
+  ? store_id
+  //2. 유저의 위시리스트에 추가한 모든 상품 (storeId 옵션 없음)
+  : null;
+  let url = "/api/users/wishlist";
+  if(storeId) url += `?storeId=${storeId}`;
+
+  const request = 
+    axios
+    .get(url)
+    .then(res => res.data);
+
+  return {
+    type : WISHLIST_USER,
     payload : request
   }
 }
