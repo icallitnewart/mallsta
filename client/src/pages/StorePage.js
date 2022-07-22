@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useParams, useOutletContext, Link, Outlet } from 'react-router-dom';
+import { useParams, useOutletContext, Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getStoreInfo } from "../_actions/store_action";
+import useAlert from '../hooks/useAlert';
 
-import { BsShop, BsBoxSeam } from "react-icons/bs";
-import { ImSpinner3 } from "react-icons/im";
-import { Alert, Content, PostButton } from "../styles/shopping/ContentStyle";
+import { Content, PostButton } from "../styles/shopping/ContentStyle";
 
 import Filter from '../components/shopping/Filter';
 import Popup from '../components/shopping/store/Popup';
@@ -22,6 +21,7 @@ function StorePage() {
   const [ isLoading, setIsLoading ] = useState(true);
   const [ isUpload, setIsUpload ] = useState(false);
   const [ isEdit, setIsEdit ] = useState(false);
+  const { renderAlert } = useAlert(isLoading);
   const props = {
     productId, username, 
     auth, isPageOwner, userInfo,
@@ -65,38 +65,11 @@ function StorePage() {
     }
   }, [productData, isReloaded]);
 
-  const renderAlert = (type)=> {
-    if(type==="loading") {
-      return (
-        <Alert isLoading={isLoading}>
-          <ImSpinner3 />
-        </Alert>
-      )
-    }
-    if(type==="store") {
-      return (
-        <Alert>
-          <BsShop />
-          <h1>You have not opened your store yet. <br/> Start selling now!</h1>
-          <Link to="/account/store">Open Store</Link>
-        </Alert>
-      )
-    }
-    if(type==="product") {
-      return (
-        <Alert>
-          <BsBoxSeam />
-          <p style={{ marginTop: "0px" }}>No Product</p>
-        </Alert>  
-      )
-    }
-  };
-
   return (
     <React.Fragment>
     {(isPageOwner && !auth.storeOwner)
     //스토어를 열지 않은 경우 알림 문구 출력 (페이지 소유주)
-    ? renderAlert("store")
+    ? renderAlert("notify", "store")
     : <>
       <Filter />
       <Content section="store">
@@ -121,10 +94,10 @@ function StorePage() {
 
         {/* 상품 목록 */}
         {isLoading
-        ? renderAlert("loading")
+        ? renderAlert("notify", "loading")
         : ((products.length === 0)
           //상품이 없는 경우 알림 문구 출력
-          ? renderAlert("product")
+          ? renderAlert("empty", "product")
           : <PostList {...{ ...props, products }} />
         )}
       </Content>

@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { likeProduct } from '../../../_actions/product_action';
+import useAlert from '../../../hooks/useAlert';
 
-import { BsBoxSeam, BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
-import { Item, Detail, TextBox, Alert } from "../../../styles/shopping/ContentStyle";
-import { ImSpinner3 } from 'react-icons/im';
+import { BsSuitHeart, BsSuitHeartFill } from "react-icons/bs";
+import { Item, Detail, TextBox } from "../../../styles/shopping/ContentStyle";
 
 function PostList({ 
-  auth, username, isLoading,
+  auth, isLoading,
   products, setProducts, likes, setLikes
 }) {
   const dispatch = useDispatch();
+  const { renderAlert } = useAlert(isLoading);
 
   //위시리스트에 상품 추가/삭제
   const updateWishlist = (index)=> {
@@ -50,11 +51,7 @@ function PostList({
 
   return (
     <React.Fragment>
-      {isLoading &&
-        <Alert isLoading={isLoading}>
-          <ImSpinner3 />
-        </Alert>
-      }
+      {isLoading && renderAlert("notify", "loading")}
       {(!isLoading && products.length > 0)  
       ? products.map((product, index)=> {
           const isLiked = likes.some(likedItem=> likedItem === product.index);
@@ -64,7 +61,6 @@ function PostList({
               <img src={process.env.PUBLIC_URL + product.images[0].file.filePath} />
               <Detail
                 onClick={()=> {
-                  //TODO: URL 데이터 연동
                   window.location.replace(product.url);
                 }}
               >
@@ -92,12 +88,7 @@ function PostList({
             </Item>
           )
         })
-      : <Alert>
-          <BsBoxSeam />
-          <p style={{ marginTop: "0px" }}>
-            No Items Added
-          </p>
-        </Alert> 
+      : renderAlert("empty", "wishlist")
       }
     </React.Fragment>
   )
