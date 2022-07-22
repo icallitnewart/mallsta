@@ -20,6 +20,7 @@ export const Container = styled.div`
   background: #fff;
   border-radius: 3px;
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
 
   >form {
     width: 55%;
