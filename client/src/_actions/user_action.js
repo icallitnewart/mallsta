@@ -9,7 +9,8 @@ import {
   EDIT_USER,
   UPLOAD_USER,
   DELETE_UPLOAD_USER,
-  WISHLIST_USER
+  WISHLIST_USER,
+  ADD_TO_CART_USER
 } from "./types";
 
 //로그인
@@ -148,6 +149,19 @@ export function wishlistUser(storeId) {
 
   return {
     type : WISHLIST_USER,
+    payload : request
+  }
+}
+
+//장바구니 담기
+export function addToCartUser(data) {
+  const request = 
+    axios
+    .post('/api/users/add_to_cart', data)
+    .then(res => res.data);
+
+  return {
+    type : ADD_TO_CART_USER,
     payload : request
   }
 }

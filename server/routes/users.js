@@ -291,4 +291,55 @@ router.get('/wishlist', auth, (req, res)=> {
   });
 });
 
+//장바구니 담기
+router.post('/add_to_cart', auth, (req, res)=> {
+  User
+  .findById(req.user._id)
+  .populate("cart")
+  .exec((err, userInfo)=> {
+    if(err) return res.json({ success : false, err });
+
+    const isExist = userInfo.cart.some(item=> item.product._id.toString() === req.body.product._id.toString());
+    
+    //장바구니에 해당 상품이 없을 경우
+    if(!isExist) {
+      User.findOneAndUpdate(
+        { _id : req.user._id },
+        { $push : {
+            cart : {
+              product : req.body.product,
+              quantity : req.body.quantity
+            }
+          } 
+        },
+        { new : true },
+        (err, userInfo)=> {
+          if(err) return res.json({ success : false, err });
+
+          return res.status(200).json({ success: true });
+        }
+      );
+    } 
+    //장바구니에 이미 해당 상품이 있을 경우
+    else {
+      User.findOneAndUpdate(
+        { 
+          _id : req.user._id,
+          "cart.product" : req.body.product._id
+        },
+        { $inc : {
+            "cart.$.quantity" : req.body.quantity
+          } 
+        },
+        { new : true },
+        (err, userInfo)=> {
+          if(err) return res.json({ success : false, err });
+          
+          return res.status(200).json({ success: true });
+        }
+      );
+    }
+  });
+});
+
 module.exports = router;

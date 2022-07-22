@@ -45,7 +45,7 @@ const userSchema = mongoose.Schema({
   },
   wishlist : [
     {
-      type : mongoose.Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Product"
     }
   ],
@@ -53,10 +53,18 @@ const userSchema = mongoose.Schema({
     type: Array,
     default: []
   },
-  cart : {
-    type: Array,
-    default: []
-  },
+  cart : [
+    {
+      product : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product"
+      },
+      quantity : {
+        type: Number,
+        min: 1
+      }
+    }
+  ],
   order : {
     type: Array,
     default: []
