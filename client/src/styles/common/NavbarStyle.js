@@ -40,21 +40,17 @@ export const Li = styled.li`
     padding: 5px;
     box-sizing: content-box;
   }
+`;
 
-  //장바구니 아이템 개수 아이콘
-  ${props=> (props.isCartEmpty===false) && css`
-    &::after {
-      position: absolute;
-      top: 2px; left: 15px;
-      display: block;
-      content: "100";
-      padding: 3px;
-      color: white;
-      font: 8px/9px "Poppins";
-      border-radius: 50%;
-      background: #f64146;
-    }`
-  }
+export const CartItems = styled.span`
+  position: absolute;
+  top: 2px; left: 15px;
+  display: inline-block;
+  padding: 3px 5px;
+  color: white;
+  font: 8px/1 "Noto Sans KR";
+  border-radius: 10px;
+  background: #f64146;
 `;
 
 export const Dropdown = styled.div`

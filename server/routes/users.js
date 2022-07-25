@@ -316,7 +316,10 @@ router.post('/add_to_cart', auth, (req, res)=> {
         (err, userInfo)=> {
           if(err) return res.json({ success : false, err });
 
-          return res.status(200).json({ success: true });
+          return res.status(200).json({ 
+            success: true,
+            cartItems : userInfo.cart
+          });
         }
       );
     } 
@@ -335,7 +338,10 @@ router.post('/add_to_cart', auth, (req, res)=> {
         (err, userInfo)=> {
           if(err) return res.json({ success : false, err });
           
-          return res.status(200).json({ success: true });
+          return res.status(200).json({ 
+            success: true,
+            cartItems : userInfo.cart 
+          });
         }
       );
     }
