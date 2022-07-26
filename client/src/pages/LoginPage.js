@@ -60,7 +60,7 @@ function LoginPage() {
         setErr(messages);
 
       } else {
-        navigate('/');
+        navigate(`/${values.username}/shopping`);
       }
     });
   };
