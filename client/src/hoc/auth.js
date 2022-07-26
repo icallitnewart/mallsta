@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { auth } from "../_actions/user_action";
+import useAlert from '../hooks/useAlert';
 
-export default function (Component, option, adminRoute = null) {
+export default function (Component, option, checkAlert = null, adminRoute = null) {
   /*
     option
     - null : 아무나 출입 가능
@@ -14,6 +15,15 @@ export default function (Component, option, adminRoute = null) {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    //checkAlert === true
+    const paths = useLocation().pathname.split("/");
+    const path = paths[paths.length - 1];
+    const username = useParams().username;
+    const user = useSelector(state=> state.user);
+    const { renderAlert } = useAlert();
+    const [ isAlert, setIsAlert ] = useState(null);
+
+    //회원 인증 체크 및 자격에 따른 접근 제한
     useEffect(()=> {
       dispatch(auth()).then(response=> {
         if(!response.payload.isAuth) {
@@ -33,7 +43,36 @@ export default function (Component, option, adminRoute = null) {
       }); 
     },[]);
 
-    return (Component);
+    //checkAlert === true
+    //조건에 따라 알림 문구 출력
+    useEffect(()=> {
+      if(checkAlert) {
+        const userInfo = user.userInfo.userInfo;
+        if(userInfo) { 
+          //스토어 오픈 X
+          if(!userInfo.storeOwner) {
+            const isAuth = user.userData;
+            //로그인 X || 페이지 소유자 X
+            if(!isAuth || isAuth.username !== username) {
+              setIsAlert(true);
+            } else {
+              setIsAlert(false);
+            }
+          } else {
+            setIsAlert(false);
+          }
+        } 
+      }
+    }, [user]);
+
+    return (
+      checkAlert
+      ? (isAlert === false
+        ? Component
+        : renderAlert("unavailable", path)
+        )
+      : Component
+    );
   };
 
   return <CheckAuthentication />;

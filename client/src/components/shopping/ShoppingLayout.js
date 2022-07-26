@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Outlet, useLocation, useParams } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 import { getUserInfo } from '../../_actions/user_action';
-import useAlert from '../../hooks/useAlert';
 
 import { Background, Container } from "../../styles/common/LayoutStyle";
 
@@ -13,8 +12,6 @@ function ShoppingLayout() {
   const dispatch = useDispatch();
   const auth = useSelector(state=> state.user.userData);
   const username = useParams().username;
-  const path = useLocation().pathname.split("/");
-  const { renderAlert } = useAlert();
 
   const [ userInfo, setUserInfo ] = useState(null);
   const [ isAuth, setIsAuth ] = useState(null);
@@ -49,7 +46,7 @@ function ShoppingLayout() {
     }
   }, [auth]);
 
-  //페이지 소유주와 로그인 유저가 동일한지 판단
+  //페이지 소유자와 로그인 유저가 동일한지 판단
   useEffect(()=> {
     if(isAuth) {
       if(auth.username === username) {
@@ -67,15 +64,7 @@ function ShoppingLayout() {
       </Container>
       <TabMenu {...props} />
       <Container>
-      {userInfo &&
-      ((!isPageOwner && !userInfo.storeOwner)
-        //조건: 페이지 소유주 X && 스토어 오픈 X
-        ? renderAlert("unavailable", path[path.length - 1])
-        //조건: 페이지 소유주 O || 스토어 오픈 O
-        : <Outlet 
-            context={{...props}} 
-          />
-      )}
+      {userInfo && <Outlet context={{ ...props }} />}
       </Container>
     </Background>
   )

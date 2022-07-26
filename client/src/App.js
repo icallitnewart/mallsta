@@ -69,28 +69,28 @@ function App() {
             {/* Store Page */}
             <Route 
               path="/:username/shopping" 
-              element={Auth(<StorePage />, null)} 
+              element={Auth(<StorePage />, null, true)} 
             >
               {/* Product Page */}
               <Route 
                 path="product/:productId" 
-                element={Auth(<ProductPage />, null)} 
+                element={Auth(<ProductPage />, null, true)} 
               />
             </Route>
             {/* Wishlist Page */}
             <Route 
               path="/:username/shopping/likes" 
-              element={Auth(<WishlistPage />, true)} 
+              element={Auth(<WishlistPage />, true, true)} 
             />
             {/* Review Page */}
             <Route 
               path="/:username/shopping/reviews" 
-              element={Auth(<ReviewPage />, true)} 
+              element={Auth(<ReviewPage />, true, true)} 
             />
             {/* Order History Page */}
             <Route 
               path="/:username/shopping/order" 
-              element={Auth(<OrderPage />, true)} 
+              element={Auth(<OrderPage />, true, true)} 
             />
           </Route>
 

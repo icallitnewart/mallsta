@@ -12,7 +12,7 @@ function Navbar() {
   const navigate = useNavigate();
   const auth = useSelector(state=> state.user.userData);
   const cart = useSelector(state=> state.user.cart);
-  const username = auth.username;
+  const username = auth ? auth.username : null;
 
   const [ isLoggedIn, setIsLoggedIn ] = useState(null);
   const [ showDropdown, setShowDropdown ] = useState(false);
@@ -20,7 +20,7 @@ function Navbar() {
 
   //로그인 여부, 장바구니 개수 설정
   useEffect(()=> {
-    if(auth) {
+    if(auth && auth.cart) {
       setIsLoggedIn(true);
       setCartItems(auth.cart.length);
     } else {
