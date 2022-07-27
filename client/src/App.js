@@ -17,6 +17,8 @@ import RegisterPage from "./pages/RegisterPage";
 //account
 import EditProfilePage from "./pages/EditProfilePage";
 import EditStorePage from "./pages/EditStorePage";
+//cart
+import CartPage from "./pages/CartPage";
 //shopping
 import StorePage from "./pages/StorePage";
 import ProductPage from "./pages/ProductPage";
@@ -63,6 +65,12 @@ function App() {
               element={Auth(<EditStorePage />, true)} 
             />
           </Route>
+
+          {/* Cart Page */}
+          <Route 
+            path="/cart" 
+            element={Auth(<CartPage />, true)} 
+          />
 
           {/* Shopping Pages */}
           <Route element={<ShoppingLayout />}>
