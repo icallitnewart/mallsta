@@ -56,6 +56,7 @@ export const CartItems = styled.span`
 export const Dropdown = styled.div`
   position: absolute;
   top: 42px; right: -30px;
+  z-index: 1000;
   width: 160px;
   background: #fff;
   box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1);
