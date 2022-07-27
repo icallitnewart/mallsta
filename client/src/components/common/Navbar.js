@@ -98,7 +98,7 @@ function Navbar() {
             </Li>
             <Li>
               <Link 
-                to={isLoggedIn ?`/${username}/cart` : "/"}
+                to={"/cart"}
                 onClick={replaceLink}
               >
                 <BsCart />

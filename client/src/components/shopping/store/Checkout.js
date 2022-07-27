@@ -55,7 +55,7 @@ function Checkout({ isLiked, setIsLiked, auth, product }) {
           const timer = setTimeout(()=> {
             const alert = "Item added to cart! Would you like to go check your cart?"
             if(window.confirm(alert)) {
-              navigate(`/${auth.username}/cart`);
+              navigate(`/cart`);
             }
           }, 100);
           return ()=> clearTimeout(timer);
