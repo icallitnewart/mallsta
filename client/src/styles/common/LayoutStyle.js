@@ -1,6 +1,8 @@
 import styled, { css } from "styled-components";
 
 export const Background = styled.div`
+  position: relative;
+  top: 50px; left: 0px;
   width: 100%;
   min-height: calc(100vh - 55px);
   background: #fbfbfb;
