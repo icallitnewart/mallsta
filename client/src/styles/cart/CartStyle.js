@@ -276,10 +276,6 @@ export const ShippingBox = styled.div`
 
     tr {
       &:last-child {
-        th {
-          vertical-align: top;
-        }
-
         td p {
           margin-bottom: 10px;
         }
@@ -292,6 +288,7 @@ export const ShippingBox = styled.div`
         color: #555;
         letter-spacing: 1px;
         margin-right: 10px;
+        vertical-align: top;
       }
       
       td {
