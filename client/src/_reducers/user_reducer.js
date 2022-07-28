@@ -9,7 +9,8 @@ import {
   UPLOAD_USER,
   DELETE_UPLOAD_USER,
   WISHLIST_USER,
-  ADD_TO_CART_USER
+  ADD_TO_CART_USER,
+  GET_CART_USER
 } from "../_actions/types";
 
 export default function(state={}, action) {
@@ -75,6 +76,12 @@ export default function(state={}, action) {
       }
       break;
     case ADD_TO_CART_USER :
+      return {
+        ...state,
+        cart : action.payload
+      }
+      break;
+    case GET_CART_USER :
       return {
         ...state,
         cart : action.payload

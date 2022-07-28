@@ -10,7 +10,8 @@ import {
   UPLOAD_USER,
   DELETE_UPLOAD_USER,
   WISHLIST_USER,
-  ADD_TO_CART_USER
+  ADD_TO_CART_USER,
+  GET_CART_USER
 } from "./types";
 
 //로그인
@@ -162,6 +163,19 @@ export function addToCartUser(data) {
 
   return {
     type : ADD_TO_CART_USER,
+    payload : request
+  }
+}
+
+//장바구니 정보 요청
+export function getCartUser() {
+  const request = 
+    axios
+    .get('/api/users/cartItems')
+    .then(res => res.data);
+
+  return {
+    type : GET_CART_USER,
     payload : request
   }
 }

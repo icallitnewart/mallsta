@@ -4,7 +4,15 @@ import { Link } from 'react-router-dom';
 import { Container } from "../../styles/common/LayoutStyle";
 import { ShippingBox, PriceBox, ErrMsg } from "../../styles/cart/CartStyle";
 
-function Checkout() {
+function Checkout({ auth }) {
+  const errMsg = (type)=> {
+    const message = `You have not entered this information yet. Please update your ${type} by clicking on the "Change" button at the top-right corner.`;
+
+    return (
+      <ErrMsg>{message}</ErrMsg>
+    )
+  };
+
   return (
     <Container
       style={{ padding: "30px" }}
@@ -20,28 +28,31 @@ function Checkout() {
           <tbody>
             <tr>
               <th>NAME</th>
-              <td>Jane Doe</td>
+              <td>{auth && auth.username}</td>
             </tr>
             <tr>
               <th>CONTACT</th>
-              <td>01012341234</td>
+              <td>
+                {auth && (
+                  !auth.phone ? errMsg("contact number") : auth.phone
+                )}
+              </td>
             </tr>
             <tr>
               <th>EMAIL</th>
-              <td>JaneDoe@mail.com</td>
+              <td>{auth && auth.email}</td>
             </tr>
             <tr>
               <th>ADDRESS</th>
               <td>
-                <ErrMsg>
-                  You have not entered this information yet. Please update your address by clicking on "change" button at the top-right corner.
-                </ErrMsg>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing
-                </p>  
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing
-                </p>  
+                {auth && (
+                  (!auth.address[0] && !auth.address[1]) 
+                  ? errMsg("shipping address") 
+                  : <>
+                    <p>{auth.address[0]}</p>
+                    <p>{auth.address[1]}</p>
+                    </>
+                )}
               </td>
             </tr>
           </tbody>

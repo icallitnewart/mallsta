@@ -348,4 +348,38 @@ router.post('/add_to_cart', auth, (req, res)=> {
   });
 });
 
+//장바구니 (+위시리스트) 정보 요청
+router.get('/cartItems', auth, (req, res)=> {
+  User
+  .findById(req.user._id)
+  //장바구니 상품 정보
+  .populate({
+    path : "cart",
+    populate : {
+      path : "product",
+      model : "Product"
+    }
+  })
+  //상품의 스토어 정보
+  .populate({
+    path : "cart.product",
+    populate : {
+      path : "store",
+      model : "Store"
+    }
+  })
+  //위시리스트 정보
+  .populate("wishlist")
+  .exec((err, userInfo)=> {
+    if(err) return res.json({ success : false, err });
+
+    return res.status(200).json({
+      success : true,
+      cartItems : userInfo.cart,
+      wishlist : userInfo.wishlist
+    });
+  });
+
+})
+
 module.exports = router;

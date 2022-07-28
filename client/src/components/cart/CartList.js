@@ -9,7 +9,7 @@ import {
   QuantityBox, QuantityController, Price, DeleteButton 
 } from "../../styles/cart/CartStyle";
 
-function CartList() {
+function CartList({ cartItems, setCartItems, renderAlert, isLoading }) {
   return (
     <Container 
       wd={"calc(80% - 15px)"}
@@ -17,44 +17,63 @@ function CartList() {
     >
       <Title>CART ITEMS</Title>
       <ItemList>
-        <CartItem>
-          <Pic>
-            <img src="/img/profile_image_default.jpg" alt="" />
-          </Pic>
-          <TextBox>
-            <h2>
-              <Link to="/">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, placeat.
-              </Link>
-            </h2>
-            <p>Judy's Accessory Shop</p>
-            <span>$300</span>
-          </TextBox>
-          <QuantityBox>
-            <DeleteButton
-              type="button"
-              aria-label="Remove this item from cart"
-            >
-              <GrClose />
-            </DeleteButton>
-            <QuantityController>
-              <button 
-                type="button"
-                aria-label="Decrease product quantity by one"
-              >
-                <HiMinus />
-              </button>
-              <span>1</span>
-              <button
-                type="button"
-                aria-label="Increase product quantity by one"
-              >
-                <HiPlus />
-              </button>
-            </QuantityController>
-            <Price>$300</Price>
-          </QuantityBox>
-        </CartItem>
+        {isLoading 
+        ? renderAlert("notify", "loading")
+        : cartItems.map(item=> {
+            const product = item.product;
+            return (
+              <CartItem key={product.index}>
+                <Pic>
+                  <Link to={product.url}>
+                    <img 
+                      src={product.images[0].file.filePath} 
+                      alt={`A product image of ${product.title}`} 
+                    />
+                  </Link>
+                </Pic>
+                <TextBox>
+                  <h2>
+                    <Link to={product.url}>
+                      {product.title}
+                    </Link>
+                  </h2>
+                  <p>{product.store.name}</p>
+                  <span>
+                    {product.price.currency === "dollar" ? "$" : "₩"}
+                    {product.price.amount}
+                  </span>
+                </TextBox>
+                <QuantityBox>
+                  <DeleteButton
+                    type="button"
+                    aria-label="Remove this item from cart"
+                  >
+                    <GrClose />
+                  </DeleteButton>
+                  <QuantityController>
+                    <button 
+                      type="button"
+                      aria-label="Decrease product quantity by one"
+                    >
+                      <HiMinus />
+                    </button>
+                    <span>{item.quantity}</span>
+                    <button
+                      type="button"
+                      aria-label="Increase product quantity by one"
+                    >
+                      <HiPlus />
+                    </button>
+                  </QuantityController>
+                  <Price>
+                    {product.price.currency === "dollar" ? "$" : "₩"}
+                    {product.price.amount * item.quantity}
+                  </Price>
+                </QuantityBox>
+              </CartItem>
+            )
+          })
+        }
       </ItemList>
     </Container>
   )

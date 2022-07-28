@@ -1,9 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { BsCart3 } from "react-icons/bs";
 import { Container, Title2, LikeList, LikeItem, DetailBox } from "../../styles/cart/CartStyle";
 
-function Wishlist() {
+function Wishlist({ 
+  auth, isLoading, renderAlert, 
+  cartItems, setCartItems, wishlist
+}) {
+  const navigate = useNavigate();
+
   return (
     <Container 
       wd={"calc(20% - 15px)"}
@@ -13,20 +19,30 @@ function Wishlist() {
         Wishlist
       </Title2>
       <LikeList
-        cartItems={3}
+        cartItems={cartItems.length}
       >
-        <LikeItem>
-          <img src="/img/profile_image_default.jpg" alt="" />
-          <button
-            type="button"
-            aria-label="Add to cart"
-          >
-            <BsCart3 />
-          </button>
-          <DetailBox>
-            <h4>Lorem ipsum dolor sit</h4>
-          </DetailBox>
-        </LikeItem>
+        {isLoading
+        ? renderAlert("notify", "loading")
+        : wishlist.map(item=>
+            <LikeItem key={item.index}>
+              <img 
+                src={item.images[0].file.filePath} 
+                alt={`A product image of ${item.title}`} 
+              />
+              <button
+                type="button"
+                aria-label="Add to cart"
+              >
+                <BsCart3 />
+              </button>
+              <DetailBox 
+                onClick={()=> navigate(item.url)}
+              >
+                <h4>{item.title}</h4>
+              </DetailBox>
+            </LikeItem>
+          )
+        }
       </LikeList>
     </Container>
   )
