@@ -184,7 +184,7 @@ export const LikeList = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   width: 100%;
-  max-height: ${props=> `calc(120px * ${props.cartItems})`};
+  max-height: ${props=> `calc(150px * ${props.cartItems})`};
   overflow-y: auto;
 
   &::-webkit-scrollbar {
