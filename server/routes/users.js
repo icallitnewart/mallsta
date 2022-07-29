@@ -353,14 +353,8 @@ router.get('/cartItems', auth, (req, res)=> {
   User
   .findById(req.user._id)
   //장바구니 상품 정보
-  .populate({
-    path : "cart",
-    populate : {
-      path : "product",
-      model : "Product"
-    }
-  })
-  //상품의 스토어 정보
+  .populate("cart")
+  //장바구니 상품의 스토어 정보
   .populate({
     path : "cart.product",
     populate : {
@@ -370,6 +364,14 @@ router.get('/cartItems', auth, (req, res)=> {
   })
   //위시리스트 정보
   .populate("wishlist")
+  //위시리스트 상품의 스토어 정보
+  .populate({
+    path : "wishlist",
+    populate : {
+      path : "store",
+      model : "Store"
+    }
+  })
   .exec((err, userInfo)=> {
     if(err) return res.json({ success : false, err });
 
