@@ -379,7 +379,28 @@ router.get('/cartItems', auth, (req, res)=> {
       wishlist : userInfo.wishlist
     });
   });
+});
 
-})
+//장바구니에서 상품 삭제
+router.post('/delete_cart', auth, (req, res)=> {
+  User.findOneAndUpdate(
+    { _id : req.user._id },
+    { $pull : {
+        cart : {
+          product : req.body.product._id
+        }
+      } 
+    },
+    { new : true },
+    (err, userInfo)=> {
+      if(err) return res.json({ success : false, err });
+
+      return res.status(200).json({ 
+        success : true, 
+        cartItems : userInfo.cart 
+      });
+    }
+  )
+});
 
 module.exports = router;
