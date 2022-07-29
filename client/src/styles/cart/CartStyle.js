@@ -326,10 +326,15 @@ export const PriceBox = styled.div`
   span {
     font: 400 40px/1 "Poppins";
     color: #333;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
+
+    &:nth-of-type(2) {
+      margin-bottom: 5px;
+    }
   }
 
   button {
+    margin-top: 10px;
     padding: 15px 20px;
     background: #ff9966;
     border: 0px;

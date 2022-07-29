@@ -4,13 +4,32 @@ import { Link } from 'react-router-dom';
 import { Container } from "../../styles/common/LayoutStyle";
 import { ShippingBox, PriceBox, ErrMsg } from "../../styles/cart/CartStyle";
 
-function Checkout({ auth }) {
+function Checkout({ auth, cartItems }) {
   const errMsg = (type)=> {
     const message = `You have not entered this information yet. Please update your ${type} by clicking on the "Change" button at the top-right corner.`;
 
     return (
       <ErrMsg>{message}</ErrMsg>
     )
+  };
+  
+  //총 가격 계산
+  const calculateTotal = ()=> {
+    let dollarTotal = 0;
+    let wonTotal = 0;
+    cartItems.forEach(item=> {
+      if(item.product.price.currency === "won") {
+        wonTotal += item.product.price.amount * item.quantity;
+      }
+      if(item.product.price.currency === "dollar") {
+        dollarTotal += item.product.price.amount * item.quantity;
+      }
+    });
+
+    return [ 
+      dollarTotal !== 0 && dollarTotal, 
+      wonTotal !== 0 && wonTotal 
+    ];
   };
 
   return (
@@ -60,7 +79,19 @@ function Checkout({ auth }) {
       </ShippingBox>
       <PriceBox>
         <p>Total Price</p>
-        <span>$3000</span>
+        {calculateTotal()[0] && 
+          <span>
+            ${calculateTotal()[0]}
+          </span>
+        }
+        {calculateTotal()[1] && 
+          <span>
+            ₩{calculateTotal()[1]}
+          </span>
+        }
+        {!calculateTotal()[0] && !calculateTotal()[1] && 
+          <span>$0</span>
+        }
         <button>Place Order</button>
       </PriceBox>
     </Container>
