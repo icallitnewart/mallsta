@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 
 export const Wrapper = styled.div`
   display: flex;
@@ -307,6 +307,15 @@ export const ErrMsg = styled.p`
   color: #ff5e62;
 `;
 
+const spin = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+`;
+
 export const PriceBox = styled.div`
   display: flex;
   justify-content: center;
@@ -332,17 +341,24 @@ export const PriceBox = styled.div`
       margin-bottom: 5px;
     }
   }
+`;
 
-  button {
-    margin-top: 10px;
-    padding: 15px 20px;
-    background: #ff9966;
-    border: 0px;
-    border-radius: 3px;
-    font: 16px/1 "Poppins";
-    color: #fff;
-    cursor: pointer;
-    background: linear-gradient(to left, #ff9966, #ff5e62);
-  }
+export const OrderButton = styled.button`
+  width: 130px;
+  height: 45px;
+  margin-top: 10px;
+  background: #ff9966;
+  border: 0px;
+  border-radius: 3px;
+  font: 16px/1 "Poppins";
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(to left, #ff9966, #ff5e62);
+  
+  ${props=> props.isLoading && css`
+    svg {
+      animation: ${spin} linear 1.2s infinite;
+    }
+  `}
 `;
 //Checkout : End

@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { placeOrder } from '../../_actions/order_action';
 
+import { CgSpinner } from "react-icons/cg";
 import { Container } from "../../styles/common/LayoutStyle";
-import { ShippingBox, PriceBox, ErrMsg } from "../../styles/cart/CartStyle";
+import { ShippingBox, PriceBox, ErrMsg, OrderButton } from "../../styles/cart/CartStyle";
 
 function Checkout({ auth, cartItems }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [ isLoading, setIsLoading ] = useState(false);
+
+  //에러 메시지 출력
   const errMsg = (type)=> {
     const message = `You have not entered this information yet. Please update your ${type} by clicking on the "Change" button at the top-right corner.`;
     return <ErrMsg>{message}</ErrMsg>;
@@ -63,20 +67,33 @@ function Checkout({ auth, cartItems }) {
       Are you sure you want to purchase these items?
     `;
     if(window.confirm(msg)) {
+      setIsLoading(true);
+
       const body = {
         cartItems,
         totalPrice : calculateTotal()
       };
-  
+
       dispatch(placeOrder(body))
       .then(response=> {
         const data = response.payload;
   
         if(data.success) {
-          alert("Order Successful!");
-          navigate(`/${auth.username}/shopping/order`);
+          setIsLoading(false);
+
+          const timer = setTimeout(()=> {
+            alert("Order Successful!");
+            navigate(`/${auth.username}/shopping/order`);
+          }, 100);
+          return ()=> clearTimeout(timer);
         } else {
-          console.error(data.err);
+          setIsLoading(false);
+
+          const timer = setTimeout(()=> {
+            console.error(data.err);
+            alert("An error occured. Please try again");
+          }, 100);
+          return ()=> clearTimeout(timer);
         }
       });
     };
@@ -142,10 +159,14 @@ function Checkout({ auth, cartItems }) {
         {!calculateTotal().dollar && !calculateTotal().won && 
           <span>$0</span>
         }
-        <button
+        <OrderButton
           type="button"
           onClick={submitOrder}
-        >Place Order</button>
+          isLoading={isLoading}
+          disabled={isLoading}
+        >
+          {isLoading ? <CgSpinner /> : "Place Order"}
+        </OrderButton>
       </PriceBox>
     </Container>
   )
