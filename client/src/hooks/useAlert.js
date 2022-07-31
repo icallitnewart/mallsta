@@ -40,7 +40,13 @@ function useAlert(isLoading) {
                     <p style={{ marginTop: "0px" }}>
                       No Items Added
                     </p>
-                  </Alert>
+                  </Alert>,
+    item : <Alert style={{ height: "400px" }}>
+                <BsBoxSeam />
+                <p style={{ marginTop: "0px" }}>
+                  No Items Added
+                </p>
+              </Alert>
   };
 
   const unavailable = {
