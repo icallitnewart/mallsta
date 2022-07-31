@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { placeOrder } from '../../_actions/order_action';
@@ -10,6 +10,12 @@ import { ShippingBox, PriceBox, ErrMsg, OrderButton } from "../../styles/cart/Ca
 function Checkout({ auth, cartItems }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const initPrice = {
+    dollar : null,
+    won : null
+  };
+  const [ price, setPrice ] = useState(initPrice);
   const [ isLoading, setIsLoading ] = useState(false);
 
   //에러 메시지 출력
@@ -71,7 +77,7 @@ function Checkout({ auth, cartItems }) {
 
       const body = {
         cartItems,
-        totalPrice : calculateTotal()
+        totalPrice : price
       };
 
       dispatch(placeOrder(body))
@@ -98,6 +104,14 @@ function Checkout({ auth, cartItems }) {
       });
     };
   };
+
+  useEffect(()=> {
+    if(cartItems.length > 0) {
+      setPrice(calculateTotal());
+    } else {
+      setPrice(initPrice);
+    }
+  }, [cartItems]);
 
   return (
     <Container
@@ -146,17 +160,13 @@ function Checkout({ auth, cartItems }) {
       </ShippingBox>
       <PriceBox>
         <p>Total Price</p>
-        {calculateTotal().dollar && 
-          <span>
-            ${calculateTotal().dollar}
-          </span>
+        {price.dollar && 
+          <span>${price.dollar}</span>
         }
-        {calculateTotal().won && 
-          <span>
-            ₩{calculateTotal().won}
-          </span>
+        {price.won && 
+          <span>₩{price.won}</span>
         }
-        {!calculateTotal().dollar && !calculateTotal().won && 
+        {(!price.dollar && !price.won) && 
           <span>$0</span>
         }
         <OrderButton
