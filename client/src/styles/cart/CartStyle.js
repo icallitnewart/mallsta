@@ -182,9 +182,10 @@ export const Title2 = styled.h3`
 export const LikeList = styled.div`
   display: flex;
   justify-content: center;
+  align-content: flex-start;
   flex-wrap: wrap;
   width: 100%;
-  max-height: ${props=> `calc(150px * ${props.cartItems})`};
+  max-height: ${props=> props.cartItems > 0 ? `calc(130px * ${props.cartItems} + 40px)` : "465px"};
   overflow-y: auto;
 
   &::-webkit-scrollbar {
