@@ -65,10 +65,27 @@ const userSchema = mongoose.Schema({
       }
     }
   ],
-  order : {
-    type: Array,
-    default: []
-  },
+  order : [
+    {
+      orderList : [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Order"
+        }
+      ],
+      payment : {
+        dollar : {
+          type : Number || null
+        },
+        won : {
+          type : Number || null
+        }
+      },
+      date : {
+        type : Date
+      }
+    }
+  ],
   storeOwner : {
     type: Boolean,
     default : false

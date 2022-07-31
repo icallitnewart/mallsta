@@ -22,10 +22,32 @@ const storeSchema = mongoose.Schema({
     ref: 'User',
     required: true
   },
-  order : {
-    type: Array,
-    default : []
-  },
+  order : [
+    {
+      orderNumber : {
+        type : Number
+      },
+      productList : [
+        {
+          product : {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Product"
+          },
+          quantity : {
+            type : Number,
+            min : 1
+          }
+        }
+      ],
+      buyer : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+      },
+      date : {
+        type : Date
+      }
+    }
+  ],
   product : [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Product'

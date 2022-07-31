@@ -6,6 +6,7 @@ import { createFilter } from "redux-persist-transform-filter";
 import user from "./user_reducer";
 import store from "./store_reducer";
 import product from "./product_reducer";
+import order from "./order_reducer";
 
 const authSubsetFilter = createFilter("user", ["userData"]);
 
@@ -19,7 +20,8 @@ const persistConfig = {
 const rootReducer = combineReducers({
   user,
   store,
-  product
+  product,
+  order
 });
 
 export default persistReducer(persistConfig, rootReducer);

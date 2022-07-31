@@ -1,16 +1,17 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { placeOrder } from '../../_actions/order_action';
 
 import { Container } from "../../styles/common/LayoutStyle";
 import { ShippingBox, PriceBox, ErrMsg } from "../../styles/cart/CartStyle";
 
 function Checkout({ auth, cartItems }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const errMsg = (type)=> {
     const message = `You have not entered this information yet. Please update your ${type} by clicking on the "Change" button at the top-right corner.`;
-
-    return (
-      <ErrMsg>{message}</ErrMsg>
-    )
+    return <ErrMsg>{message}</ErrMsg>;
   };
   
   //총 가격 계산
@@ -26,10 +27,59 @@ function Checkout({ auth, cartItems }) {
       }
     });
 
-    return [ 
-      dollarTotal !== 0 && dollarTotal, 
-      wonTotal !== 0 && wonTotal 
-    ];
+    const totalPrice = { 
+      dollar : (dollarTotal === 0) ? null : dollarTotal,
+      won : (wonTotal === 0) ? null : wonTotal 
+    };
+    return totalPrice;
+  };
+
+  //주문 정보 에러 확인
+  const checkErr = ()=> {
+    let errMsg = "";
+    if(cartItems.length === 0) {
+      errMsg = "Your cart is empty!";
+      return errMsg;
+    } 
+
+    if(!auth.username || !auth.phone || !auth.email || !auth.address[0]) {
+      errMsg = "Please check your shipping details and make sure all fields are filled.";
+      return errMsg;
+    }
+  };
+
+  //상품 주문
+  const submitOrder = ()=> {
+    //주문 정보 에러 확인
+    const errMsg = checkErr();
+    if(errMsg) return alert(errMsg);
+
+    //확인창 띄우기
+    const productTitles = cartItems.map(item=> "- " + item.product.title + "\n      ");
+    const msg = `
+      [ Your Order List ]
+      ${productTitles.join("")}
+      Total Price: 
+      Are you sure you want to purchase these items?
+    `;
+    if(window.confirm(msg)) {
+      const body = {
+        cartItems,
+        totalPrice : calculateTotal()
+      };
+  
+      dispatch(placeOrder(body))
+      .then(response=> {
+        const data = response.payload;
+  
+        if(data.success) {
+          alert("Order Successful!");
+          navigate(`/${auth.username}/shopping/order`);
+        } else {
+          console.error(data.err);
+        }
+      });
+    };
   };
 
   return (
@@ -79,20 +129,23 @@ function Checkout({ auth, cartItems }) {
       </ShippingBox>
       <PriceBox>
         <p>Total Price</p>
-        {calculateTotal()[0] && 
+        {calculateTotal().dollar && 
           <span>
-            ${calculateTotal()[0]}
+            ${calculateTotal().dollar}
           </span>
         }
-        {calculateTotal()[1] && 
+        {calculateTotal().won && 
           <span>
-            ₩{calculateTotal()[1]}
+            ₩{calculateTotal().won}
           </span>
         }
-        {!calculateTotal()[0] && !calculateTotal()[1] && 
+        {!calculateTotal().dollar && !calculateTotal().won && 
           <span>$0</span>
         }
-        <button>Place Order</button>
+        <button
+          type="button"
+          onClick={submitOrder}
+        >Place Order</button>
       </PriceBox>
     </Container>
   )

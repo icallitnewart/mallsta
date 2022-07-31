@@ -90,7 +90,13 @@ const productSchema = mongoose.Schema({
       type: Number,
       default: 0
     },
-    users : [
+    orderList : [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Order"
+      }
+    ],
+    buyers : [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
