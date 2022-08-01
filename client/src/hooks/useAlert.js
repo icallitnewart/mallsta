@@ -46,6 +46,12 @@ function useAlert(isLoading) {
                 <p style={{ marginTop: "0px" }}>
                   No Items Added
                 </p>
+              </Alert>,
+    order : <Alert>
+                <BsBoxSeam />
+                <p style={{ marginTop: "0px" }}>
+                  No Items
+                </p>
               </Alert>
   };
 

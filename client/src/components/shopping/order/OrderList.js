@@ -7,12 +7,15 @@ import { Item, TextBox, PostButton } from "../../../styles/shopping/ContentStyle
 
 function OrderList({ orders, isLoading }) {
   const navigate = useNavigate();
-  const { renderAlert } = useAlert();
+  const { renderAlert } = useAlert(isLoading);
 
   return (
     <React.Fragment>
     {isLoading && renderAlert("notify", "loading")}
-    {!isLoading && orders.map((order, index)=>
+    {!isLoading &&
+    (orders.length === 0) 
+    ? renderAlert("empty", "order")
+    : orders.map((order, index)=>
       <Item key={index}> 
         <img 
           src={process.env.PUBLIC_URL + order.image} 
