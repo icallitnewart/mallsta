@@ -12,6 +12,7 @@ export const WISHLIST_USER = "wishlist_user";
 export const ADD_TO_CART_USER = "add_to_cart_user";
 export const GET_CART_USER = "get_cart_user";
 export const DELETE_CART_USER = "delete_cart_user";
+export const ORDERLIST_USER = "orderlist_user";
 
 //store
 export const REGISTER_STORE = "register_store";

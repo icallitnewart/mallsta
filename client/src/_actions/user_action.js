@@ -12,7 +12,8 @@ import {
   WISHLIST_USER,
   ADD_TO_CART_USER,
   GET_CART_USER,
-  DELETE_CART_USER
+  DELETE_CART_USER,
+  ORDERLIST_USER
 } from "./types";
 
 //로그인
@@ -190,6 +191,19 @@ export function deleteCartUser(data) {
 
   return {
     type : DELETE_CART_USER,
+    payload : request
+  }
+}
+
+//주문 목록 요청
+export function orderListUser() {
+  const request = 
+    axios
+    .get('/api/users/orderList')
+    .then(res => res.data);
+
+  return {
+    type : ORDERLIST_USER,
     payload : request
   }
 }

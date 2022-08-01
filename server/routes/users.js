@@ -405,4 +405,30 @@ router.post('/delete_cart', auth, (req, res)=> {
   )
 });
 
+//주문 목록 요청
+router.get('/orderList', auth, (req, res)=> {
+  User
+  .findById(req.user._id)
+  .populate({
+    path : "order.orderList",
+    model : "Order",
+    populate : {
+      path : "productList.product",
+      model : "Product",
+      populate : {
+        path : "store",
+        model : "Store"
+      }
+    }
+  })
+  .exec((err, userInfo)=> {
+    if(err) return res.json({ success : false, err });
+
+    return res.status(200).json({
+      success : true,
+      order : userInfo.order
+    });
+  })
+});
+
 module.exports = router;

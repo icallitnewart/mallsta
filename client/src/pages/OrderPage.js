@@ -1,55 +1,61 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { orderListUser } from '../_actions/user_action';
 
-import { Content, Item, TextBox, PostButton } from "../styles/shopping/ContentStyle";
+import { Content } from "../styles/shopping/ContentStyle";
 
 import Filter from '../components/shopping/Filter';
-
+import OrderList from '../components/shopping/order/OrderList';
 
 function OrderPage() {
-  const arr = Array.from(Array(30).keys());
+  const dispatch = useDispatch();
+  const [ orders, setOrders ] = useState([]);
+  const [ isLoading, setIsLoading ] = useState(true);
+  const props = { orders, isLoading };
+
+  //주문 목록 데이터 호출
+  useEffect(()=> {
+    dispatch(orderListUser())
+    .then(response=> {
+      const data = response.payload;
+      if(data.success) {
+        const orderData = data.order;
+        let orderItems = [];
+
+        orderData.forEach(dataItem=> {
+          const date = dataItem.date.split("T").join(" ").split(".")[0].replaceAll("-", ".");
+
+          dataItem.orderList.forEach(order=> {
+            const orderNumber = order.orderNumber;
+
+            order.productList.forEach(productItem=> {
+              const product = productItem.product;
+              const orderInfo = {
+                orderNumber,
+                title : product.title,
+                price : product.price,
+                store : product.store,
+                image : product.images[0].file.filePath,
+                url : product.url,
+                quantity : productItem.quantity,
+                date
+              };
+              orderItems.push(orderInfo);
+            });
+          });
+        });
+        setOrders(orderItems);
+        setIsLoading(false);
+      }
+    })
+  }, []);
+
   return (
     <>
     <Filter />
     <Content section="order">
       <h1>Payment Receipt</h1>
-      {arr.map((item, index)=>
-        <Item key={index}> 
-          <img src={process.env.PUBLIC_URL + "/img/profile_image_default.jpg"} />
-          <TextBox>
-            <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit.</h2>
-            <h3>
-              <span>Order Number</span> 
-              <span>342352366</span>
-            </h3>
-            <h3>
-              <span>Price</span> 
-              <span>$300</span>
-            </h3>
-            <h3>
-              <span>Quantity</span> 
-              <span>2 EA</span>
-            </h3>
-            <h3>
-              <span>Date</span> 
-              <span>2022.04.03</span>
-            </h3>
-            <h3>
-              <span>Payment</span> 
-              <span>$600</span>
-            </h3>
-          </TextBox>
-          <PostButton
-            bgColor="#ff9966"
-            wd="130px"
-            ht="35px"
-            style={{
-              margin: "10px 25px 0px auto"
-            }}
-          >
-            WRITE A REVIEW
-          </PostButton>
-        </Item>
-      )}
+      <OrderList { ...props } />
     </Content>
     </>
   )
