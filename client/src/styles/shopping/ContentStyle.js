@@ -18,7 +18,7 @@ export const Content = styled.section`
     margin-bottom: 20px;
   }
 
-  //Store & Likes
+  //Store & Wishlist
   ${props=> (props.section==="store" || props.section==="likes") && css`
     column-gap: 7.5px;
 
@@ -27,6 +27,7 @@ export const Content = styled.section`
       aspect-ratio: 1 / 1;
       margin-bottom: 7px;
       font-size: 0px;
+      cursor: pointer;
 
       img {
         height: 100%;
@@ -72,13 +73,26 @@ export const Content = styled.section`
       flex-wrap: wrap;
       align-content: flex-start;
       width: calc(100% / 2 - 10px);
-      padding-bottom: 25px;
+      padding-bottom: 75px;
       margin-bottom: 20px;
       background: #ffefe3;
 
       img {
         height: 160px;
-        margin-bottom: 25px;
+        margin-bottom: 20px;
+        cursor: pointer;
+      }
+
+      button {
+        position: absolute;
+        right: 25px; bottom: 25px;
+        display: flex;
+        align-items: center;
+        padding: 12px 17px 12px 20px;
+
+        svg {
+          margin-left: 3px;
+        }
       }
     }
 
@@ -92,16 +106,20 @@ export const Content = styled.section`
       }
 
       h2 {
-        font: 600 16px/1.4 "Poppins";
+        font: 600 16px/1.5 "Poppins";
         color: #333;
-        margin-bottom: 5px;
+        margin-bottom: 15px;
         word-break: break-all;
+
+        a {
+          color: #ff5e62;
+        }
       }
 
       h3 {
         display: flex;
         justify-content: space-between;
-        font: 13px/1 "Poppins";
+        font: 500 14px/1 "Poppins";
         margin-top: 10px;
         margin-bottom: 5px;
 
@@ -176,7 +194,6 @@ export const Alert = styled.div`
 
 export const Item = styled.article`
   position: relative;
-  cursor: pointer;
 
   img {
     width: 100%;

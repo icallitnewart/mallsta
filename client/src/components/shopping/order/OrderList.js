@@ -53,11 +53,6 @@ function OrderList({ orders, isLoading }) {
           type="button"
           onClick={()=> navigate(order.url)}
           bgColor="#ff9966"
-          wd="130px"
-          ht="35px"
-          style={{
-            margin: "10px 25px 0px auto"
-          }}
         >
           REVIEW <BsPencilSquare />
         </PostButton>
