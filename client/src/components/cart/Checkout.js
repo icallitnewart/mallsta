@@ -65,11 +65,30 @@ function Checkout({ auth, cartItems }) {
     if(errMsg) return alert(errMsg);
 
     //확인창 띄우기
-    const productTitles = cartItems.map(item=> "- " + item.product.title + "\n      ");
+    const productTitles = cartItems.map(item=> {
+      const title = "- " + item.product.title;
+      const quantity = ` (${item.quantity}EA)`;
+      const breakLine = "\n      ";
+      return title + quantity + breakLine;
+    });
+    const totalPrice = ()=> {
+      let str = "";
+      let dollar = "";
+      let won = "";
+      if(price.dollar) dollar = "$" + price.dollar; 
+      if(price.won) won = "₩" + price.won;
+      if(dollar && won) {
+        str = `${dollar} + ${won}`;
+      } else {
+        if(dollar) str = dollar;
+        if(won) str = won;
+      }
+      return str;
+    };
     const msg = `
       [ Your Order List ]
       ${productTitles.join("")}
-      Total Price: 
+      Total Price: ${totalPrice()}
       Are you sure you want to purchase these items?
     `;
     if(window.confirm(msg)) {
