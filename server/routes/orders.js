@@ -112,6 +112,13 @@ router.post('/place_order', auth, async (req, res)=> {
     });
     await Product.bulkWrite(productOpt);  
 
+    //5. 장바구니에 담겨있는 모든 상품 제거
+    await User.findOneAndUpdate(
+      { _id : buyer },
+      { $set : { cart : [] } },
+      { new : true }
+    );
+
     //완료
     return res.status(200).json({ 
       success : true,
