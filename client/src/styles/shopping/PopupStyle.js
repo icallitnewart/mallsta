@@ -1051,32 +1051,35 @@ export const Rating = styled.div`
 `;
 
 export const ReviewInput = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   width: calc(100% - 90px);
   height: 28px;
   border-radius: 20px;
   border: 1px solid #eee;
-  padding: 0px 5px;
+  overflow: hidden;
 
   input[type=text] {
     width: 100%;
     height: 100%;
     border: 0px;
-    border-radius: 20px;
-    padding: 0px 7px 3px;
+    padding: 0px 27px 0px 10px;
+    font: 12px/1 "arial";
     resize: none;
     outline: none;
-    font: 12px/1.4 "Noto Sans KR";
     color: #333;
     overflow: hidden;
 
     &::placeholder {
-      color: #bbb;
+      color: #aaa;
+      font: 12px/1 "Noto Sans KR";
     }
   }
 
   button {
+    position: absolute;
+    top: 3px; right: 3px;
     width: 20px;
     height: 20px;
     border: 0px;
