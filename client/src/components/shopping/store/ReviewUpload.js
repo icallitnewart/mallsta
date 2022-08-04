@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { BsStar, BsStarFill, BsStarHalf, BsFillArrowUpCircleFill } from "react-icons/bs";
+import useInputs from '../../../hooks/useInputs';
 import { 
   ReviewForm, Rating, ReviewInput
 } from '../../../styles/shopping/PopupStyle';
@@ -8,12 +9,52 @@ import {
 function ReviewUpload({ isSeller, product, auth }) {
   //리뷰 작성 자격 여부
   const [ isQualified, setIsQualified ] = useState(false);
+  //별 아이콘
+  const [ stars, setStars ] = useState(0);
+
+  //value
+  const initValue = { review : "" };
+  const { values, handleChange } =  useInputs(initValue);
+  const [ rating, setRating ] = useState(0);
+
+  //유효성 검사
+  const checkErr = ()=> {
+    let errMsg = "";
+    if(!values.review) errMsg = "Please write a review.";
+    if(rating === 0) errMsg = "Please leave a rating by clicking on stars."; 
+    return errMsg;
+  };
   
-  const writeReview = (e)=> {
+  //리뷰 작성하기
+  const submitReview = (e)=> {
     e.preventDefault();
     
+    //작성 자격 미달시 경고창 출력
     const msg = "Sorry, only those who bought this product can leave a review.";
     if(!isQualified) return alert(msg);
+
+    //유효성 검사
+    const errMsg = checkErr();
+    if(errMsg) return alert(errMsg);
+
+    const body = {
+      review : values.review,
+      rating
+    };
+  };
+
+  //별점 주기
+  const giveRating = ()=> {
+    if(!isQualified) return alert("Only buyers of this product can leave a rating.");
+    setRating(stars);
+  };
+
+  //별 아이콘 마우스오버시 별 색칠하기
+  const onHoverStars = (e, rating)=> {
+    //별 아이콘 마우스 위치에 따라 full/half 구분 
+    //(짝수: full / 홀수: half)
+    if(e.nativeEvent.offsetX > 7) rating += 1;
+    setStars(rating);
   };
 
   useEffect(()=> {
@@ -43,43 +84,33 @@ function ReviewUpload({ isSeller, product, auth }) {
 
   return (
     <ReviewForm>
-      <Rating>
-        <label htmlFor="ratingScore" hidden>Rating Score</label>
+      <Rating onMouseLeave={()=> setStars(rating)}>
+        <label htmlFor="rating" hidden>Ratings</label>
         <input 
           type="hidden" 
-          name="ratingScore" 
-          id="ratingScore"
+          name="rating" 
+          id="rating"
+          value={rating}
         />
-        <button
-          type="button"
-          aria-label="Give a rating score of 1 or 2 out of 10"
-        >
-          <BsStarFill />
-        </button>
-        <button
-          type="button"
-          aria-label="Give a rating score of 3 or 4 out of 10"
-        >
-          <BsStarFill />
-        </button>
-        <button
-          type="button"
-          aria-label="Give a rating score of 5 or 6 out of 10"
-        >
-          <BsStarFill />
-        </button>
-        <button
-          type="button"
-          aria-label="Give a rating score of 7 or 8 out of 10"
-        >
-          <BsStarHalf />
-        </button>
-        <button
-          type="button"
-          aria-label="Give a rating score of 9 or 10 out of 10"
-        >
-          <BsStar />
-        </button>
+        {Array(5).fill().map((arr, index)=> {
+          const score = index * 2 + 1;
+          return (
+            <button
+              key={index}
+              type="button"
+              aria-label={`Rate a product a ${score} or ${score + 1} out of 10`}
+              onMouseOver={(e)=> onHoverStars(e, score)}
+              onClick={giveRating}
+            >
+              {(score < stars) 
+                ? <BsStarFill />
+                : (stars % 2 === 1 && score === stars)
+                  ? <BsStarHalf /> 
+                  : <BsStar /> 
+              }
+            </button>
+          )
+        })}
       </Rating>
       <ReviewInput>
         <label htmlFor="review" hidden>
@@ -89,6 +120,8 @@ function ReviewUpload({ isSeller, product, auth }) {
           type="text" 
           name="review" 
           id="review" 
+          value={values.review}
+          onChange={handleChange}
           placeholder={
             isQualified 
             ? "Leave a review..." 
@@ -98,7 +131,7 @@ function ReviewUpload({ isSeller, product, auth }) {
         ></input>
         <button
           aria-label="Post a review"
-          onClick={writeReview}
+          onClick={submitReview}
         >
           <BsFillArrowUpCircleFill />
         </button>
