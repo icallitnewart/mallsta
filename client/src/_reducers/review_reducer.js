@@ -1,5 +1,6 @@
 import {
-  WRITE_REVIEW
+  WRITE_REVIEW,
+  GETLIST_REVIEW
 } from "../_actions/types";
 
 export default function(state={}, action) {
@@ -8,6 +9,12 @@ export default function(state={}, action) {
       return {
         ...state,
         reviewUpload : action.payload
+      }
+      break;
+    case GETLIST_REVIEW :
+      return {
+        ...state,
+        reviewList : action.payload
       }
       break;
     default :

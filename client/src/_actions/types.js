@@ -33,3 +33,4 @@ export const PLACE_ORDER = "place_order";
 
 //review
 export const WRITE_REVIEW = "write_review";
+export const GETLIST_REVIEW = "getlist_review";

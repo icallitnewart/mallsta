@@ -1,6 +1,7 @@
 import axios from "axios";
 import {
-  WRITE_REVIEW
+  WRITE_REVIEW,
+  GETLIST_REVIEW
 } from "./types";
 
 //리뷰 작성
@@ -16,3 +17,15 @@ export function writeReview(data) {
   }
 }
 
+//리뷰 목록 요청
+export function getListReview(productId) {
+  const request = 
+    axios
+    .get(`/api/reviews/reviewList?productId=${productId}`)
+    .then(res => res.data);
+
+  return {
+    type : GETLIST_REVIEW,
+    payload : request
+  }
+}

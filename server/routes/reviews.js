@@ -51,7 +51,23 @@ router.post('/write', auth, async (req, res)=> {
   } catch(err) {
     return res.json({ success : false, err : err.message });
   }
+});
 
+//리뷰 목록 요청
+router.get('/reviewList', (req, res)=> {
+  const product = req.query.productId;
+
+  Review
+  .find({ product })
+  .populate("writer")
+  .exec((err, reviewInfo)=> {
+    if(err) return res.json({ success : false, err });
+
+    return res.status(200).json({
+      success : true,
+      reviewList : reviewInfo
+    })
+  });
 });
 
 module.exports = router;
