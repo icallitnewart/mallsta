@@ -7,6 +7,7 @@ import user from "./user_reducer";
 import store from "./store_reducer";
 import product from "./product_reducer";
 import order from "./order_reducer";
+import review from "./review_reducer";
 
 const authSubsetFilter = createFilter("user", ["userData"]);
 
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
   user,
   store,
   product,
-  order
+  order,
+  review
 });
 
 export default persistReducer(persistConfig, rootReducer);

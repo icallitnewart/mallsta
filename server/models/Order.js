@@ -17,6 +17,10 @@ const orderSchema = mongoose.Schema({
         type: Number,
         min: 1,
         required: true
+      },
+      review : {
+        type: mongoose.Schema.Types.ObjectId || null,
+        default: null
       }
     }
   ],

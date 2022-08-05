@@ -102,7 +102,13 @@ const productSchema = mongoose.Schema({
         ref: "User"
       }
     ]
-  }
+  },
+  reviews : [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Review"
+    }
+  ]
 }, { timestamps : true });
 
 const Product = mongoose.model('Product', productSchema);

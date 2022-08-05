@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import useInputs from '../../../hooks/useInputs';
 
 import { BsStar, BsStarFill, BsStarHalf, BsFillArrowUpCircleFill } from "react-icons/bs";
-import useInputs from '../../../hooks/useInputs';
 import { 
   ReviewForm, Rating, ReviewInput
 } from '../../../styles/shopping/PopupStyle';
+import { writeReview } from '../../../_actions/review_action';
 
 function ReviewUpload({ isSeller, product, auth }) {
+  const dispatch = useDispatch();
+  const storeInfo = useSelector(state=> state.user.userInfo.userInfo.store);
   //리뷰 작성 자격 여부
   const [ isQualified, setIsQualified ] = useState(false);
   //별 아이콘
   const [ stars, setStars ] = useState(0);
+  //리뷰 작성 가능한 유저의 주문 기록
+  const [ orderHistory, setOrderHistory ] = useState([]);
 
   //value
   const initValue = { review : "" };
@@ -20,8 +26,17 @@ function ReviewUpload({ isSeller, product, auth }) {
   //유효성 검사
   const checkErr = ()=> {
     let errMsg = "";
-    if(!values.review) errMsg = "Please write a review.";
-    if(rating === 0) errMsg = "Please leave a rating by clicking on stars."; 
+    const min = 10;
+    const max = 50;
+    if(!values.review) {
+      errMsg = "Please write a review.";
+    }
+    if(values.review.length < min || values.review.length > max) {
+      errMsg = `A review must be at least ${min} characters long and less than ${max}.`;
+    }
+    if(rating === 0) {
+      errMsg = "Please leave a rating by clicking on stars."; 
+    }
     return errMsg;
   };
   
@@ -39,8 +54,25 @@ function ReviewUpload({ isSeller, product, auth }) {
 
     const body = {
       review : values.review,
-      rating
+      rating,
+      product,
+      order : orderHistory[0],
+      store : storeInfo 
     };
+
+    dispatch(writeReview(body))
+    .then(response=> {
+      const data = response.payload;
+      
+      if(data.success) {
+        alert("Your review has been posted! Thanks for leaving a review.");
+        //TODO: input, 리뷰 목록 리렌더링
+      } else {
+        console.error(data.err);
+        alert("An error occured. Please try again later.");
+      };
+    })
+    
   };
 
   //별점 주기
@@ -78,6 +110,7 @@ function ReviewUpload({ isSeller, product, auth }) {
   
         if(myOrderList.length > 0) {
           setIsQualified(true);
+          setOrderHistory(myOrderList);
         }
     }
   }, [isSeller, product, auth]);
@@ -92,6 +125,7 @@ function ReviewUpload({ isSeller, product, auth }) {
           id="rating"
           value={rating}
         />
+        {/* 별 아이콘 버튼 */}
         {Array(5).fill().map((arr, index)=> {
           const score = index * 2 + 1;
           return (
@@ -121,10 +155,11 @@ function ReviewUpload({ isSeller, product, auth }) {
           name="review" 
           id="review" 
           value={values.review}
+          maxLength={50}
           onChange={handleChange}
           placeholder={
             isQualified 
-            ? "Leave a review..." 
+            ? "Leave a review... (at least 10 characters)" 
             : "You need to buy this item to write a review."
           }
           disabled={!isQualified}

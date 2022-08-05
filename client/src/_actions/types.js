@@ -30,3 +30,6 @@ export const LIKE_PRODUCT = "like_product";
 
 //order
 export const PLACE_ORDER = "place_order";
+
+//review
+export const WRITE_REVIEW = "write_review";
