@@ -1,5 +1,14 @@
 import styled, { css, keyframes } from "styled-components";
 
+const spin = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+`;
+
 export const Background = styled.div`
   position: fixed;
   top: 0px; left: 0px;
@@ -624,15 +633,6 @@ export const ButtonBox = styled.div`
   text-align: right;
 `;
 
-const spin = keyframes`
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-`;
-
 export const Button = styled.button`
   display: inline-flex;
   justify-content: center;
@@ -821,6 +821,8 @@ export const Tags = styled.ul`
   }
 `;
 
+
+//ProductReview : Start
 export const ReviewBox = styled.div`
   position: relative;
   width: 100%;
@@ -991,39 +993,41 @@ export const PageNumber = styled.li`
   `}
 `;
 
-//isSeller === true
-export const EditButtonBox = styled.div`
+export const ReviewAlert = styled.div`
   display: flex;
-  justify-content: flex-end;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
   width: 100%;
-  height: 60px;
-  padding: 10px 15px;
+  height: calc(100% - 45px);
+  font: 500 15px/1 "Poppins";
+  color: #bbb;
 
-  button {
-    width: 90px;
-    margin-left: 10px;
-    border: 0px;
-    border-radius: 2px;
-    color: #fff;
-    font: 12px/1 "Poppins";
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    cursor: pointer;
-
-    //delete button
-    &:first-child {
-      background: #ff5e62;
-    }
-
-    //edit button
-    &:last-child {
-      background: #ff9966;
-    }
+  p {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 3px;
+    font-size: 14px;
   }
 
+  svg {
+    font-size: 30px;
+
+    ${props=> props.isLoading 
+      ? css`
+        animation: ${spin} linear 2s infinite;
+      `
+      : css`
+        margin-bottom: 8px;
+      `
+    }
+  }
 `;
+//ProductReview : End
+
 
 //isSeller === false
+//ReviewUpload : Start
 export const ReviewForm = styled.form`
   display: flex;
   width: 100%;
@@ -1091,6 +1095,40 @@ export const ReviewInput = styled.div`
       color: #ff9966;
     }
   }
+`;
+//ReviewUpload : End
+
+
+//isSeller === true
+export const EditButtonBox = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  height: 60px;
+  padding: 10px 15px;
+
+  button {
+    width: 90px;
+    margin-left: 10px;
+    border: 0px;
+    border-radius: 2px;
+    color: #fff;
+    font: 12px/1 "Poppins";
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    //delete button
+    &:first-child {
+      background: #ff5e62;
+    }
+
+    //edit button
+    &:last-child {
+      background: #ff9966;
+    }
+  }
+
 `;
 
 export const CheckoutForm= styled.div`
